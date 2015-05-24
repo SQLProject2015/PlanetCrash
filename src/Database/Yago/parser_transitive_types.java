@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import entities.entity_country;
+import entities.entity_currency;
 import entities.entity_person;
 
 
@@ -15,13 +16,18 @@ public class parser_transitive_types extends AbstractYagoParser{
 	
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, entity_person> persons_map;
+	ArrayList<String> currency_array = new ArrayList<String>();
+	ArrayList<String> language_array = new ArrayList<String>();
+	
 
 	public parser_transitive_types(String filepath,  HashMap<String, entity_country> countries_map,
-			HashMap<String,entity_person> persons_map) {
+			HashMap<String,entity_person> persons_map, ArrayList<String> currency_array, ArrayList<String> language_array) {
 		super(filepath);
 		
 		this.countries_map = countries_map;
 		this.persons_map = persons_map;
+		this.currency_array = currency_array;
+		this.language_array = language_array;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -48,7 +54,16 @@ public class parser_transitive_types extends AbstractYagoParser{
 			}
 			//System.out.println(toParse.lentity);
 		}
-		else if (toParse.rentity.equals("<wordnet_currency_113385913>")
+		else if (toParse.rentity.equals("<wordnet_currency_113385913>")){
+			if (!currency_array.contains(toParse.lentity)){
+				currency_array.add(toParse.lentity);
+			}
+		}
+		else if (toParse.rentity.equals("<wikicat_Languages>")){
+			if (!language_array.contains(toParse.lentity)){
+				language_array.add(toParse.lentity);
+			}
+		}
 	}
 	
 

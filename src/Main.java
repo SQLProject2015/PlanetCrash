@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,19 +29,47 @@ public class Main {
 
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_person> persons_map = new HashMap<String, entity_person>();
-		HashMap<String, entity_currency> currency_map = new HashMap<String, entity_currency>();
+		ArrayList<String> currency_array = new ArrayList<String>();
+		ArrayList<String> language_array = new ArrayList<String>();
 		
-		parser_transitive_types c = new parser_transitive_types("D:\\db project\\yago3_tsv\\yagoTransitiveType.tsv", countries_map, persons_map);		
+		parser_transitive_types c = new parser_transitive_types("D:\\db project\\yago3_tsv\\yagoTransitiveType.tsv", countries_map, persons_map, currency_array, language_array);		
 		c.populate();
 		
-//		parser_yago_facts d = new parser_yago_facts("D:\\db project\\yago3_tsv\\yagoFacts.tsv", countries_map);
-//		d.populate();
+		parser_yago_facts d = new parser_yago_facts("D:\\db project\\yago3_tsv\\yagoFacts.tsv", countries_map);
+		d.populate();
+						
+		for (String curr : currency_array){
+			try {
+				dbh.executeUpdate("INSERT INTO Currency (Name) VALUES(\""+curr+"\");");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
 		
-
+		for (String lang : language_array){
+			try {
+				dbh.executeUpdate("INSERT INTO Currency (Name) VALUES(\""+lang+"\");");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
 		
 		for (String country : countries_map.keySet()){
 			try {
 				dbh.executeUpdate("INSERT INTO Country (Name) VALUES(\""+countries_map.get(country).getYagoName()+"\");");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
+		
+		for (String person : persons_map.keySet()){
+			try {
+				dbh.executeUpdate("INSERT INTO Country (Name, yearOfBirth, yearOfDeath) VALUES(\""+persons_map.get(person).getName()+"\",\""+
+						persons_map.get(person).getYearOfBirth()+"\",\""+ 
+						persons_map.get(person).getYearOfDeath()+"\");");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
