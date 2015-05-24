@@ -1,11 +1,18 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class entity_person {
 	private String name;
 	private int yearOfBirth;
 	private int yearOfDeath;
 	private String placeOfBirth;
+	private ArrayList<String> profession_list = new ArrayList<String>();
 	
+	
+	public entity_person(){
+	
+	}
 	
 	public entity_person(String name,int yearOfBirth,int yearOfDeath,String placeOfBirth){
 		this.name = name;
@@ -43,5 +50,13 @@ public class entity_person {
 
 	public void setPlaceOfBirth(String placeOfBirth) {
 		this.placeOfBirth = placeOfBirth;
+	}
+
+	public ArrayList<String> getProfession_list() {
+		return profession_list;
+	}
+
+	public void addProfession(String profession) {
+		this.profession_list.add(profession);
 	}
 }
