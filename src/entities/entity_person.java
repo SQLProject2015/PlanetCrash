@@ -42,6 +42,6 @@ public class entity_person {
 	}
 
 	public void setPlaceOfBirth(String placeOfBirth) {
-		placeOfBirth = placeOfBirth;
+		this.placeOfBirth = placeOfBirth;
 	}
 }
