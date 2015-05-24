@@ -16,20 +16,20 @@ public class entity_country {
 	}
 	
 	public entity_country(String yago_name,String label,String continent,String currency,String language,String capital,int population_size,String leader){
-		yago_name = yago_name;
-		label = label;
-		continent = continent;
-		currency = currency;
-		language = language;
-		capital = capital;
-		population_size = population_size;
-		leader = leader;
+		this.yago_name = yago_name;
+		this.label = label;
+		this.continent = continent;
+		this.currency = currency;
+		this.language = language;
+		this.capital = capital;
+		this.population_size = population_size;
+		this.leader = leader;
 	}
 
-	public String getName() {
+	public String getYagoName() {
 		return yago_name;
 	}
-	public void setName(String name) {
+	public void setYagoName(String name) {
 		this.yago_name = name;
 	}
 	public String getContinent() {

@@ -18,7 +18,7 @@ public abstract class AbstractYagoParser {
 		
 		while(lexer.hasNext())
 			parse(lexer.next());
-		
+				
 	}
 	
 	/*

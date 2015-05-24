@@ -5,11 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import entities.entity_country;
-import parser_entities.Importer;
-import parser_entities.entity_movie;
-import parser_entities.entity_person;
-
-
 
 public class parser_yago_facts extends AbstractYagoParser{
 	
@@ -20,23 +15,33 @@ public class parser_yago_facts extends AbstractYagoParser{
 	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map) {		
 		super(filepath);
 		
-		countries_map = countries_map;
+		this.countries_map = countries_map;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void parse(YagoEntry toParse) {
-		// TODO Auto-generated method stub
-		if (toParse.relation.equals("<isLocatedIn>")){
-			if (countries_map.containsKey(toParse.lentity)){
+		
+		if (countries_map.containsKey(toParse.lentity)){
+			if (toParse.relation.equals("<isLocatedIn>")){
 				countries_map.get(toParse.lentity).setContinent(toParse.rentity);
 			}
-			else{
-				entity_country new_country = new entity_country();
-				new_country.setContinent(toParse.rentity);
-				countries_map.put(toParse.lentity, new_country);
+			else if (toParse.relation.equals("<hasCurrency>")){
+				countries_map.get(toParse.lentity).setCurrency(toParse.rentity);
 			}
-		}		
+			else if (toParse.relation.equals("<hasOfficialLanguage>")){
+				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
+			}
+			else if (toParse.relation.equals("<hasOfficialLanguage>")){
+				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
+			}
+			else if (toParse.relation.equals("<hasCapital>")){
+				countries_map.get(toParse.lentity).setCapital(toParse.rentity);
+			}
+			else if (toParse.relation.equals("<isLeaderOf>")){
+				countries_map.get(toParse.lentity).setLeader(toParse.rentity);
+			}
+		}	
 	}
 	
 
