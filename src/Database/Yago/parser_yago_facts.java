@@ -1,13 +1,11 @@
 package Database.Yago;
 
 import java.util.HashMap;
-import java.util.List;
 
 import entities.entity_country;
 
 public class parser_yago_facts extends AbstractYagoParser{
 	
-	private final int max_list_size = 1000;
 	
 	HashMap<String, entity_country> countries_map;
 	

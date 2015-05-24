@@ -2,6 +2,8 @@ import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import entities.entity_country;
 import entities.entity_currency;
@@ -23,6 +25,7 @@ public class Main {
 		
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 		
+
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_person> persons_map = new HashMap<String, entity_person>();
 		HashMap<String, entity_currency> currency_map = new HashMap<String, entity_currency>();
