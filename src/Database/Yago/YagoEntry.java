@@ -10,7 +10,7 @@ public class YagoEntry {
 	public String relation;
 	public String lentity; //Left entity
 	
-	public YagoEntry(String _id, String rentity, String relation, String lentity) {
+	public YagoEntry(String _id, String lentity, String relation, String rentity) {
 		this._id=_id;
 		this.rentity=rentity;
 		this.relation=relation;
