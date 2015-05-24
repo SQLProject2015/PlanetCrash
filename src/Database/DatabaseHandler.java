@@ -29,6 +29,23 @@ public class DatabaseHandler {
 		
 	}
 
+	/**
+	 * 
+	 * @param query
+	 * @return ResultSet of the query
+	 * @throws SQLException
+	 */
+	public ResultSet executeQuery(String query) throws SQLException {
+		Statement stmnt = conn.createStatement();
+		ResultSet rs = stmnt.executeQuery(query);
+		return rs;
+	}
+	
+	public int executeUpdate(String update) throws SQLException {
+		Statement stmnt = conn.createStatement();
+		return stmnt.executeUpdate(update);
+	}
+	
 //	/*
 //	 * Opens a new connection to the database
 //	 */
