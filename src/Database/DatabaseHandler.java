@@ -61,7 +61,7 @@ public class DatabaseHandler {
 	 * @return array of ints indicating rows affected
 	 * @throws SQLException 
 	 */
-	public int[] batchInsert(String table, String[] columns, List<Object[]> batch) throws SQLException {
+	public int[] batchInsert(String table, String[] columns, List<String[]> batch) throws SQLException {
 		//Create SQL statement
 		String sql = "INSERT INTO "+table+" (";
 		for(int i=0;i<columns.length;i++) 
@@ -70,33 +70,48 @@ public class DatabaseHandler {
 		for(int i=0;i<columns.length;i++)
 			sql+="?"+(i<columns.length-1?",":"");
 		sql+=");";
-
+		//System.out.println(sql);
+		//set auto-commit to false
+		conn.setAutoCommit(false);
+		
 		//Create prepared statement
 		PreparedStatement pstmnt = conn.prepareStatement(sql);
 
-		//set auto-commit to false
-		conn.setAutoCommit(false);
-
 		//set the variables
-		for(Object[] b: batch) {
+		for(String[] b: batch) {
 			if (b.length!=columns.length) {
 				System.out.println("Wrong value array length!");
 				continue;
 			}
 			for(int i=0;i<columns.length;i++) {
-				if(b[i] instanceof Integer)
-					pstmnt.setInt(i, (Integer)b[i]);
-				else if(b[i] instanceof String)
-					pstmnt.setString(i, (String)b[i]);
+					pstmnt.setString(i+1, b[i]);
 			}
 			pstmnt.addBatch(); //add to batch
 		}
 		
 		int[] count = pstmnt.executeBatch();
+		conn.commit();
 		conn.setAutoCommit(true);
 		return count;
 	}
 
+	public void singleInsert(String table, String[] columns, String[] values) throws SQLException {
+		if(columns.length!=values.length) {
+			System.out.println("Mismatching colums-values");
+			return;
+		}
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO "+table+" (");
+		for(int i=0;i<columns.length;i++)
+			sql.append(columns[i]+(i<columns.length-1?",":""));
+		sql.append(") VALUES(");
+		for(int i=0;i<columns.length;i++) 
+			sql.append("\""+values[i]+"\""+(i<columns.length-1?",":""));
+		sql.append(");");
+		//System.out.println(sql.toString());
+		executeUpdate(sql.toString());
+	}
+	
 	//	/*
 	//	 * Opens a new connection to the database
 	//	 */

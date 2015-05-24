@@ -40,7 +40,12 @@ public class parser_yago_date_facts extends AbstractYagoParser{
 		while (m.find()) {
 			date = m.group(1);
 		}
+		
+		try{
 		year = Integer.parseInt(date.split("-")[0]);
+		} catch(NumberFormatException e) {
+			return -1;
+		}
 		return year;
 	}
 	
