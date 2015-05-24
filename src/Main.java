@@ -5,6 +5,7 @@ import entities.entity_country;
 import entities.entity_person;
 import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_facts;
+import Database.Yago.parser_yago_literal_facts;
 
 
 
@@ -19,6 +20,9 @@ public class Main {
 		
 		parser_yago_facts d = new parser_yago_facts("D:\\db project\\yago3_tsv\\yagoFacts.tsv", countries_map);
 		d.populate();
+		
+		parser_yago_literal_facts e = new parser_yago_literal_facts("D:\\db project\\yago3_tsv\\yagoLiteralFacts.tsv", countries_map);
+		e.populate();
 		
 		int i =0;
 		if (i == 0){

@@ -1,6 +1,5 @@
 package Database.Yago;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,10 +37,14 @@ public class parser_yago_facts extends AbstractYagoParser{
 			else if (toParse.relation.equals("<hasCapital>")){
 				countries_map.get(toParse.lentity).setCapital(toParse.rentity);
 			}
-			else if (toParse.relation.equals("<isLeaderOf>")){
-				countries_map.get(toParse.lentity).setLeader(toParse.rentity);
-			}
 		}	
+		
+		if(countries_map.containsKey(toParse.rentity)){
+			if (toParse.relation.equals("<isLeaderOf>")){
+				countries_map.get(toParse.rentity).setLeader(toParse.lentity);
+			}
+		}
+
 	}
 	
 
