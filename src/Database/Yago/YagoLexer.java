@@ -19,7 +19,7 @@ public class YagoLexer implements Iterator<YagoEntry> {
 
 	@Override
 	public boolean hasNext() {
-		return this.next == null;
+		return this.next != null;
 	}
 
 	@Override
