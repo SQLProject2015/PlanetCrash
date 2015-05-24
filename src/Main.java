@@ -3,7 +3,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,14 +36,19 @@ public class Main {
 
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_person> persons_map = new HashMap<String, entity_person>();
-		ArrayList<String> currency_array = new ArrayList<String>();
-		ArrayList<String> language_array = new ArrayList<String>();
+		HashSet<String> currency_set = new HashSet<String>();
+		HashSet<String> language_set = new HashSet<String>();
+		HashSet<String> cities_set = new HashSet<String>();
+		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>(); 
 		
-		parser_transitive_types c = new parser_transitive_types("D:\\db project\\yago3_tsv\\yagoTransitiveType.tsv", countries_map, persons_map, currency_array, language_array);		
+		
+		parser_transitive_types c = new parser_transitive_types("D:\\db project\\yago3_tsv\\yagoTransitiveType.tsv", countries_map,
+				persons_map, cities_set, currency_set, language_set, countries_cities_map);		
 		c.populate();
 		
-		parser_yago_facts d = new parser_yago_facts("D:\\db project\\yago3_tsv\\yagoFacts.tsv", countries_map);
+		parser_yago_facts d = new parser_yago_facts("D:\\db project\\yago3_tsv\\yagoFacts.tsv",  countries_map,  countries_cities_map, cities_set);
 		d.populate();
+						
 		
 		parser_yago_literal_facts g = new parser_yago_literal_facts("D:\\db project\\yago3_tsv\\yagoLiteralFacts.tsv", countries_map);
 		g.populate();
@@ -49,7 +56,7 @@ public class Main {
 		parser_yago_date_facts f = new parser_yago_date_facts("D:\\db project\\yago3_tsv\\yagoDateFacts.tsv", persons_map);
 		f.populate();
 						
-		for (String curr : currency_array){
+		for (String curr : currency_set){
 			try {
 //				dbh.executeUpdate("INSERT INTO Currency (Name) VALUES(\""+curr+"\");");
 				dbh.singleInsert("Currency", new String[]{"Name"}, new String[]{curr});
@@ -60,7 +67,7 @@ public class Main {
 			}
 		}
 		
-		for (String lang : language_array){
+		for (String lang : language_set){
 			try {
 //				dbh.executeUpdate("INSERT INTO Language (Name) VALUES(\""+lang+"\");");
 				dbh.singleInsert("Language", new String[]{"Name"}, new String[]{lang});
