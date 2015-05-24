@@ -17,7 +17,7 @@ public class ConnectionPool {
 	private AtomicInteger POOLMAX = new AtomicInteger(5);
 	private AtomicInteger POOLMIN = new AtomicInteger(3);
 
-	private AtomicInteger count; //how many connections have been spawned overall
+	private AtomicInteger count = new AtomicInteger(); //how many connections have been spawned overall
 
 	private Stack<Connection> cStack;
 	

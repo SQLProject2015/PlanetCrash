@@ -47,8 +47,8 @@ public class parser_transitive_types extends AbstractYagoParser{
 				persons_map.put(toParse.lentity, new_person);					
 			}
 			//System.out.println(toParse.lentity);
-	
 		}
+		else if (toParse.rentity.equals("<wordnet_currency_113385913>")
 	}
 	
 
