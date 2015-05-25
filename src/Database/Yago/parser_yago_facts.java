@@ -17,7 +17,8 @@ public class parser_yago_facts extends AbstractYagoParser{
 		super(filepath);
 		
 		this.countries_map = countries_map;
-		// TODO Auto-generated constructor stub
+		this.countries_cities_map = countries_cities_map;
+		this.cities_set = cities_set;
 	}
 
 	@Override
@@ -48,6 +49,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 				countries_map.get(toParse.rentity).setLeader(toParse.lentity);
 			}
 		}
+		
 		
 		if (countries_cities_map.containsKey(toParse.rentity)){
 			if (toParse.relation.equals("<isLocatedIn>") && cities_set.contains(toParse.lentity)){
