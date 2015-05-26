@@ -18,13 +18,14 @@ import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
 import Database.Yago.parser_yago_facts;
 import Database.Yago.parser_yago_literal_facts;
+import Database.Yago.Uploaders.CountriesUploader;
 
 
 
 public class Main {
 	private static ConnectionPool mConnPool;
 
-	public static final int BATCHSIZE=5000;
+	public static final int BATCHSIZE=100;
 	private static List<Object[]> batch;
 
 	private static final String YAGO_TRANSITIVETYPE = "D:\\Temp\\yagoTransitiveType.tsv";
@@ -110,20 +111,8 @@ public class Main {
 			}
 		}
 
-		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
-		for (String country : countries_map.keySet()){
-			try {
-				//				dbh.executeUpdate("INSERT INTO Country (Name) VALUES(\""+countries_map.get(country).getYagoName()+"\");");
-				dbh.singleInsert("Country", new String[]{"Name"}, new String[]{countries_map.get(country).getYagoName()});
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				//				System.out.println(countries_map.get(country).getYagoName());
-				//				e.printStackTrace();
-			}
-		}
-
+		
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
-		int total = 0;
 		batch = new ArrayList<Object[]>();
 		for (String person : persons_map.keySet()){
 			try {
@@ -133,8 +122,7 @@ public class Main {
 				//				dbh.singleInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"},
 				//						new String[]{persons_map.get(person).getName(),""+persons_map.get(person).getYearOfBirth(),""+persons_map.get(person).getYearOfDeath()});
 				if(batch.size()>=BATCHSIZE) {
-					total += BATCHSIZE;
-					System.out.println("clearing batch! total : " + total);
+					System.out.println("clearing batch!");
 					dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
 					batch = new ArrayList<Object[]>();
 				}
@@ -164,6 +152,20 @@ public class Main {
 			//e.printStackTrace();
 		}
 
+		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
+//		for (String country : countries_map.keySet()){
+//			try {
+//				//				dbh.executeUpdate("INSERT INTO Country (Name) VALUES(\""+countries_map.get(country).getYagoName()+"\");");
+//				dbh.singleInsert("Country", new String[]{"Name"}, new String[]{countries_map.get(country).getYagoName()});
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				//				System.out.println(countries_map.get(country).getYagoName());
+//				//				e.printStackTrace();
+//			}
+//		}
+		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
+		cUploader.upload();
+		
 		int i =0;
 		if (i == 0){
 			System.out.println("yes");
