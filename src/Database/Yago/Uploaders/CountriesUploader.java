@@ -11,7 +11,7 @@ import java.util.Set;
 import Database.DatabaseHandler;
 import entities.entity_country;
 
-public class CountriesPopulator implements Uploader{
+public class CountriesUploader implements Uploader{
 	Map<String, entity_country> cmap;
 	DatabaseHandler dbh;
 	
@@ -21,7 +21,7 @@ public class CountriesPopulator implements Uploader{
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
 	 */
-	public CountriesPopulator(Map<String, entity_country> countries_map, DatabaseHandler dbh) {
+	public CountriesUploader(Map<String, entity_country> countries_map, DatabaseHandler dbh) {
 		this.cmap=countries_map;
 		this.dbh=dbh;
 	}
