@@ -24,33 +24,36 @@ public class parser_yago_facts extends AbstractYagoParser{
 	@Override
 	public void parse(YagoEntry toParse) {
 		
-		if (countries_map.containsKey(toParse.lentity)){
+		entity_country country = countries_map.get(toParse.lentity);
+		if (country != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
-				countries_map.get(toParse.lentity).setContinent(toParse.rentity);
+				country.setContinent(toParse.rentity);
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_has_currency())){
-				countries_map.get(toParse.lentity).setCurrency(toParse.rentity);
+				country.setCurrency(toParse.rentity);
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_official_language())){
-				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
+				country.setLanguage(toParse.rentity);
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_capital_city())){
-				countries_map.get(toParse.lentity).setCapital(toParse.rentity);
+				country.setCapital(toParse.rentity);
 			}
 		}
 
 		
-		
-		if(countries_map.containsKey(toParse.rentity)){
+		country = countries_map.get(toParse.rentity);
+		if(country != null){
 			if (toParse.relation.equals("<isLeaderOf>")){
-				countries_map.get(toParse.rentity).setLeader(toParse.lentity);
+				country.setLeader(toParse.lentity);
 			}
 		}
 		
 		
-		if (countries_cities_map.containsKey(toParse.rentity)){
+		
+		Set<String> list = countries_cities_map.get(toParse.rentity);
+		if (list!=null){
 			if (toParse.relation.equals("<isLocatedIn>") && cities_set.contains(toParse.lentity)){
-				countries_cities_map.get(toParse.rentity).add(toParse.lentity);
+				list.add(toParse.lentity);
 			}
 		}
 

@@ -23,7 +23,8 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 	@Override
 	public void parse(YagoEntry toParse) {
 		
-		if (countries_map.containsKey(toParse.lentity)){
+		entity_country country = countries_map.get(toParse.lentity);
+		if (country!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_population())){
 				int population = 0;
 				Pattern p = Pattern.compile("\"([^\"]*)\"");
@@ -31,7 +32,7 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 				while (m.find()) {
 				  population = Integer.parseInt((m.group(1)));
 				}
-				countries_map.get(toParse.lentity).setPopulation_size(population);
+				country.setPopulation_size(population);
 			}
 		}	
 	}

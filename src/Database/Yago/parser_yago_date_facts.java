@@ -22,12 +22,13 @@ public class parser_yago_date_facts extends AbstractYagoParser{
 	@Override
 	public void parse(YagoEntry toParse) {
 		
-		if (persons_map.containsKey(toParse.lentity)){
+		entity_person person = persons_map.get(toParse.lentity);
+		if (person!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_birth_date())){
-				persons_map.get(toParse.lentity).setYearOfBirth(getYearFromYagoDate(toParse.rentity));
+				person.setYearOfBirth(getYearFromYagoDate(toParse.rentity));
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_death_date())){
-				persons_map.get(toParse.lentity).setYearOfDeath(getYearFromYagoDate(toParse.rentity));
+				person.setYearOfDeath(getYearFromYagoDate(toParse.rentity));
 			}
 		}
 	}
