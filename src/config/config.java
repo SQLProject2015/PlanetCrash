@@ -75,6 +75,10 @@ public class config {
 	public String get_yago_tag_country(){
 		return configFile.getProperty("COUNTRY");
 	}
+	/** get the yago tag name for "country" type **/
+	public String get_yago_tag_university(){
+		return configFile.getProperty("UNIVERSITY");
+	}
 	/** get the yago tag name for "city" type **/
 	public String get_yago_tag_city(){
 		return configFile.getProperty("CITY");

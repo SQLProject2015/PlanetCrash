@@ -8,6 +8,8 @@ import java.util.Set;
 import entities.entity_country;
 import entities.entity_currency;
 import entities.entity_person;
+import entities.entity_university;
+
 		
 
 
@@ -16,6 +18,7 @@ public class parser_transitive_types extends AbstractYagoParser{
 	private final int persons_limit = 100000;
 	
 	HashMap<String, entity_country> countries_map;
+	HashMap<String, entity_university> universities_map;
 	HashMap<String, entity_person> persons_map;
 	HashSet<String> cities_set = new HashSet<String>();
 	HashSet<String> currency_set = new HashSet<String>();
@@ -70,6 +73,10 @@ public class parser_transitive_types extends AbstractYagoParser{
 		}
 		else if (toParse.rentity.equals(properties.get_yago_tag_city())){
 			cities_set.add(toParse.lentity);
+		}
+		else if(toParse.rentity.equals(properties.get_yago_tag_university())){
+			entity_university new_university = new entity_university(toParse.lentity,"");
+			universities_map.put(toParse.lentity, new_university);
 		}
 	}
 	
