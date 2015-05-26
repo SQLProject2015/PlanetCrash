@@ -34,9 +34,6 @@ public class parser_yago_facts extends AbstractYagoParser{
 			else if (toParse.relation.equals("<hasOfficialLanguage>")){
 				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
 			}
-			else if (toParse.relation.equals("<hasOfficialLanguage>")){
-				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
-			}
 			else if (toParse.relation.equals("<hasCapital>")){
 				countries_map.get(toParse.lentity).setCapital(toParse.rentity);
 			}
