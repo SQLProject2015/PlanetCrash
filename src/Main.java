@@ -24,7 +24,7 @@ import Database.Yago.parser_yago_literal_facts;
 public class Main {
 	private static ConnectionPool mConnPool;
 
-	public static final int BATCHSIZE=100;
+	public static final int BATCHSIZE=5000;
 	private static List<Object[]> batch;
 
 	private static final String YAGO_TRANSITIVETYPE = "D:\\Temp\\yagoTransitiveType.tsv";
@@ -123,6 +123,7 @@ public class Main {
 		}
 
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+		int total = 0;
 		batch = new ArrayList<Object[]>();
 		for (String person : persons_map.keySet()){
 			try {
@@ -132,7 +133,8 @@ public class Main {
 				//				dbh.singleInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"},
 				//						new String[]{persons_map.get(person).getName(),""+persons_map.get(person).getYearOfBirth(),""+persons_map.get(person).getYearOfDeath()});
 				if(batch.size()>=BATCHSIZE) {
-					System.out.println("clearing batch!");
+					total += BATCHSIZE;
+					System.out.println("clearing batch! total : " + total);
 					dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
 					batch = new ArrayList<Object[]>();
 				}
