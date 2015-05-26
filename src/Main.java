@@ -27,10 +27,10 @@ public class Main {
 	public static final int BATCHSIZE=100;
 	private static List<Object[]> batch;
 
-	private static final String YAGO_TRANSITIVETYPE = "C:\\Temp\\yago\\yagoTransitiveType.tsv";
-	private static final String YAGO_FACTS = "C:\\Temp\\yago\\yagoFacts.tsv";
-	private static final String YAGO_LITERALFACTS = "C:\\Temp\\yago\\yagoLiteralFacts.tsv";
-	private static final String YAGO_DATEFACTS = "C:\\Temp\\yago\\yagoDateFacts.tsv";
+	private static final String YAGO_TRANSITIVETYPE = "D:\\Temp\\yagoTransitiveType.tsv";
+	private static final String YAGO_FACTS = "D:\\Temp\\yagoFacts.tsv";
+	private static final String YAGO_LITERALFACTS = "D:\\Temp\\yagoLiteralFacts.tsv";
+	private static final String YAGO_DATEFACTS = "D:\\Temp\\yagoDateFacts.tsv";
 
 	public static void main(String args[]) {
 		//Init connection pool
