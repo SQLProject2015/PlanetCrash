@@ -38,15 +38,15 @@ public class parser_transitive_types extends AbstractYagoParser{
 	@Override
 	public void parse(YagoEntry toParse) {
 		// TODO Auto-generated method stub
-		if (toParse.rentity.equals("<wikicat_Countries>")){
+		if (toParse.rentity.equals(properties.get_yago_tag_country())){
 			entity_country new_country = new entity_country();
 			new_country.setYagoName(toParse.lentity);
 			countries_map.put(toParse.lentity, new_country);
 			countries_cities_map.put(toParse.lentity, new HashSet<String>());
 		}
-		else if (toParse.rentity.equals("<wordnet_musician_110339966>") || toParse.rentity.equals("<wordnet_scientist_110560637>") ||
-				toParse.rentity.equals("<wordnet_politician_110450303>") || toParse.rentity.equals("<wordnet_actor_109765278>") ||
-				toParse.rentity.equals("<wordnet_athlete_109820263>")){
+		else if (toParse.rentity.equals(properties.get_yago_tag_musician()) || toParse.rentity.equals(properties.get_yago_tag_scientist()) ||
+				toParse.rentity.equals(properties.get_yago_tag_politician()) || toParse.rentity.equals(properties.get_yago_tag_actor()) ||
+				toParse.rentity.equals(properties.get_yago_tag_athlete())){
 			if (persons_map.size() != persons_limit){
 				entity_person person = persons_map.get(toParse.lentity);
 				if (person!=null){
@@ -61,14 +61,14 @@ public class parser_transitive_types extends AbstractYagoParser{
 			}
 			//System.out.println(toParse.lentity);
 		}
-		else if (toParse.rentity.equals("<wordnet_currency_113385913>")){
+		else if (toParse.rentity.equals(properties.get_yago_tag_currency())){
 			currency_set.add(toParse.lentity);
 		}
-		else if (toParse.rentity.equals("<wikicat_Languages>")){
+		else if (toParse.rentity.equals(properties.get_yago_tag_language())){
 			language_set.add(toParse.lentity);
 
 		}
-		else if (toParse.rentity.equals("<wordnet_city_108524735>")){
+		else if (toParse.rentity.equals(properties.get_yago_tag_city())){
 			cities_set.add(toParse.lentity);
 		}
 	}
