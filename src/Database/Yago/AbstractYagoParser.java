@@ -24,7 +24,9 @@ public abstract class AbstractYagoParser {
 		}
 				
 	}
-	
+	public static String entity_cleaner(String entity){
+		return entity.replaceAll("<", "").replaceAll(">", "").replaceAll("_", " ");
+	}
 	/*
 	 * This function gets a yago entry and uses it to populate the database
 	 */
