@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 import config.config;
 
-public abstract class AbstractYagoParser {
+public abstract class AbstractYagoParser implements Runnable {
 	
 	String filepath; //path of the yago TSV file
 	config properties;
@@ -27,6 +27,14 @@ public abstract class AbstractYagoParser {
 			parse(next);
 		}
 				
+	}
+	public void run(){
+		try {
+			populate();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static String entity_cleaner(String entity){
 		return entity.replaceAll("<", "").replaceAll(">", "").replaceAll("_", " ");
