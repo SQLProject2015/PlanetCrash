@@ -25,16 +25,16 @@ public class parser_yago_facts extends AbstractYagoParser{
 	public void parse(YagoEntry toParse) {
 		
 		if (countries_map.containsKey(toParse.lentity)){
-			if (toParse.relation.equals("<isLocatedIn>")){
+			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
 				countries_map.get(toParse.lentity).setContinent(toParse.rentity);
 			}
-			else if (toParse.relation.equals("<hasCurrency>")){
+			else if (toParse.relation.equals(properties.get_yago_tag_has_currency())){
 				countries_map.get(toParse.lentity).setCurrency(toParse.rentity);
 			}
-			else if (toParse.relation.equals("<hasOfficialLanguage>")){
+			else if (toParse.relation.equals(properties.get_yago_tag_official_language())){
 				countries_map.get(toParse.lentity).setLanguage(toParse.rentity);
 			}
-			else if (toParse.relation.equals("<hasCapital>")){
+			else if (toParse.relation.equals(properties.get_yago_tag_capital_city())){
 				countries_map.get(toParse.lentity).setCapital(toParse.rentity);
 			}
 		}

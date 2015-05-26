@@ -2,15 +2,19 @@ package Database.Yago;
 
 import java.io.FileNotFoundException;
 
+import config.config;
+
 public abstract class AbstractYagoParser {
 	
 	String filepath; //path of the yago TSV file
+	config properties;
 	public static final int VARCHAR_LIMIT = 45;
 	/*
 	 * Gets a TSV filepath and parses all its rows to populate the DB
 	 */
 	public AbstractYagoParser(String filepath) {
 		this.filepath = filepath;
+		this.properties = new config();
 	}
 	
 	public void populate() throws FileNotFoundException {

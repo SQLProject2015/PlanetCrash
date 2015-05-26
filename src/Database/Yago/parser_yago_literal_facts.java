@@ -24,7 +24,7 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 	public void parse(YagoEntry toParse) {
 		
 		if (countries_map.containsKey(toParse.lentity)){
-			if (toParse.relation.equals("<hasNumberOfPeople>")){
+			if (toParse.relation.equals(properties.get_yago_tag_population())){
 				int population = 0;
 				Pattern p = Pattern.compile("\"([^\"]*)\"");
 				Matcher m = p.matcher(toParse.rentity);
