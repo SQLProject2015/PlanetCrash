@@ -56,6 +56,13 @@ public class Main {
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
+			
+			
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Musician"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Scientist"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Politician"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Athlete"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Actor"});
 		} catch (SQLException e) {
 
 		}
