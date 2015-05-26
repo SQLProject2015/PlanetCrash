@@ -61,7 +61,7 @@ public class DatabaseHandler {
 	 * @return array of ints indicating rows affected
 	 * @throws SQLException 
 	 */
-	public int[] batchInsert(String table, String[] columns, List<String[]> batch) throws SQLException {
+	public int[] batchInsert(String table, String[] columns, List<Object[]> batch) throws SQLException {
 		//Create SQL statement
 		String sql = "INSERT INTO "+table+" (";
 		for(int i=0;i<columns.length;i++) 
@@ -78,18 +78,21 @@ public class DatabaseHandler {
 		PreparedStatement pstmnt = conn.prepareStatement(sql);
 
 		//set the variables
-		for(String[] b: batch) {
+		for(Object[] b: batch) {
 			if (b.length!=columns.length) {
 				System.out.println("Wrong value array length!");
 				continue;
 			}
 			for(int i=0;i<columns.length;i++) {
-					pstmnt.setString(i+1, b[i]);
+				if(b[i] instanceof String)
+					pstmnt.setString(i+1, (String)b[i]);
+				else if(b[i] instanceof Integer)
+					pstmnt.setInt(i+1, (Integer)b[i]);
 			}
 			pstmnt.addBatch(); //add to batch
 		}
 		
-		int[] count = pstmnt.executeBatch();
+		int[] count = pstmnt.executeBatch(); //TODO: REROLL TRANSACTION IF FAILED
 		conn.commit();
 		conn.setAutoCommit(true);
 		return count;
