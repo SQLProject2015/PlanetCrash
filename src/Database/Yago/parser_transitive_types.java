@@ -13,7 +13,7 @@ import entities.entity_person;
 
 public class parser_transitive_types extends AbstractYagoParser{
 	
-	private final int max_list_size = 1000;
+	private final int persons_limit = 100000;
 	
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, entity_person> persons_map;
@@ -47,14 +47,16 @@ public class parser_transitive_types extends AbstractYagoParser{
 		else if (toParse.rentity.equals("<wordnet_musician_110339966>") || toParse.rentity.equals("<wordnet_scientist_110560637>") ||
 				toParse.rentity.equals("<wordnet_politician_110450303>") || toParse.rentity.equals("<wordnet_actor_109765278>") ||
 				toParse.rentity.equals("<wordnet_athlete_109820263>")){
-			if (persons_map.containsKey(toParse.lentity)){
-				persons_map.get(toParse.lentity).addProfession(toParse.rentity);
-			}
-			else{
-				entity_person new_person = new entity_person();
-				new_person.setName(toParse.lentity);
-				new_person.addProfession(toParse.rentity);
-				persons_map.put(toParse.lentity, new_person);					
+			if (persons_map.size() != persons_limit){
+				if (persons_map.containsKey(toParse.lentity)){
+					persons_map.get(toParse.lentity).addProfession(toParse.rentity);
+				}
+				else{
+					entity_person new_person = new entity_person();
+					new_person.setName(toParse.lentity);
+					new_person.addProfession(toParse.rentity);
+					persons_map.put(toParse.lentity, new_person);					
+				}
 			}
 			//System.out.println(toParse.lentity);
 		}

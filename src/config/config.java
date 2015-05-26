@@ -18,144 +18,133 @@ public class config {
 		}
 	}
 	
-	/** get the path of the file yagoSimpleTypes.ttl */
+	/** get the path of the file yago_transitive_types.tsv */
 	public String get_yago_transitive_types_path(){		
 		return configFile.getProperty("YagoTransitiveTypeFilePath");
 	}
 	
-//	/** get the path of the file yagoFacts.ttl */
-//	public String get_yago_facts_path(){
-//		return configFile.getProperty("YagoFactsFilePath");
-//	}
-//
-//	/** get the path of the file yagoLiteralFacts.ttl */
-//	public String get_yago_literal_facts_path(){
-//		return configFile.getProperty("YagoLiteralFactsFilePath");
-//	}
-//	
-//	/** get the path of the file yagoWikipediaInfo.ttl */
-//	public String get_yago_wikipedia_path(){
-//		return configFile.getProperty("YagoWikipediaInfoFilePath");
-//	}
-//	
-//	public String get_yago_labels_path(){
-//		return configFile.getProperty("YagoMultilingualInfoFilePath");
-//	}
-//	
-//	public String get_imdb_genres_path(){
-//		return configFile.getProperty("IMDBgenreListFilePath");
-//	}
-//	
-//	/** get the path of the file plot.list provided by IMDB */
-//	public String get_imdb_plots_path(){
-//		return configFile.getProperty("IMDBplotListFilePath");
-//	}
-//	
-//	/** get the path of the file plot.list provided by IMDB */
-//	public String get_imdb_names_path(){
-//		return configFile.getProperty("IMDBnamesListFilePath");
-//	}
-//	
-//	
-//	/** get the path of the file l.list provided by IMDB */
-//	public String get_imdb_languages_path(){
-//		return configFile.getProperty("IMDBlanguageFilePat");
-//	}
-//	
-//	/** get the path of the file l.list provided by IMDB */
-//	public String get_imdb_tags_path(){
-//		return configFile.getProperty("IMDB_KEYWORD_FILE_PATH");
-//	}
-//	
-//	public String get_imdb_taglines_path() {
-//		return configFile.getProperty("IMDBtaglineFilePath");
-//	}
-//	
-//	/** get the server address */
-//	public String get_host_address(){
-//		return configFile.getProperty("Host");
-//	}
-//	
-//	/** get the port of the server */
-//	public String get_port(){
-//		return configFile.getProperty("Port");
-//	}
-//	
-//	/** get the dbName(Schema name) */
-//	public String get_db_name(){
-//		return configFile.getProperty("DbName");
-//	}
-//	
-//	/** get the user name */
-//	public String get_user_name(){
-//		return configFile.getProperty("UserName");
-//	}
-//	
-//	/** get user password */
-//	public String get_password(){
-//		return configFile.getProperty("Password");
-//	}
-//	
-//	/** get number of connections to create **/
-//	public int get_number_connection(){
-//		return Integer.parseInt(configFile.getProperty("NumOfConnections"));
-//	}
-//	
-//	/*parsing*/
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_actedin(){
-//		return configFile.getProperty("ACTED_IN");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_label(){
-//		return configFile.getProperty("LABEL");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_directed(){
-//		return configFile.getProperty("DIRECTED");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_created(){
-//		return configFile.getProperty("CREATED");
-//	}
-// 
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_movie(){
-//		return configFile.getProperty("YAGO_TYPES_MOVIE");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_actor(){
-//		return configFile.getProperty("YAGO_TYPES_ACTOR");
-//	}
-//
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_director(){
-//		return configFile.getProperty("YAGO_TYPES_DIRECTOR");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_year(){
-//		return configFile.getProperty("YAGO_LITERAL_YEAR");
-//	}
-//
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_length(){
-//		return configFile.getProperty("YAGO_LITERAL_LENGTH");
-//	}
-//	
-//	/** get the yago tag name for "acted in" fact **/
-//	public String get_yago_tag_wikipedia(){
-//		return configFile.getProperty("YAGO_WIKI_TAG");
-//	}
-//	
-//	public String get_imdb_directors_path(){
-//		return configFile.getProperty("IMDB_DIRECTOR_FILE_PATH");
-//	}
+	/** get the path of the file yagoFacts.tsv */
+	public String get_yago_facts_path(){
+		return configFile.getProperty("YagoFactsFilePath");
+	}
+
+	/** get the path of the file yagoLiteralFacts.tsv */
+	public String get_yago_literal_facts_path(){
+		return configFile.getProperty("YagoLiteralFactsFilePath");
+	}
+	/** get the path of the file yagoDateFacts.tsv */
+	public String get_yago_date_facts_path(){
+		return configFile.getProperty("YagoDateFacts");
+	}
+
+	/** get the server address */
+	public String get_host_address(){
+		return configFile.getProperty("Host");
+	}
+	
+	/** get the port of the server */
+	public String get_port(){
+		return configFile.getProperty("Port");
+	}
+	
+	/** get the dbName(Schema name) */
+	public String get_db_name(){
+		return configFile.getProperty("DbName");
+	}
+	
+	/** get the user name */
+	public String get_user_name(){
+		return configFile.getProperty("UserName");
+	}
+	
+	/** get user password */
+	public String get_password(){
+		return configFile.getProperty("Password");
+	}
+	
+	/** get number of connections to create **/
+	public int get_number_connection(){
+		return Integer.parseInt(configFile.getProperty("NumOfConnections"));
+	}
+	
+	/*parsing*/
+	
+
+
+	/** get the yago tag name for "country" type **/
+	public String get_yago_tag_country(){
+		return configFile.getProperty("COUNTRY");
+	}
+	/** get the yago tag name for "city" type **/
+	public String get_yago_tag_city(){
+		return configFile.getProperty("CITY");
+	}
+	
+	/** get the yago tag name for "language" type **/
+	public String get_yago_tag_language(){
+		return configFile.getProperty("LANGUAGE");
+	}
+	/** get the yago tag name for "currency" type **/
+	public String get_yago_tag_currency(){
+		return configFile.getProperty("CURRENCY");
+	}
+	/** get the yago tag name for "population" type **/
+	public String get_yago_tag_population(){
+		return configFile.getProperty("POPULATION");
+	}
+	
+	/** get the yago tag name for "musician" type **/
+	public String get_yago_tag_musician(){
+		return configFile.getProperty("MUSICIAN");
+	}
+	/** get the yago tag name for "scientist" type **/
+	public String get_yago_tag_scientist(){
+		return configFile.getProperty("SCIENTIST");
+	}
+	/** get the yago tag name for "politician" type **/
+	public String get_yago_tag_politician(){
+		return configFile.getProperty("POLITICIAN");
+	}
+	/** get the yago tag name for "actor" type **/
+	public String get_yago_tag_actor(){
+		return configFile.getProperty("ACTOR");
+	}
+	/** get the yago tag name for "athlete" type **/
+	public String get_yago_tag_athlete(){
+		return configFile.getProperty("ATHLETHE");
+	}
+
+	/** get the yago tag name for "date of birth" fact **/
+	public String get_yago_tag_birth_date(){
+		return configFile.getProperty("BORNDATE");
+	}
+	/** get the yago tag name for "date of death" fact **/
+	public String get_yago_tag_death_date(){
+		return configFile.getProperty("DEATHDATE");
+	}
+	/** get the yago tag name for "locatedin" fact **/
+	public String get_yago_tag_located_in(){
+		return configFile.getProperty("FACT_LOCATION");
+	}
+	/** get the yago tag name for "has currency" fact **/
+	public String get_yago_tag_has_currency(){
+		return configFile.getProperty("FACT_CURRENCY");
+	}
+	/** get the yago tag name for "official language" fact **/
+	public String get_yago_tag_official_language(){
+		return configFile.getProperty("FACT_LANGUAGE");
+	}
+	/** get the yago tag name for "capital city" fact **/
+	public String get_yago_tag_capital_city(){
+		return configFile.getProperty("FACT_CAPITAL");
+	}
+	/** get the yago tag name for "capital city" fact **/
+	public String get_yago_tag_leader(){
+		return configFile.getProperty("FACT_LEADER");
+	}
+
+
+
 //	/** get number of connections to create **/
 //	public  int get_window_height(){
 //		return Integer.parseInt(configFile.getProperty("WINDOW_HEIGHT"));

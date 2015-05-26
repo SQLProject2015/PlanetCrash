@@ -47,6 +47,19 @@ public class Main {
 		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>(); 
 
 		long start = System.currentTimeMillis();
+		
+		try {			
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Europe"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Asia"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Africa"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
+		} catch (SQLException e) {
+
+		}
+		
+		
 		try{
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
 			parser_transitive_types c = new parser_transitive_types(YAGO_TRANSITIVETYPE, countries_map,
