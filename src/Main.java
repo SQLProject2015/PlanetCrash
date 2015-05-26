@@ -25,7 +25,7 @@ import Database.Yago.Uploaders.CountriesUploader;
 public class Main {
 	private static ConnectionPool mConnPool;
 
-	public static final int BATCHSIZE=100;
+	public static final int BATCHSIZE=5000;
 	private static List<Object[]> batch;
 
 	private static final String YAGO_TRANSITIVETYPE = "D:\\Temp\\yagoTransitiveType.tsv";
@@ -112,45 +112,47 @@ public class Main {
 		}
 
 		
-		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
-		batch = new ArrayList<Object[]>();
-		for (String person : persons_map.keySet()){
-			try {
-				//				dbh.executeUpdate("INSERT INTO Country (Name, yearOfBirth, yearOfDeath) VALUES(\""+persons_map.get(person).getName()+"\",\""+
-				//						persons_map.get(person).getYearOfBirth()+"\",\""+ 
-				//						persons_map.get(person).getYearOfDeath()+"\");");
-				//				dbh.singleInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"},
-				//						new String[]{persons_map.get(person).getName(),""+persons_map.get(person).getYearOfBirth(),""+persons_map.get(person).getYearOfDeath()});
-				if(batch.size()>=BATCHSIZE) {
-					System.out.println("clearing batch!");
-					dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
-					batch = new ArrayList<Object[]>();
-				}
-				//System.out.println("Adding person: "+persons_map.get(person).getName()+" "+persons_map.get(person).getYearOfBirth()+" "+persons_map.get(person).getYearOfDeath());
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				for(Object[] arr : batch) {
-					try {
-						dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
-								+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
-						e1.printStackTrace();
-					}
-				}
-				batch = new ArrayList<Object[]>();
-			}
-			batch.add(new Object[]{persons_map.get(person).getName(),persons_map.get(person).getYearOfBirth(),persons_map.get(person).getYearOfDeath()});
-		}
-		try {
-			dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
+//		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+//		int total = 0;
+//		batch = new ArrayList<Object[]>();
+//		for (String person : persons_map.keySet()){
+//			try {
+//				//				dbh.executeUpdate("INSERT INTO Country (Name, yearOfBirth, yearOfDeath) VALUES(\""+persons_map.get(person).getName()+"\",\""+
+//				//						persons_map.get(person).getYearOfBirth()+"\",\""+ 
+//				//						persons_map.get(person).getYearOfDeath()+"\");");
+//				//				dbh.singleInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"},
+//				//						new String[]{persons_map.get(person).getName(),""+persons_map.get(person).getYearOfBirth(),""+persons_map.get(person).getYearOfDeath()});
+//				if(batch.size()>=BATCHSIZE) {
+//					System.out.println("clearing batch! total : " + total);
+//					total+=BATCHSIZE;
+//					dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
+//					batch = new ArrayList<Object[]>();
+//				}
+//				//System.out.println("Adding person: "+persons_map.get(person).getName()+" "+persons_map.get(person).getYearOfBirth()+" "+persons_map.get(person).getYearOfDeath());
+//				
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				for(Object[] arr : batch) {
+//					try {
+//						dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
+//								+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
+//					} catch (SQLException e1) {
+//						// TODO Auto-generated catch block
+//						System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
+//						e1.printStackTrace();
+//					}
+//				}
+//				batch = new ArrayList<Object[]>();
+//			}
+//			batch.add(new Object[]{persons_map.get(person).getName(),persons_map.get(person).getYearOfBirth(),persons_map.get(person).getYearOfDeath()});
+//		}
+//		try {
+//			dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			//e.printStackTrace();
+//		}
 
 		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
 //		for (String country : countries_map.keySet()){

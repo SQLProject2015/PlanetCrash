@@ -53,7 +53,7 @@ public class DatabaseHandler {
 	public ResultSet executeFormatQuery(String table, String[] columns, String condition) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT ");
-		if(columns.length==0)
+		if(columns.length==0 || columns==null)
 			sql.append("*");
 		else {
 			sql.append("(");
@@ -62,7 +62,7 @@ public class DatabaseHandler {
 			sql.append(")");
 		}
 		
-		sql.append((condition==null?"":condition)+";");
+		sql.append("FROM "+table+(condition==null?"":" "+condition)+";");
 		
 		return executeQuery(sql.toString());
 	}
@@ -109,7 +109,9 @@ public class DatabaseHandler {
 				continue;
 			}
 			for(int i=0;i<columns.length;i++) {
-				if(b[i] instanceof String)
+				if(b[i]==null)
+					pstmnt.setNull(i+1, java.sql.Types.NULL);
+				else if(b[i] instanceof String)
 					pstmnt.setString(i+1, (String)b[i]);
 				else if(b[i] instanceof Integer)
 					pstmnt.setInt(i+1, (Integer)b[i]);

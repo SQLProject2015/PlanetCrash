@@ -14,7 +14,7 @@ import entities.entity_country;
 public class CountriesUploader implements Uploader{
 	Map<String, entity_country> cmap;
 	DatabaseHandler dbh;
-	
+
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize","currentLeader"};
 
 	/**
@@ -31,52 +31,52 @@ public class CountriesUploader implements Uploader{
 	 */
 	public void upload() {
 		Collection<entity_country> countries = cmap.values();
-		
+
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(entity_country country : countries) {
-			
+
 			//Get relevant ids
 			ResultSet rs;
 			Object[] values = new Object[columns.length];
 			try {
 				//Name
 				values[0] = country.getYagoName();
-				
+
 				//idContinent
 				rs=dbh.executeFormatQuery("Continent", new String[]{"idContinent"}, "WHERE Name = \""+country.getContinent()+"\"");
-				rs.first();
-				values[1] = rs.getInt(0);
-				
+				if(rs.first())
+					values[1] = rs.getInt(1);
+
 				//idCurrency
 				rs=dbh.executeFormatQuery("Currency", new String[]{"idCurrency"}, "WHERE Name =\""+country.getCurrency()+"\"");
-				rs.first();
-				values[2]=rs.getInt(0);
-				
+				if(rs.first())
+					values[2]=rs.getInt(1);
+
 				//idLanguage
 				rs=dbh.executeFormatQuery("Language", new String[]{"idLanguage"}, "WHERE Name =\""+country.getLanguage()+"\"");
-				rs.first();
-				values[3]=rs.getInt(0);
-				
+				if(rs.first())
+					values[3]=rs.getInt(1);
+
 				//idCapital
 				rs=dbh.executeFormatQuery("City", new String[]{"idCity"}, "WHERE Name =\""+country.getCapital()+"\"");
-				rs.first();
-				values[4]=rs.getInt(0);
-				
+				if(rs.first())
+					values[4]=rs.getInt(1);
+
 				//PopulationSize
 				values[5]=country.getPopulation_size();
-				
+
 				//currentLeader
 				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name =\""+country.getLeader()+"\"");
-				rs.first();
-				values[6]=rs.getInt(0);
-				
+				if(rs.first())
+					values[6]=rs.getInt(1);
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Error initializing country: "+country.getYagoName());
-				//e.printStackTrace();
+				e.printStackTrace();
 				continue;
 			}
-			
+
 			if(batch.size()>=BATCHSIZE) {
 				//clear the batch
 				try {
@@ -98,6 +98,6 @@ public class CountriesUploader implements Uploader{
 			}
 			batch.add(values);
 		}
-		
+
 	}
 }
