@@ -44,6 +44,31 @@ public class DatabaseHandler {
 
 	/**
 	 * 
+	 * @param table table name to search
+	 * @param columns column names to search (or empty to search all)
+	 * @param condition condition to search (e.g "WHERE NAME = \"JOHN\"") (or null/empty for nothing)
+	 * @return result set for your query
+	 * @throws SQLException 
+	 */
+	public ResultSet executeFormatQuery(String table, String[] columns, String condition) throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		if(columns.length==0)
+			sql.append("*");
+		else {
+			sql.append("(");
+			for(int i=0;i<columns.length;i++)
+				sql.append(columns[i]+(i<columns.length-1?",":""));
+			sql.append(")");
+		}
+		
+		sql.append((condition==null?"":condition)+";");
+		
+		return executeQuery(sql.toString());
+	}
+	
+	/**
+	 * 
 	 * @param update
 	 * @return number of rows affected by update
 	 * @throws SQLException
