@@ -11,10 +11,10 @@ import java.util.Set;
 import Database.DatabaseHandler;
 import entities.entity_country;
 
-public class CountriesUploader implements Uploader{
+public class CountriesUploader extends Uploader{
 	Map<String, entity_country> cmap;
-	DatabaseHandler dbh;
 
+	String table = "Country";
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize","currentLeader"};
 
 	/**
@@ -22,8 +22,8 @@ public class CountriesUploader implements Uploader{
 	 * @param countries_map
 	 */
 	public CountriesUploader(Map<String, entity_country> countries_map, DatabaseHandler dbh) {
+		super(dbh);
 		this.cmap=countries_map;
-		this.dbh=dbh;
 	}
 
 	/**
@@ -78,26 +78,12 @@ public class CountriesUploader implements Uploader{
 			}
 
 			if(batch.size()>=BATCHSIZE) {
-				//clear the batch
-				try {
-					dbh.batchInsert("Country", columns, batch);
-					batch = new ArrayList<Object[]>();
-				} catch (SQLException e) {
-					for(Object[] arr : batch) {
-						try {
-							dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
-									+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
-							e1.printStackTrace();
-						}
-					}
-					batch = new ArrayList<Object[]>();
-				}
+				insertBatch(batch, table, columns);
 			}
 			batch.add(values);
 		}
+		if(batch.size()>0) //empty what's left
+			insertBatch(batch, table, columns);
 
 	}
 }

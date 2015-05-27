@@ -1,7 +1,50 @@
 package Database.Yago.Uploaders;
 
-public interface Uploader {
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import Database.DatabaseHandler;
+
+public abstract class Uploader {
 	public static final int BATCHSIZE=500;
 	
-	public void upload();
+	protected DatabaseHandler dbh;
+	
+	protected Uploader(DatabaseHandler dbh) {
+		this.dbh=dbh;
+	}
+	
+	public abstract void upload();
+	
+	protected void insertBatch(List<Object[]> batch, String table, String[] columns) {
+		try {
+			dbh.batchInsert("Country", columns, batch);
+			batch = new ArrayList<Object[]>();
+		} catch (SQLException e) {
+			for(Object[] arr : batch) { //insert individually
+				try { 
+//					dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
+//							+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
+					
+					StringBuilder sql = new StringBuilder();
+					sql.append("INSERT INTO "+table+"(");
+					for(int i=0;i<columns.length;i++)
+						sql.append(columns[i]+(i<columns.length-1?",":""));
+					sql.append(") VALUES(");
+					for(int i=0;i<columns.length;i++)
+						sql.append((arr[i]==null?"NULL":"\""+arr[i]+"\"")+(i<columns.length-1?",":""));
+					sql.append(");");
+					
+					dbh.executeUpdate(sql.toString());
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
+					e1.printStackTrace();
+				}
+			}
+		}
+		batch = new ArrayList<Object[]>();
+	}
 }
