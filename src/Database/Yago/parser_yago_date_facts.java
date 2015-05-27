@@ -20,7 +20,7 @@ public class parser_yago_date_facts extends AbstractYagoParser{
 	}
 
 	@Override
-	public void parse(YagoEntry toParse) {
+	public boolean parse(YagoEntry toParse) {
 		
 		entity_person person = persons_map.get(toParse.lentity);
 		if (person!=null){
@@ -30,7 +30,9 @@ public class parser_yago_date_facts extends AbstractYagoParser{
 			else if (toParse.relation.equals(properties.get_yago_tag_death_date())){
 				person.setYearOfDeath(getYearFromYagoDate(toParse.rentity));
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	public int getYearFromYagoDate(String toParse){

@@ -21,7 +21,7 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 	}
 
 	@Override
-	public void parse(YagoEntry toParse) {
+	public boolean parse(YagoEntry toParse) {
 		
 		entity_country country = countries_map.get(toParse.lentity);
 		if (country!=null){
@@ -33,8 +33,10 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 				  population = Integer.parseInt((m.group(1)));
 				}
 				country.setPopulation_size(population);
+				return true;
 			}
 		}	
+		return false;
 	}
 	
 

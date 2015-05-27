@@ -1,12 +1,17 @@
 package Database.Yago;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import config.config;
 
 public abstract class AbstractYagoParser implements Runnable {
 	
 	String filepath; //path of the yago TSV file
+	String litepath; //filepath of the lite file
 	config properties;
 	public static final int VARCHAR_LIMIT = 45;
 	/*
@@ -14,19 +19,46 @@ public abstract class AbstractYagoParser implements Runnable {
 	 */
 	public AbstractYagoParser(String filepath) {
 		this.filepath = filepath;
+		this.litepath = filepath.substring(0, filepath.lastIndexOf("."))+".lite";
 		this.properties = new config();
 	}
 	
 	public void populate() throws FileNotFoundException {
-		YagoLexer lexer = new YagoLexer(filepath);
+		File litefile = new File(litepath);
+		boolean litemode = litefile.exists(), okayflag=true; //TODO: add config flag to make sure litefile is complete
+		BufferedWriter bw = null;
+		if(!litemode) {
+			try {
+				litefile.createNewFile();
+			bw = new BufferedWriter(new FileWriter(litefile));
+			} catch (IOException e) {
+				System.out.println("Error initializing lite file!");
+				okayflag=false;
+			}
+		}
+		YagoLexer lexer = new YagoLexer(litemode?litepath:filepath);
 		
 		while(lexer.hasNext()) {
 			YagoEntry next = lexer.next();
 			if(next.lentity.length()>VARCHAR_LIMIT || next.rentity.length()>VARCHAR_LIMIT)
 				continue;
-			parse(next);
+			if(parse(next)&&okayflag&&!litemode&&bw!=null) {
+				try {
+					bw.write(next.getId()+"\t"+next.getLeftEntity()+"\t"+next.getRelation()+"\t"+next.getRightEntity()+"\n");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 				
+		if(bw!=null)
+			try {
+				bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	public void run(){
 		try {
@@ -42,6 +74,6 @@ public abstract class AbstractYagoParser implements Runnable {
 	/*
 	 * This function gets a yago entry and uses it to populate the database
 	 */
-	abstract public void parse(YagoEntry toParse);
+	abstract public boolean parse(YagoEntry toParse);
 
 }

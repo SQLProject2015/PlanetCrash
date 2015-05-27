@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import entities.entity_country;
 import entities.entity_currency;
 import entities.entity_person;
+import entities.entity_university;
 import Database.ConnectionPool;
 import Database.DatabaseHandler;
 import Database.Yago.parser_transitive_types;
@@ -28,10 +29,10 @@ public class Main {
 	public static final int BATCHSIZE=5000;
 	private static List<Object[]> batch;
 
-	private static final String YAGO_TRANSITIVETYPE = "D:\\Temp\\yagoTransitiveType.tsv";
-	private static final String YAGO_FACTS = "D:\\Temp\\yagoFacts.tsv";
-	private static final String YAGO_LITERALFACTS = "D:\\Temp\\yagoLiteralFacts.tsv";
-	private static final String YAGO_DATEFACTS = "D:\\Temp\\yagoDateFacts.tsv";
+	private static final String YAGO_TRANSITIVETYPE = "C:\\Temp\\yago\\yagoTransitiveType.tsv";
+	private static final String YAGO_FACTS = "C:\\Temp\\yago\\yagoFacts.tsv";
+	private static final String YAGO_LITERALFACTS = "C:\\Temp\\yago\\yagoLiteralFacts.tsv";
+	private static final String YAGO_DATEFACTS = "C:\\Temp\\yago\\yagoDateFacts.tsv";
 
 	public static void main(String args[]) {
 		//Init connection pool
@@ -45,7 +46,8 @@ public class Main {
 		HashSet<String> currency_set = new HashSet<String>();
 		HashSet<String> language_set = new HashSet<String>();
 		HashSet<String> cities_set = new HashSet<String>();
-		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>(); 
+		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>();
+		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
 
 		long start = System.currentTimeMillis();
 		
@@ -71,7 +73,7 @@ public class Main {
 		try{
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
 			parser_transitive_types c = new parser_transitive_types(YAGO_TRANSITIVETYPE, countries_map,
-					persons_map, cities_set, currency_set, language_set, countries_cities_map);		
+					persons_map, cities_set, currency_set, language_set, countries_cities_map, universities_map);		
 			c.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			

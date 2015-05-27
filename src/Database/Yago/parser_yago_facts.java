@@ -22,21 +22,26 @@ public class parser_yago_facts extends AbstractYagoParser{
 	}
 
 	@Override
-	public void parse(YagoEntry toParse) {
+	public boolean parse(YagoEntry toParse) {
+		boolean flag=false;
 		
 		entity_country country = countries_map.get(toParse.lentity);
 		if (country != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
 				country.setContinent(toParse.rentity);
+				flag=true;
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_has_currency())){
 				country.setCurrency(toParse.rentity);
+				flag=true;
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_official_language())){
 				country.setLanguage(toParse.rentity);
+				flag=true;
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_capital_city())){
 				country.setCapital(toParse.rentity);
+				flag=true;
 			}
 		}
 
@@ -45,6 +50,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 		if(country != null){
 			if (toParse.relation.equals("<isLeaderOf>")){
 				country.setLeader(toParse.lentity);
+				flag=true;
 			}
 		}
 		
@@ -54,9 +60,11 @@ public class parser_yago_facts extends AbstractYagoParser{
 		if (list!=null){
 			if (toParse.relation.equals("<isLocatedIn>") && cities_set.contains(toParse.lentity)){
 				list.add(toParse.lentity);
+				flag=true;
 			}
 		}
-
+		
+		return flag;
 	}
 	
 
