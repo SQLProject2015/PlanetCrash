@@ -20,6 +20,7 @@ import Database.Yago.parser_yago_date_facts;
 import Database.Yago.parser_yago_facts;
 import Database.Yago.parser_yago_literal_facts;
 import Database.Yago.Uploaders.CountriesUploader;
+import GUI.GameGUI;
 
 
 
@@ -35,6 +36,11 @@ public class Main {
 	private static final String YAGO_DATEFACTS = "C:\\Temp\\yago\\yagoDateFacts.tsv";
 
 	public static void main(String args[]) {
+		
+		//Game GUI
+				GameGUI gg = new GameGUI();
+				gg.start();
+		
 		//Init connection pool
 		mConnPool = new ConnectionPool();
 
@@ -48,7 +54,7 @@ public class Main {
 		HashSet<String> cities_set = new HashSet<String>();
 		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>();
 		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
-
+		
 		long start = System.currentTimeMillis();
 		
 		try {			
