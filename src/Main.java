@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import config.config;
 import entities.entity_country;
 import entities.entity_currency;
 import entities.entity_person;
@@ -30,22 +31,18 @@ public class Main {
 	public static final int BATCHSIZE=5000;
 	private static List<Object[]> batch;
 
-	private static final String YAGO_TRANSITIVETYPE = "C:\\Temp\\yago\\yagoTransitiveType.tsv";
-	private static final String YAGO_FACTS = "C:\\Temp\\yago\\yagoFacts.tsv";
-	private static final String YAGO_LITERALFACTS = "C:\\Temp\\yago\\yagoLiteralFacts.tsv";
-	private static final String YAGO_DATEFACTS = "C:\\Temp\\yago\\yagoDateFacts.tsv";
 
 	public static void main(String args[]) {
 		
-		//Game GUI
-				GameGUI gg = new GameGUI();
-				gg.start();
-		
-		//Init connection pool
-		mConnPool = new ConnectionPool();
+//		//Game GUI
+//				GameGUI gg = new GameGUI();
+//				gg.start();
+//		
+//		//Init connection pool
+//		mConnPool = new ConnectionPool();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-
+		config properties = new config();
 
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_person> persons_map = new HashMap<String, entity_person>();
@@ -78,23 +75,23 @@ public class Main {
 		
 		try{
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
-			parser_transitive_types c = new parser_transitive_types(YAGO_TRANSITIVETYPE, countries_map,
+			parser_transitive_types c = new parser_transitive_types(properties.get_yago_transitive_types_path(), countries_map,
 					persons_map, cities_set, currency_set, language_set, countries_cities_map, universities_map);		
 			c.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_facts d = new parser_yago_facts(YAGO_FACTS,  countries_map,  countries_cities_map, cities_set,universities_map);
+			parser_yago_facts d = new parser_yago_facts(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_set,universities_map);
 			d.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing literal facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_literal_facts g = new parser_yago_literal_facts(YAGO_LITERALFACTS, countries_map);
+			parser_yago_literal_facts g = new parser_yago_literal_facts(properties.get_yago_literal_facts_path(), countries_map);
 			g.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing date facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_date_facts f = new parser_yago_date_facts(YAGO_DATEFACTS, persons_map);
+			parser_yago_date_facts f = new parser_yago_date_facts(properties.get_yago_date_facts_path(), persons_map);
 			f.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			

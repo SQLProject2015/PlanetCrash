@@ -27,7 +27,10 @@ public class parser_transitive_types extends AbstractYagoParser{
 	
 
 	public parser_transitive_types(String filepath,  HashMap<String, entity_country> countries_map,
-			HashMap<String,entity_person> persons_map,HashSet<String> cities_set, HashSet<String> currency_set, HashSet<String> language_set, HashMap<String, Set<String>> countries_cities_map, HashMap<String, entity_university> universities_map) {
+			HashMap<String,entity_person> persons_map,HashSet<String> cities_set,
+			HashSet<String> currency_set, HashSet<String> language_set,
+			HashMap<String, Set<String>> countries_cities_map,
+			HashMap<String, entity_university> universities_map) {
 		super(filepath);
 		
 		this.countries_map = countries_map;
