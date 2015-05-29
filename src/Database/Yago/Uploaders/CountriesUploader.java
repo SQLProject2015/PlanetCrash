@@ -11,7 +11,7 @@ import java.util.Set;
 import Database.DatabaseHandler;
 import entities.entity_country;
 
-public class CountriesUploader extends Uploader{
+public class CountriesUploader extends AbstractUploader{
 	Map<String, entity_country> cmap;
 
 	String table = "Country";

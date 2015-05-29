@@ -6,12 +6,12 @@ import java.util.List;
 
 import Database.DatabaseHandler;
 
-public abstract class Uploader {
+public abstract class AbstractUploader {
 	public static final int BATCHSIZE=500;
 	
 	protected DatabaseHandler dbh;
 	
-	protected Uploader(DatabaseHandler dbh) {
+	protected AbstractUploader(DatabaseHandler dbh) {
 		this.dbh=dbh;
 	}
 	

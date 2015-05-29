@@ -6,19 +6,24 @@ import java.util.Set;
 
 import entities.entity_country;
 import entities.entity_country_city;
+import entities.entity_university;
 
 public class parser_yago_facts extends AbstractYagoParser{
 	
 	HashSet<String> cities_set;
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, Set<String>> countries_cities_map;
+	HashMap<String, entity_university> universities_map;
 	
-	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map, HashMap<String, Set<String>> countries_cities_map, HashSet<String> cities_set) {		
+	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map,
+			HashMap<String, Set<String>> countries_cities_map, HashSet<String> cities_set,
+			HashMap<String, entity_university> universities_map) {		
 		super(filepath);
 		
 		this.countries_map = countries_map;
 		this.countries_cities_map = countries_cities_map;
 		this.cities_set = cities_set;
+		this.universities_map = universities_map;
 	}
 
 	@Override
@@ -64,6 +69,13 @@ public class parser_yago_facts extends AbstractYagoParser{
 			}
 		}
 		
+		entity_university university = universities_map.get(toParse.lentity);
+		if(university != null){
+			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
+				university.setCountry(toParse.lentity);
+				flag=true;
+			}
+		}
 		return flag;
 	}
 	
