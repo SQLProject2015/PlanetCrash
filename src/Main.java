@@ -84,7 +84,7 @@ public class Main {
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_facts d = new parser_yago_facts(YAGO_FACTS,  countries_map,  countries_cities_map, cities_set);
+			parser_yago_facts d = new parser_yago_facts(YAGO_FACTS,  countries_map,  countries_cities_map, cities_set,universities_map);
 			d.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
