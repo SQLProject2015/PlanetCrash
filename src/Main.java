@@ -37,10 +37,10 @@ public class Main {
 
 	public static void main(String args[]) {
 		
-//		//Game GUI
-//				GameGUI gg = new GameGUI();
-//				gg.start();
-//		
+		//Game GUI
+				GameGUI gg = new GameGUI();
+				gg.start();
+		
 		//Init connection pool
 		mConnPool = new ConnectionPool();
 

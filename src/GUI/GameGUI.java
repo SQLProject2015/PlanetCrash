@@ -23,13 +23,14 @@ public class GameGUI {
                 SwingUtilities.isEventDispatchThread());
         JFrame f = new JFrame("Swing Paint Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLocationRelativeTo(null);
+        f.setResizable(false);
         
         //Add background
         StarryBackground sb = new StarryBackground();
         f.add(sb);
         f.pack();
         
+        f.setLocationRelativeTo(null); //middle of screen
         f.setVisible(true);
     }
 	

@@ -2,30 +2,60 @@ package GUI.Objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Star {
 	double angle;
-	int startX,startY,endX,endY,startVelocity,acceleration;
+	int startX,startY,endX,endY,velocity;
+	float acceleration;
 	int x,y;
 	long starttime;
 	
-	public Star(double angle,int startX,int startY, int startVelocity, int acceleration) {
+	public Star(double angle,int startX,int startY, int startVelocity, float acceleration) {
 		this.angle=angle;
 		this.x=this.startX=startX;
 		this.y=this.startY=startY;
-		this.startVelocity=startVelocity;
+		this.velocity=startVelocity;
 		this.acceleration=acceleration;
 		this.starttime=System.currentTimeMillis();
 	}
 	
-	public void update() {
-		long time = System.currentTimeMillis()-starttime;
-		int dist = (int) (startVelocity*time+0.5*acceleration*time*time);
-		x = (int) (Math.cos(angle)*dist);
-		y = (int) (Math.sin(angle)*dist);
+	public void paint(Graphics g) {
+		Color c = g.getColor();
+		g.setColor(Color.WHITE);
+		((Graphics2D)g).fillOval(x, y, 2, 2);
+		g.setColor(c);
 	}
 	
-	public void paintStar(Graphics g) {
-		g.setColor(Color.WHITE);
+	private float percentLifetime() {
+		return 0;
+	}
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
+	}
+	
+	public void setX(int x) {
+		this.x=x;
+	}
+	
+	public void setY(int y) {
+		this.y=y;
+	}
+	
+	public double getAngle() {
+		return this.angle;
+	}
+	
+	public void setVelocity(int v) {
+		this.velocity=v;
+	}
+	
+	public int getVelocity() {
+		return this.velocity;
 	}
 }
