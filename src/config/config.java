@@ -34,7 +34,7 @@ public class config {
 	}
 	/** get the path of the file yagoDateFacts.tsv */
 	public String get_yago_date_facts_path(){
-		return configFile.getProperty("YagoDateFacts");
+		return configFile.getProperty("YagoDateFactsFilePath");
 	}
 
 	/** get the server address */
@@ -146,7 +146,17 @@ public class config {
 	public String get_yago_tag_leader(){
 		return configFile.getProperty("FACT_LEADER");
 	}
-
+	public String get_yago_tag_prize(){
+		return configFile.getProperty("FACT_PRIZE");
+	}
+	public String get_yago_tag_birth_place(){
+		return configFile.getProperty("FACT_BIRTHPLACE");
+	}
+	public String get_yago_tag_wiki_len(){
+		return configFile.getProperty("FACT_WIKILEN");
+	}
+	
+	
 
 
 //	/** get number of connections to create **/

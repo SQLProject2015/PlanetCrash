@@ -45,6 +45,4 @@ public class YagoLexer implements Iterator<YagoEntry> {
 		// TODO Auto-generated method stub
 
 	}
-
-
 }

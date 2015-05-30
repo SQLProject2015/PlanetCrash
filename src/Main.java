@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,8 +20,10 @@ import Database.DatabaseHandler;
 import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
 import Database.Yago.parser_yago_facts;
+import Database.Yago.parser_yago_facts2;
 import Database.Yago.parser_yago_literal_facts;
 import Database.Yago.Uploaders.CountriesUploader;
+import Database.Yago.Uploaders.PersonsUploader;
 import GUI.GameGUI;
 
 
@@ -38,8 +41,8 @@ public class Main {
 //				GameGUI gg = new GameGUI();
 //				gg.start();
 //		
-//		//Init connection pool
-//		mConnPool = new ConnectionPool();
+		//Init connection pool
+		mConnPool = new ConnectionPool();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 		config properties = new config();
@@ -51,6 +54,8 @@ public class Main {
 		HashSet<String> cities_set = new HashSet<String>();
 		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>();
 		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
+		HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
+		HashSet<String> lite_city_set = new HashSet<String>();
 		
 		long start = System.currentTimeMillis();
 		
@@ -61,7 +66,7 @@ public class Main {
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
-			
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Oceania"});
 			
 			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Musician"});
 			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Scientist"});
@@ -81,8 +86,13 @@ public class Main {
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_facts d = new parser_yago_facts(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_set,universities_map);
+			parser_yago_facts d = new parser_yago_facts(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_set,universities_map,persons_map, lite_persons_map);
 			d.populate();
+			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
+			
+			System.out.println("parsing facts second time " + (System.currentTimeMillis()-start)/1000f);
+			parser_yago_facts2 h = new parser_yago_facts2(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_set,universities_map,persons_map, lite_persons_map, lite_city_set);
+			h.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			
 			System.out.println("parsing literal facts " + (System.currentTimeMillis()-start)/1000f);
@@ -99,35 +109,90 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
-		for (String curr : currency_set){
-			try {
-				//				dbh.executeUpdate("INSERT INTO Currency (Name) VALUES(\""+curr+"\");");
-				dbh.singleInsert("Currency", new String[]{"Name"}, new String[]{curr});
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				//System.out.println(curr);
-				//e.printStackTrace();
-			}
-		}
-
-		System.out.println("inserting languages " + (System.currentTimeMillis()-start)/1000f);
-		for (String lang : language_set){
-			try {
-				//				dbh.executeUpdate("INSERT INTO Language (Name) VALUES(\""+lang+"\");");
-				dbh.singleInsert("Language", new String[]{"Name"}, new String[]{lang});
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				//				System.out.println(lang);
-				//				e.printStackTrace();
-			}
-		}
+// 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
+// 		for (String curr : currency_set){
+// 			try {
+// 				//				dbh.executeUpdate("INSERT INTO Currency (Name) VALUES(\""+curr+"\");");
+// 				dbh.singleInsert("Currency", new String[]{"Name"}, new String[]{curr});
+// 			} catch (SQLException e) {
+// 				// TODO Auto-generated catch block
+// 				//System.out.println(curr);
+// 				//e.printStackTrace();
+// 			}
+// 		}
+//// 
+// 		System.out.println("inserting languages " + (System.currentTimeMillis()-start)/1000f);
+// 		for (String lang : language_set){
+// 			try {
+// 				//				dbh.executeUpdate("INSERT INTO Language (Name) VALUES(\""+lang+"\");");
+// 				dbh.singleInsert("Language", new String[]{"Name"}, new String[]{lang});
+// 			} catch (SQLException e) {
+// 				// TODO Auto-generated catch block
+// 				//				System.out.println(lang);
+// 				//				e.printStackTrace();
+// 			}
+// 		}
+//// 		
+//// 		
+// 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
+// 		int total = 0;
+// 		batch = new ArrayList<Object[]>();
+// 		for (String city : lite_city_set){
+// 			try {
+// 				//				dbh.executeUpdate("INSERT INTO Country (Name, yearOfBirth, yearOfDeath) VALUES(\""+persons_map.get(person).getName()+"\",\""+
+// 				//						persons_map.get(person).getYearOfBirth()+"\",\""+ 
+// 				//						persons_map.get(person).getYearOfDeath()+"\");");
+// 				//				dbh.singleInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"},
+// 				//						new String[]{persons_map.get(person).getName(),""+persons_map.get(person).getYearOfBirth(),""+persons_map.get(person).getYearOfDeath()});
+// 				if(batch.size()>=BATCHSIZE) {
+// 					System.out.println("clearing batch! total : " + total);
+// 					total+=BATCHSIZE;
+// 					dbh.batchInsert("City", new String[]{"Name"}, batch);
+// 					batch = new ArrayList<Object[]>();
+// 				}
+// 				//System.out.println("Adding person: "+persons_map.get(person).getName()+" "+persons_map.get(person).getYearOfBirth()+" "+persons_map.get(person).getYearOfDeath());
+// 				
+// 			} catch (SQLException e) {
+// 				// TODO Auto-generated catch block
+// 				e.printStackTrace();
+// 				for(Object[] arr : batch) {
+// 					try {
+// 						dbh.executeUpdate("INSERT INTO City (Name) VALUES(\""
+// 								+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
+// 					} catch (SQLException e1) {
+// 						// TODO Auto-generated catch block
+// 						System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
+// 						e1.printStackTrace();
+// 					}
+// 				}
+// 				batch = new ArrayList<Object[]>();
+// 			}
+// 			batch.add(new Object[]{city});
+// 		}
+// 		try {
+// 			dbh.batchInsert("City", new String[]{"Name"}, batch);
+// 		} catch (SQLException e) {
+// 			// TODO Auto-generated catch block
+// 			//e.printStackTrace();
+// 		}
+//		
+////		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+////		for (entity_person person : persons_map.values()){
+////			try {
+////				//				dbh.executeUpdate("INSERT INTO Language (Name) VALUES(\""+lang+"\");");
+////				dbh.singleInsert("Person", new String[]{"Name"}, new String[]{city});
+////			} catch (SQLException e) {
+////				// TODO Auto-generated catch block
+////				//				System.out.println(lang);
+////				//				e.printStackTrace();
+////			}
+////		}
 
 		
 //		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
 //		int total = 0;
 //		batch = new ArrayList<Object[]>();
-//		for (String person : persons_map.keySet()){
+//		for (String person : lite_persons_map.keySet()){
 //			try {
 //				//				dbh.executeUpdate("INSERT INTO Country (Name, yearOfBirth, yearOfDeath) VALUES(\""+persons_map.get(person).getName()+"\",\""+
 //				//						persons_map.get(person).getYearOfBirth()+"\",\""+ 
@@ -157,7 +222,7 @@ public class Main {
 //				}
 //				batch = new ArrayList<Object[]>();
 //			}
-//			batch.add(new Object[]{persons_map.get(person).getName(),persons_map.get(person).getYearOfBirth(),persons_map.get(person).getYearOfDeath()});
+//			batch.add(new Object[]{lite_persons_map.get(person).getName(),lite_persons_map.get(person).getYearOfBirth(),lite_persons_map.get(person).getYearOfDeath()});
 //		}
 //		try {
 //			dbh.batchInsert("Person", new String[]{"Name","yearOfBirth","yearOfDeath"}, batch);
@@ -166,7 +231,7 @@ public class Main {
 //			//e.printStackTrace();
 //		}
 
-		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
+		
 //		for (String country : countries_map.keySet()){
 //			try {
 //				//				dbh.executeUpdate("INSERT INTO Country (Name) VALUES(\""+countries_map.get(country).getYagoName()+"\");");
@@ -177,8 +242,17 @@ public class Main {
 //				//				e.printStackTrace();
 //			}
 //		}
-		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
-		cUploader.upload();
+		
+		//PERSONS
+		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
+		pUploader.upload();
+		
+		
+		//COUNTRIES
+//		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
+//		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
+//		cUploader.upload();
 		
 		int i =0;
 		if (i == 0){

@@ -19,7 +19,7 @@ public abstract class AbstractUploader {
 	
 	protected void insertBatch(List<Object[]> batch, String table, String[] columns) {
 		try {
-			dbh.batchInsert("Country", columns, batch);
+			dbh.batchInsert(table, columns, batch);
 			batch = new ArrayList<Object[]>();
 		} catch (SQLException e) {
 			for(Object[] arr : batch) { //insert individually

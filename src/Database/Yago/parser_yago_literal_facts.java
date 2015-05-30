@@ -23,7 +23,7 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 	@Override
 	public boolean parse(YagoEntry toParse) {
 		
-		entity_country country = countries_map.get(toParse.lentity);
+		entity_country country = countries_map.get(entity_cleaner(toParse.lentity));
 		if (country!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_population())){
 				int population = 0;
