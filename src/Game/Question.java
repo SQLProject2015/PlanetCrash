@@ -15,7 +15,13 @@ public class Question {
 		this.questionReady=false;
 		this.possibleAnswers=new ArrayList<Answer>();
 	}
-	
+	public void printQuestion(){
+		System.out.println(getQuestion());
+		int i;
+		for(i=0;i<4;i++){
+			System.out.println("\t"+(i+1)+"."+possibleAnswers.get(i).getAnswer());
+		}
+	}
 	public String getQuestion(){
 		return this.question;
 	}

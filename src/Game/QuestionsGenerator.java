@@ -37,14 +37,14 @@ public class QuestionsGenerator {
 		generateOfficialCurrencyQuestion();
 		generateCapitalCityQuestion();
 		//generateBornInQuestions();//up to 3 questions of this type
-		//generatePrizeWinnerQuestions("Grammy Award");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Academy Award for Best Actor");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Academy Award for Best Actress");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Nobel Peace Prize");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("FIFA World Player of the Year");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Nobel Prize in Physics");//up to 2 questions of this type
-		//generatePrizeWinnerQuestions("Nobel Prize in Chemistry");//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
 
 		
 	}
@@ -52,7 +52,9 @@ public class QuestionsGenerator {
 
 		
 	}
-	
+	public ArrayList<Question> getPossibleQuestions(){
+		return this.possibleQuestions;
+	}
 	private void generateProffesionQuestion(){
 		String query = "SELECT Person.idPerson, Person.Name, Person " +
                 "FROM"+this.dbname+".City, "+this.dbname+".Person_Proffesion, "+this.dbname+".Person "+
@@ -170,7 +172,7 @@ public class QuestionsGenerator {
 	private void generateOfficialLanguageQuestion(){
 		Question q = new Question("What is the official language in "+countryName);
 		String query = "SELECT Language.Name " +
-                   "FROM "+this.dbname+".Country,"+this.dbname+".Language "+
+                   "FROM "+this.dbname+".Country, "+this.dbname+".Language "+
                    "WHERE Country.idCountry='"+countryId+"' and Country.idLanguage=Language.idLanguage"+
                    " and Language.Name IS NOT NULL;";
 
@@ -183,7 +185,7 @@ public class QuestionsGenerator {
 				query = "SELECT DISTINCT Language.Name " +
 			               "FROM "+this.dbname+".Language "+
 			               "WHERE Language.Name!='"+officialLanguage+"' and Language.Name IS NOT NULL"+               
-			               "ORDER BY RAND()"+
+			               " ORDER BY RAND()"+
 			               " LIMIT 3;";
 				rs =this.dbh.executeQuery(query);//jdbc
 				int i =0;
@@ -257,10 +259,10 @@ public class QuestionsGenerator {
 				q.addPossibleAnswers(new Answer(capital));
 				query = "SELECT DISTINCT City.Name " +
 			               "FROM "+this.dbname+".City "+
-			               "WHERE City.idCountry='"+countryId+"' and City.Name!='"+capital+
+			               "WHERE City.idCountry='"+countryId+"' and City.Name!='"+capital+"' "+
 			               "and City.Name IS NOT NULL "+
 			               "ORDER BY RAND()"+
-			               "' LIMIT 3;";
+			               " LIMIT 3;";
 				rs =this.dbh.executeQuery(query);//jdbc
 				int i =0;
 				while (rs.next()){
@@ -280,13 +282,87 @@ public class QuestionsGenerator {
 			e.printStackTrace();
 		}
 	}
-	private void generatePrizeWinnerQuestions(String prizeName){
-		String query ="SELECT Person.Name "+
-					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".Country_City "+
-				"WHERE Country_City.idCountry ='"+countryId+"' and"+
-					"Person.idPlaceOfBirth = Country_City.idCity and"+
-				"Person.idPerson = AwardWinners.idPerson and"+
-					"AwardWinners.idAward = Award.idAward and"+
+	private void generateCommonProfessionQuestion(){
+		for(int i=0;i<3;i++){
+			Question q = new Question("");
+
+			// get a random profession
+			String query = String.format("SELECT idProfession, Name "
+										+ "FROM %s.Profession "
+										+ "ORDER BY RAND() "
+										+ "LIMIT 1;", this.dbname);
+			
+			
+			try {
+				ResultSet rs =this.dbh.executeQuery(query);//jdbc
+				if (rs.next()){
+					String professionName = rs.getString("Name");
+					int professionId = rs.getInt("idProfession");
+					q.setCorrectAnswer(new Answer(professionName));
+					q.addPossibleAnswers(new Answer(professionName));
+					
+					//get 3 random persons with that profession that were born at countryId"
+					query =  String.format("SELECT Person.Name "
+										+ "FROM %s.Person_Profession, %s.Person, %s.City "
+										+ "WHERE Person_Profession.idProfession=%d "
+										+ "AND Person.idPerson = Person_Profession.idPerson "
+										+ "AND Person.idPlaceOfBirth = City.idCity "
+										+ "AND City.idCountry = %d "
+										+ "ORDER BY RAND() "
+										+ "LIMIT 3;", this.dbname, this.dbname, this.dbname, professionId, countryId );
+					
+					rs =this.dbh.executeQuery(query);//jdbc
+					String personsList[] = new String[3];
+					i =0;
+					while (rs.next()){
+						
+						String person = rs.getString("Name");
+						personsList[i] = person;
+						i++;
+					}
+					if (i!=3){
+						return; // not enough details to make a question
+					}
+					q.setQuestion(String.format("%s, %s and %s are all...", personsList[0],personsList[1],personsList[2]));
+					
+					//get 3 other random professions
+					query =  String.format("SELECT Name"
+							+ " FROM %s.Profession "
+							+ "WHERE Profession.idProfession != %d "
+							+ "ORDER BY RAND() "
+							+ "LIMIT 3;", this.dbname, professionId);
+					
+					rs = this.dbh.executeQuery(query);//jdbc
+					i=0;
+					while (rs.next()){
+						
+						String profession = rs.getString("Name");
+						q.addPossibleAnswers(new Answer(profession+"s"));
+						i++;
+					}
+					if (i!=3){
+						return; // not enough details to make a question
+					}
+					
+					q.setQuestionAsReady();
+					possibleQuestions.add(q);
+				}
+				return;
+			} 
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	private void generatePrizeWinnerQuestions(String prizeName,int numberOfQuestion){
+		String query ="SELECT DISTINCT Person.Name "+
+					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
+				"WHERE City.idCountry ='"+countryId+"' and "+
+					"Person.idPlaceOfBirth = City.idCity and "+
+				"Person.idPerson = AwardWinners.idPerson and "+
+					"AwardWinners.idAward = Award.idAward and "+
 					"Award.Name ='"+prizeName+"' and Person.Name IS NOT NULL;";
 		
 		ArrayList<String> winners = new ArrayList<String>();
@@ -297,30 +373,32 @@ public class QuestionsGenerator {
 			while(rs.next()){
 				i++;
 				winners.add(rs.getString("Name"));
-				if(i==2){
+				if(i==numberOfQuestion){
 					break;
 				}
 			}
 			if (i==0){
 				return;
 			}
-			query ="SELECT Person.Name "+
-					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".Country_City "+
-				"WHERE Country_City.idCountry ='"+countryId+"' and"+
-					"Person.idPlaceOfBirth = Country_City.idCity and"+
-				"Person.idPerson = AwardWinners.idPerson and"+
-				"AwardWinners.idAward = Award.idAward and"+
-				"Award.Name ='"+prizeName+"' and Person.Name IS NOT NULL;";
+			query ="SELECT DISTINCT Person.Name "+
+					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
+				"WHERE City.idCountry ='"+countryId+"' and "+
+					"Person.idPlaceOfBirth = City.idCity and "+
+				"Person.idPerson = AwardWinners.idPerson and "+
+				"AwardWinners.idAward = Award.idAward and "+
+				"Award.Name !='"+prizeName+"' and Person.Name IS NOT NULL;";
 			rs =this.dbh.executeQuery(query);//jdbc
 			while(rs.next()){
-				nonWinners.add(rs.getString("Name"));
+				String nonWiner = rs.getString("Name");
+				if (!winners.contains(nonWiner))
+					nonWinners.add(nonWiner);
 			}
 			if (nonWinners.size()<3){
 				return;
 			}
 			int j;
 			for ( i=0;i<winners.size();i++){
-				if (i==5){
+				if (i==numberOfQuestion){
 					break;
 				}
 				Question q = new Question("Who won the "+prizeName+"?");
@@ -343,9 +421,9 @@ public class QuestionsGenerator {
 	
 	private ArrayList<Integer> randomIndexes(int range, int numToPick){
 		ArrayList<Integer> picked = new ArrayList<Integer>();
-		Random r = new Random(range);
+		Random r = new Random();
 		while(picked.size()<numToPick){
-			int pick = r.nextInt();
+			int pick = r.nextInt(range);
 			if (!picked.contains(pick)){
 				picked.add(pick);
 			}

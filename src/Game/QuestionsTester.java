@@ -9,9 +9,8 @@ public class QuestionsTester {
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");
-		int i;
-		while(true){
-			i=0;
+		for(int i=0 ;i<qg.getPossibleQuestions().size();i++){
+			qg.getPossibleQuestions().get(i).printQuestion();
 		}
 	}
 }
