@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import entities.entity_city;
 import entities.entity_country;
 import entities.entity_country_city;
 import entities.entity_person;
@@ -14,7 +15,7 @@ import entities.entity_university;
 
 public class parser_yago_facts extends AbstractYagoParser{
 	
-	HashSet<String> cities_set;
+	HashMap<String, entity_city> cities_map;
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, Set<String>> countries_cities_map;
 	HashMap<String, entity_university> universities_map;
@@ -25,13 +26,13 @@ public class parser_yago_facts extends AbstractYagoParser{
 
 	
 	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map,
-			HashMap<String, Set<String>> countries_cities_map, HashSet<String> cities_set,
+			HashMap<String, Set<String>> countries_cities_map, HashMap<String, entity_city> cities_map,
 			HashMap<String, entity_university> universities_map, HashMap<String, entity_person> persons_map, HashMap<String, entity_person> lite_persons_map) {		
 		super(filepath);
 		
 		this.countries_map = countries_map;
 		this.countries_cities_map = countries_cities_map;
-		this.cities_set = cities_set;
+		this.cities_map = cities_map;
 		this.universities_map = universities_map;
 		this.persons_map = persons_map;
 		this.lite_persons_map = lite_persons_map;
@@ -75,14 +76,21 @@ public class parser_yago_facts extends AbstractYagoParser{
 		}
 		
 				
-		
-		Set<String> list = countries_cities_map.get(clean_rentity);
-		if (list!=null){
-			if (toParse.relation.equals(properties.get_yago_tag_located_in()) && cities_set.contains(clean_lentity)){
-				list.add(clean_lentity);
+		entity_city city = cities_map.get(clean_lentity);
+		if (city!=null){
+			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
+				city.setCountry(clean_rentity);
 				flag=true;
 			}
 		}
+		
+//		Set<String> list = countries_cities_map.get(clean_rentity);
+//		if (list!=null){
+//			if (toParse.relation.equals(properties.get_yago_tag_located_in()) && cities_set.contains(clean_lentity)){
+//				list.add(clean_lentity);
+//				flag=true;
+//			}
+//		}
 		
 		entity_university university = universities_map.get(clean_lentity);
 		if(university != null){
@@ -96,6 +104,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 		if (per != null){
 			if (toParse.relation.equals(properties.get_yago_tag_prize())){
 				if (awards_set.contains(clean_rentity)) {
+					per.addAward(clean_rentity);
 					lite_persons_map.put(clean_lentity,per);
 					flag=true;
 				}

@@ -23,11 +23,12 @@ public abstract class AbstractUploader {
 			batch = new ArrayList<Object[]>();
 		} catch (SQLException e) {
 			for(Object[] arr : batch) { //insert individually
+				StringBuilder sql = new StringBuilder();
 				try { 
 //					dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
 //							+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
 					
-					StringBuilder sql = new StringBuilder();
+					//StringBuilder sql = new StringBuilder();
 					sql.append("INSERT INTO "+table+"(");
 					for(int i=0;i<columns.length;i++)
 						sql.append(columns[i]+(i<columns.length-1?",":""));
@@ -40,7 +41,7 @@ public abstract class AbstractUploader {
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
+					//System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
 					e1.printStackTrace();
 				}
 			}
