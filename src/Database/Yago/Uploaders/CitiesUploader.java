@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,32 +32,49 @@ public class CitiesUploader extends AbstractUploader{
 	 * Upload all country entities to the database
 	 */
 	public void upload() {
-		Collection<entity_city> cities = cmap.values();
+		int c=0;
+		ResultSet country_rs;
+		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
 
+		try{
+			country_rs = dbh.executeQuery("SELECT idCountry, Name FROM DbMysql14.Country;");
+			while (country_rs.next()) {	        
+	            int idCountry = country_rs.getInt("idCountry");
+	            String Name = country_rs.getString("Name");
+	            country_id_name_map.put(Name, idCountry);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+
+		Collection<entity_city> cities = cmap.values();
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(entity_city city : cities) {
 
 			//Get relevant ids
 			ResultSet rs;
 			Object[] values = new Object[columns.length];
-			try {
+//			try {
 				//Name
 				values[0] = city.getName();
 
 				//idCountry
-				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, "WHERE Name = \""+city.getCountry()+"\"");
-				if(rs.first())
-					values[1] = rs.getInt(1);
+//				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, "WHERE Name = \""+city.getCountry()+"\"");
+//				if(rs.first())
+//					values[1] = rs.getInt(1);
+				values[1] = country_id_name_map.get(city.getCountry());
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Error initializing city: "+city.getName());
-				e.printStackTrace();
-				continue;
-			}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				System.out.println("Error initializing city: "+city.getName());
+//				e.printStackTrace();
+//				continue;
+//			}
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
+				c+=BATCHSIZE;
+				System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
 			batch.add(values);

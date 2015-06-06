@@ -60,6 +60,10 @@ public class AwardWinnersUploader extends AbstractUploader{
 				continue;        	
 	        }
 	        
+	        if (person_id==0){
+	        	continue;
+	        }
+	        
 	        for (String award : person_details.getAwards_list()){
 	        	
 	        	Object[] values = new Object[columns.length];

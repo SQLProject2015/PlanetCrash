@@ -7,7 +7,7 @@ import java.util.List;
 import Database.DatabaseHandler;
 
 public abstract class AbstractUploader {
-	public static final int BATCHSIZE=500;
+	public static final int BATCHSIZE=10000;
 	
 	protected DatabaseHandler dbh;
 	
