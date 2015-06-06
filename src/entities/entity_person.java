@@ -8,7 +8,7 @@ public class entity_person {
 	private int yearOfDeath;
 	private String placeOfBirth;
 	private ArrayList<String> profession_list = new ArrayList<String>();
-	
+	private ArrayList<String> awards_list = new ArrayList<String>();
 	
 	public entity_person(){
 	
@@ -55,8 +55,16 @@ public class entity_person {
 	public ArrayList<String> getProfession_list() {
 		return profession_list;
 	}
+	
+	public ArrayList<String> getAwards_list() {
+		return awards_list;
+	}
 
 	public void addProfession(String profession) {
 		this.profession_list.add(profession);
+	}
+	
+	public void addAward(String award) {
+		this.awards_list.add(award);
 	}
 }
