@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Question {
@@ -12,6 +13,7 @@ public class Question {
 	public Question(String question) {
 		this.question=question;
 		this.questionReady=false;
+		this.possibleAnswers=new ArrayList<Answer>();
 	}
 	
 	public String getQuestion(){

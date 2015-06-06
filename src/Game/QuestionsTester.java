@@ -8,6 +8,10 @@ public class QuestionsTester {
 		ConnectionPool mConnPool = new ConnectionPool();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh);
+		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");
+		int i;
+		while(true){
+			i=0;
+		}
 	}
 }
