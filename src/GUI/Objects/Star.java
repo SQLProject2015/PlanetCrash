@@ -10,6 +10,7 @@ public class Star {
 	float acceleration;
 	int x,y;
 	long starttime;
+	Color color = Color.WHITE;
 	
 	public Star(double angle,int startX,int startY, int startVelocity, float acceleration) {
 		this.angle=angle;
@@ -22,7 +23,7 @@ public class Star {
 	
 	public void paint(Graphics g) {
 		Color c = g.getColor();
-		g.setColor(Color.WHITE);
+		g.setColor(color);
 		((Graphics2D)g).fillOval(x, y, 2, 2);
 		g.setColor(c);
 	}
@@ -57,5 +58,9 @@ public class Star {
 	
 	public int getVelocity() {
 		return this.velocity;
+	}
+	
+	public void setColor(Color color) {
+		this.color=color;
 	}
 }

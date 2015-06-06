@@ -31,13 +31,11 @@ public class StarryBackground extends JPanel{
 		return new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT);
 	}
 	
-	public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
-
-        g.setColor(Color.WHITE);
-        ((Graphics2D)g).fillOval(400, 300, 20, 20);
-        // Draw Text
-        //g.drawString("This is my custom Panel!",(int)(Math.random()*100),(int)(Math.random()*200));
-    }  
+//	public void paintComponent(Graphics g) {
+//        super.paintComponent(g);       
+//
+//        g.setColor(Color.WHITE);
+//        ((Graphics2D)g).fillOval(400, 300, 20, 20);
+//    }  
 	
 }
