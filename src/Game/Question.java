@@ -3,14 +3,20 @@ package Game;
 import java.util.List;
 
 public class Question {
-	List<Answer> possibleAnswers;
-	Answer correctAnswer;
+	private List<Answer> possibleAnswers;
+	private Answer correctAnswer;
+	private String question;
+	private boolean questionReady;
+
 	
-	public Question(List<Answer> possibleAnswers, Answer correctAnswer) {
-		this.possibleAnswers=possibleAnswers;
-		this.correctAnswer=correctAnswer;
+	public Question(String question) {
+		this.question=question;
+		this.questionReady=false;
 	}
 	
+	public String getQuestion(){
+		return this.question;
+	}
 	public List<Answer> getPossibleAnswers() {
 		return this.possibleAnswers;
 	}
@@ -19,7 +25,27 @@ public class Question {
 		return this.correctAnswer;
 	}
 	
+	public void setQuestion(String question){
+		this.question=question;
+	}
+	public void setPossibleAnswers(List<Answer> answers) {
+		this.possibleAnswers=answers;
+	}
+	public void addPossibleAnswers(Answer answer) {
+		this.possibleAnswers.add(answer);
+	}
+	public void setCorrectAnswer(Answer answer) {
+		this.correctAnswer=answer;
+	}
+	
 	public boolean isCorrectAnswer(Answer answer) {
 		return answer.equals(correctAnswer);
+	}
+	
+	public boolean isQuestionReady() {
+		return this.questionReady;
+	}
+	public void setQuestionAsReady() {
+		this.questionReady=true;
 	}
 }
