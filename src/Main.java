@@ -27,6 +27,8 @@ import Database.Yago.Uploaders.AwardWinnersUploader;
 import Database.Yago.Uploaders.CitiesUploader;
 import Database.Yago.Uploaders.CountriesCitiesUploader;
 import Database.Yago.Uploaders.CountriesUploader;
+import Database.Yago.Uploaders.CurrenciesUploader;
+import Database.Yago.Uploaders.LanguagesUploader;
 import Database.Yago.Uploaders.PersonProfessionUploader;
 import Database.Yago.Uploaders.PersonsUploader;
 import GUI.GameGUI;
@@ -260,22 +262,27 @@ public class Main {
 // 			}
 // 		}
 		
-		
-//		//PERSONS
-//		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
-//		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
-//		pUploader.upload();
+		//		
 //		
+//		//Currency
+//		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
+//		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
+//		currencyUploader.upload();
 //		
-//		//COUNTRIES
-//		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
-//		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
-//		cUploader.upload();
+////		//Language
+//		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
+//		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
+//		languageUploader.upload();
 //		
 //		//CITIES
 //		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
 //		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
 //		citiesUploader.upload();
+		
+//		//PERSONS
+//		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+//		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
+//		pUploader.upload();
 		
 		//COUNTRIES_CITIES
 //		System.out.println("inserting countries_city " + (System.currentTimeMillis()-start)/1000f);
@@ -283,9 +290,9 @@ public class Main {
 //		ccUploader.upload();
 	
 		//PERSONS_PROFESSION
-		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
-		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, dbh);
-		ppUploader.upload();
+//		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
+//		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, dbh);
+//		ppUploader.upload();
 		
 		//AWARD_WINNERS
 //		System.out.println("inserting award winners " + (System.currentTimeMillis()-start)/1000f);
