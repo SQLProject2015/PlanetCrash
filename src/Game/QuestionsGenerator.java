@@ -31,20 +31,21 @@ public class QuestionsGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		generatePopulationSizeQuestion();
-		generateContinentQuestion();
-		generateOfficialLanguageQuestion();
-		generateOfficialCurrencyQuestion();
-		generateCapitalCityQuestion();
-		//generateBornInQuestions();//up to 3 questions of this type
-		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
+//		generatePopulationSizeQuestion();
+//		generateContinentQuestion();
+//		generateOfficialLanguageQuestion();
+//		generateOfficialCurrencyQuestion();
+//		generateCapitalCityQuestion();
+//		generateBornInQuestions();//up to 3 questions of this type
+//		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
+//		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
+		generateCommonProfessionQuestion();
 
 		
 	}
@@ -283,7 +284,7 @@ public class QuestionsGenerator {
 		}
 	}
 	private void generateCommonProfessionQuestion(){
-		for(int i=0;i<3;i++){
+		for(int j=0;j<3;j++){
 			Question q = new Question("");
 
 			// get a random profession
@@ -294,60 +295,60 @@ public class QuestionsGenerator {
 			
 			
 			try {
-				ResultSet rs =this.dbh.executeQuery(query);//jdbc
-				if (rs.next()){
-					String professionName = rs.getString("Name");
-					int professionId = rs.getInt("idProfession");
-					q.setCorrectAnswer(new Answer(professionName));
-					q.addPossibleAnswers(new Answer(professionName));
-					
-					//get 3 random persons with that profession that were born at countryId"
-					query =  String.format("SELECT Person.Name "
-										+ "FROM %s.Person_Profession, %s.Person, %s.City "
-										+ "WHERE Person_Profession.idProfession=%d "
-										+ "AND Person.idPerson = Person_Profession.idPerson "
-										+ "AND Person.idPlaceOfBirth = City.idCity "
-										+ "AND City.idCountry = %d "
-										+ "ORDER BY RAND() "
-										+ "LIMIT 3;", this.dbname, this.dbname, this.dbname, professionId, countryId );
-					
-					rs =this.dbh.executeQuery(query);//jdbc
-					String personsList[] = new String[3];
-					i =0;
-					while (rs.next()){
-						
-						String person = rs.getString("Name");
-						personsList[i] = person;
-						i++;
-					}
-					if (i!=3){
-						return; // not enough details to make a question
-					}
-					q.setQuestion(String.format("%s, %s and %s are all...", personsList[0],personsList[1],personsList[2]));
-					
-					//get 3 other random professions
-					query =  String.format("SELECT Name"
-							+ " FROM %s.Profession "
-							+ "WHERE Profession.idProfession != %d "
-							+ "ORDER BY RAND() "
-							+ "LIMIT 3;", this.dbname, professionId);
-					
-					rs = this.dbh.executeQuery(query);//jdbc
-					i=0;
-					while (rs.next()){
-						
-						String profession = rs.getString("Name");
-						q.addPossibleAnswers(new Answer(profession+"s"));
-						i++;
-					}
-					if (i!=3){
-						return; // not enough details to make a question
-					}
-					
-					q.setQuestionAsReady();
-					possibleQuestions.add(q);
+				ResultSet rs = this.dbh.executeQuery(query);//jdbc
+				if (!rs.first()){
+					return;
 				}
-				return;
+				String professionName = rs.getString("Name");
+				int professionId = rs.getInt("idProfession");
+				q.setCorrectAnswer(new Answer(professionName+"s"));
+				q.addPossibleAnswers(new Answer(professionName+"s"));
+				
+				//get 3 random persons with that profession that were born at countryId"
+				query =  String.format("SELECT Person.Name "
+									+ "FROM %s.Person_Profession, %s.Person, %s.City "
+									+ "WHERE Person_Profession.idProfession=%d "
+									+ "AND Person.idPerson = Person_Profession.idPerson "
+									+ "AND Person.idPlaceOfBirth = City.idCity "
+									+ "AND City.idCountry = %d "
+									+ "ORDER BY RAND() "
+									+ "LIMIT 3;", this.dbname, this.dbname, this.dbname, professionId, countryId );
+				
+				rs =this.dbh.executeQuery(query);//jdbc
+				String personsList[] = new String[3];
+				int i =0;
+				while (rs.next()){
+					
+					String person = rs.getString("Name");
+					personsList[i] = person;
+					i++;
+				}
+				if (i!=3){
+					return; // not enough details to make a question
+				}
+				q.setQuestion(String.format("%s, %s and %s are all...", personsList[0],personsList[1],personsList[2]));
+				
+				//get 3 other random professions
+				query =  String.format("SELECT Name"
+						+ " FROM %s.Profession "
+						+ "WHERE Profession.idProfession != %d "
+						+ "ORDER BY RAND() "
+						+ "LIMIT 3;", this.dbname, professionId);
+				
+				rs = this.dbh.executeQuery(query);//jdbc
+				i=0;
+				while (rs.next()){
+					
+					String profession = rs.getString("Name");
+					q.addPossibleAnswers(new Answer(profession+"s"));
+					i++;
+				}
+				if (i!=3){
+					return; // not enough details to make a question
+				}
+				
+				q.setQuestionAsReady();
+				possibleQuestions.add(q);
 			} 
 			catch (SQLException e) {
 				// TODO Auto-generated catch block
