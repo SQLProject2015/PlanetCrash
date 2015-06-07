@@ -45,7 +45,8 @@ public class QuestionsGenerator {
 //		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
 //		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
 //		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
-		generateCommonProfessionQuestion();
+		generateCommonProfessionQuestion(1);
+		generateWhosDeadQuestion(1);
 
 		
 	}
@@ -283,8 +284,73 @@ public class QuestionsGenerator {
 			e.printStackTrace();
 		}
 	}
-	private void generateCommonProfessionQuestion(){
-		for(int j=0;j<3;j++){
+
+	private void generatePrizeWinnerQuestions(String prizeName,int numberOfQuestion){
+		String query ="SELECT DISTINCT Person.Name "+
+					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
+				"WHERE City.idCountry ='"+countryId+"' and "+
+					"Person.idPlaceOfBirth = City.idCity and "+
+				"Person.idPerson = AwardWinners.idPerson and "+
+					"AwardWinners.idAward = Award.idAward and "+
+					"Award.Name ='"+prizeName+"' and Person.Name IS NOT NULL;";
+		
+		ArrayList<String> winners = new ArrayList<String>();
+		ArrayList<String> nonWinners = new ArrayList<String>();
+		try {
+			ResultSet rs =this.dbh.executeQuery(query);//jdbc
+			int i = 0;
+			while(rs.next()){
+				i++;
+				winners.add(rs.getString("Name"));
+				if(i==numberOfQuestion){
+					break;
+				}
+			}
+			if (i==0){
+				return;
+			}
+			query ="SELECT DISTINCT Person.Name "+
+					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
+				"WHERE City.idCountry ='"+countryId+"' and "+
+					"Person.idPlaceOfBirth = City.idCity and "+
+				"Person.idPerson = AwardWinners.idPerson and "+
+				"AwardWinners.idAward = Award.idAward and "+
+				"Award.Name !='"+prizeName+"' and Person.Name IS NOT NULL;";
+			rs =this.dbh.executeQuery(query);//jdbc
+			while(rs.next()){
+				String nonWiner = rs.getString("Name");
+				if (!winners.contains(nonWiner))
+					nonWinners.add(nonWiner);
+			}
+			if (nonWinners.size()<3){
+				return;
+			}
+			int j;
+			for ( i=0;i<winners.size();i++){
+				if (i==numberOfQuestion){
+					break;
+				}
+				Question q = new Question("Who won the "+prizeName+"?");
+				q.setCorrectAnswer(new Answer(winners.get(i)));
+				q.addPossibleAnswers(new Answer(winners.get(i)));
+				ArrayList<Integer> indexes = randomIndexes(nonWinners.size(), 3);
+				for (j=0;j<3;j++){
+					q.addPossibleAnswers(new Answer(nonWinners.get(indexes.get(j))));
+				}
+				q.setQuestionAsReady();
+				possibleQuestions.add(q);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void generateCommonProfessionQuestion(int numberOfQuestions){
+		for(int j=0;j<numberOfQuestions;j++){
 			Question q = new Question("");
 
 			// get a random profession
@@ -357,65 +423,59 @@ public class QuestionsGenerator {
 			
 		}
 	}
-	private void generatePrizeWinnerQuestions(String prizeName,int numberOfQuestion){
-		String query ="SELECT DISTINCT Person.Name "+
-					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
-				"WHERE City.idCountry ='"+countryId+"' and "+
-					"Person.idPlaceOfBirth = City.idCity and "+
-				"Person.idPerson = AwardWinners.idPerson and "+
-					"AwardWinners.idAward = Award.idAward and "+
-					"Award.Name ='"+prizeName+"' and Person.Name IS NOT NULL;";
-		
-		ArrayList<String> winners = new ArrayList<String>();
-		ArrayList<String> nonWinners = new ArrayList<String>();
-		try {
-			ResultSet rs =this.dbh.executeQuery(query);//jdbc
-			int i = 0;
-			while(rs.next()){
-				i++;
-				winners.add(rs.getString("Name"));
-				if(i==numberOfQuestion){
-					break;
+	
+	
+	private void generateWhosDeadQuestion(int numberOfQuestions){
+		for(int j=0;j<numberOfQuestions;j++){
+			Question q = new Question("Which of the following people is no longer with us?");
+			
+			// get a random dead person
+			String query = String.format("SELECT Person.Name	"
+										+ "FROM %s.Person, DbMysql14.City "
+										+ "WHERE yearOfDeath!=0 AND yearOfBirth!=0 "
+										+ "AND idPlaceOfBirth=City.idCity "
+										+ "AND City.idCountry=%d "
+										+ "ORDER BY RAND() "
+										+ "LIMIT 1;",this.dbname, countryId );
+			
+			
+			try {
+				ResultSet rs = this.dbh.executeQuery(query);//jdbc
+				if (!rs.first()){
+					return;
 				}
-			}
-			if (i==0){
-				return;
-			}
-			query ="SELECT DISTINCT Person.Name "+
-					"FROM "+this.dbname+".Award, "+this.dbname+".AwardWinners, "+this.dbname+".Person, "+this.dbname+".City "+
-				"WHERE City.idCountry ='"+countryId+"' and "+
-					"Person.idPlaceOfBirth = City.idCity and "+
-				"Person.idPerson = AwardWinners.idPerson and "+
-				"AwardWinners.idAward = Award.idAward and "+
-				"Award.Name !='"+prizeName+"' and Person.Name IS NOT NULL;";
-			rs =this.dbh.executeQuery(query);//jdbc
-			while(rs.next()){
-				String nonWiner = rs.getString("Name");
-				if (!winners.contains(nonWiner))
-					nonWinners.add(nonWiner);
-			}
-			if (nonWinners.size()<3){
-				return;
-			}
-			int j;
-			for ( i=0;i<winners.size();i++){
-				if (i==numberOfQuestion){
-					break;
+				String deadMan = rs.getString("Name");
+				q.setCorrectAnswer(new Answer(deadMan));
+				q.addPossibleAnswers(new Answer(deadMan));
+				
+				//get 3 random persons that are still alive"
+				query = String.format("SELECT Person.Name	"
+						+ "FROM %s.Person, DbMysql14.City "
+						+ "WHERE yearOfDeath=0 AND yearOfBirth!=0 "
+						+ "AND idPlaceOfBirth=City.idCity "
+						+ "AND City.idCountry=%d "
+						+ "ORDER BY RAND() "
+						+ "LIMIT 3;",this.dbname, countryId );
+	
+				
+				rs =this.dbh.executeQuery(query);//jdbc
+				
+				int i =0;
+				while (rs.next()){
+					String alive = rs.getString("Name");
+					q.addPossibleAnswers(new Answer(alive));
+					i++;
 				}
-				Question q = new Question("Who won the "+prizeName+"?");
-				q.setCorrectAnswer(new Answer(winners.get(i)));
-				q.addPossibleAnswers(new Answer(winners.get(i)));
-				ArrayList<Integer> indexes = randomIndexes(nonWinners.size(), 3);
-				for (j=0;j<3;j++){
-					q.addPossibleAnswers(new Answer(nonWinners.get(indexes.get(j))));
+				if (i!=3){
+					return; // not enough details to make a question
 				}
 				q.setQuestionAsReady();
 				possibleQuestions.add(q);
+			} 
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 	}
