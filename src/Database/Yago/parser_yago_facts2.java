@@ -19,7 +19,8 @@ public class parser_yago_facts2 extends AbstractYagoParser{
 	HashMap<String, entity_university> universities_map;
 	HashMap<String, entity_person> persons_map;
 	Set<String> awards_set = new HashSet<String>(Arrays.asList("Grammy Award", "Grammy Lifetime Achievement Award", "Academy Award for Best Actor",
-			"Academy Award for Best Actress", "Nobel Prize in Physics", "Nobel Prize in Chemistry", "Nobel Peace Prize", "FIFA World Player of the Year"));
+																"Academy Award for Best Actress", "Nobel Prize in Physics", "Nobel Prize in Chemistry", 
+																"Nobel Peace Prize", "FIFA World Player of the Year","World Music Awards"));
 	HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
 	HashSet<String> lite_city_set;
 
