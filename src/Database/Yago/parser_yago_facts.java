@@ -1,15 +1,19 @@
 package Database.Yago;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import entities.entity_city;
 import entities.entity_country;
-import entities.entity_country_city;
 import entities.entity_person;
 import entities.entity_university;
 
@@ -20,14 +24,17 @@ public class parser_yago_facts extends AbstractYagoParser{
 	HashMap<String, Set<String>> countries_cities_map;
 	HashMap<String, entity_university> universities_map;
 	HashMap<String, entity_person> persons_map;
-	Set<String> awards_set = new HashSet<String>(Arrays.asList("Grammy Award", "Grammy Lifetime Achievement Award", "Academy Award for Best Actor",
-			"Academy Award for Best Actress", "Nobel Prize in Physics", "Nobel Prize in Chemistry", "Nobel Peace Prize", "FIFA World Player of the Year"));
 	HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
+	Set<String> awards_set;
+
+//	Set<String> awards_set = new HashSet<String>(Arrays.asList("Grammy Award", "Grammy Lifetime Achievement Award", "Academy Award for Best Actor",
+//			"Academy Award for Best Actress", "Nobel Prize in Physics", "Nobel Prize in Chemistry", "Nobel Peace Prize", "FIFA World Player of the Year"));
+	
 
 	
 	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map,
 			HashMap<String, Set<String>> countries_cities_map, HashMap<String, entity_city> cities_map,
-			HashMap<String, entity_university> universities_map, HashMap<String, entity_person> persons_map, HashMap<String, entity_person> lite_persons_map) {		
+			HashMap<String, entity_university> universities_map, HashMap<String, entity_person> persons_map, HashMap<String, entity_person> lite_persons_map, Set<String> awards_set) {		
 		super(filepath);
 		
 		this.countries_map = countries_map;
@@ -36,6 +43,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 		this.universities_map = universities_map;
 		this.persons_map = persons_map;
 		this.lite_persons_map = lite_persons_map;
+		this.awards_set = awards_set;
 	}
 
 	@Override
