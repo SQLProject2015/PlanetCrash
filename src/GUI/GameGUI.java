@@ -1,26 +1,12 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
-import javax.swing.border.EmptyBorder;
+import javax.swing.SwingUtilities;
 
-import GUI.Objects.JImage;
-import GUI.Objects.JRoundedButton;
-import GUI.Objects.LayeredPaneLayout;
-import GUI.Objects.StarryBackground;
+import Database.ConnectionPool;
 import GUI.Scenes.LoginScene;
-import GUI.Scenes.MainMenuScene;
 import GUI.Scenes.Scene;
 
 public class GameGUI {
@@ -30,7 +16,13 @@ public class GameGUI {
 	
 	public static final String ASSETS = System.getProperty("user.dir")+"\\assets\\";
 	
+	public static ConnectionPool mConnPool;
+	
 	JFrame mainFrame;
+	
+	public GameGUI(ConnectionPool cpool) {
+		this.mConnPool=cpool;
+	}
 	
 	public void start() {
         SwingUtilities.invokeLater(new Runnable() {

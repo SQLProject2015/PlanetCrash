@@ -16,6 +16,24 @@ public class JRoundedButton extends JRounded {
 	JLabel label;
 	Font font;
 
+	public JRoundedButton(Font font, String text, int width, int height, int borderThickness) {
+		super(width, height,borderThickness);
+
+		//init font
+		this.font = font;
+
+		//init label
+		label = new JLabel(text);
+		label.setFont(font);
+		label.setForeground(borderColor);
+		//				label.setBounds(0, 0, 10, 10);
+		add(label);
+
+		this.text=text;
+
+		label.setText(text);
+	}
+
 	public JRoundedButton(String text,int width, int height, int borderThickness) {
 		super(width,height,borderThickness);
 

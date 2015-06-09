@@ -24,6 +24,10 @@ public class ConnectionPool {
 	private AtomicBoolean destroyed = new AtomicBoolean(false); //was this pool assigned destruction?
 
 	public ConnectionPool() {
+
+	}
+	
+	public void init() {
 		this.cStack = new Stack<Connection>();
 		this.count.set(0);
 
@@ -35,7 +39,6 @@ public class ConnectionPool {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 	}
 
 	private synchronized Connection createConnection() throws DatabaseException {
