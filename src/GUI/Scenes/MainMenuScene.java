@@ -3,18 +3,26 @@ package GUI.Scenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.StarryBackground;
+import Game.Game;
 
 public class MainMenuScene extends Scene {
+
+	public MainMenuScene(GameGUI gameGUI, Game game) {
+		super(gameGUI, game);
+	}
 
 	@Override
 	public Component create() {
@@ -51,6 +59,16 @@ public class MainMenuScene extends Scene {
 		quitBtn.setBorderColor(Color.decode("#bf00af"));
 		panel.add(quitBtn, new Integer(3), 0);
 
+		//add welcome message
+		Font font = new Font(null, Font.PLAIN, 20);
+		JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
+		welcomeMsg.setFont(font);
+		welcomeMsg.setForeground(Color.CYAN);
+		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 240,
+				(int)welcomeMsg.getPreferredSize().getWidth(), (int)welcomeMsg.getPreferredSize().getHeight());
+		welcomeMsg.setOpaque(false);
+		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
+		panel.add(welcomeMsg, new Integer(3),0);
 		return panel;
 	}
 

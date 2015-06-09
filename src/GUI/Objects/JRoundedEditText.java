@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
@@ -52,6 +53,8 @@ public class JRoundedEditText extends JRounded{
 		if(textField instanceof JPasswordField) 
 			((JPasswordField) textField).setEchoChar('*');
 		textField.setBounds(0, 0, width, height);
+		textField.setBorder(BorderFactory.createEmptyBorder());
+
 
 		add(textField);
 	}

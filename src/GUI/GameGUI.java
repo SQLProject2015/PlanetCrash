@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import Database.ConnectionPool;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
+import Game.Game;
 
 public class GameGUI {
 
@@ -16,12 +17,15 @@ public class GameGUI {
 	
 	public static final String ASSETS = System.getProperty("user.dir")+"\\assets\\";
 	
-	public static ConnectionPool mConnPool;
+	public ConnectionPool mConnPool;
 	
-	JFrame mainFrame;
+	protected Game game;
+	
+	public JFrame mainFrame;
 	
 	public GameGUI(ConnectionPool cpool) {
 		this.mConnPool=cpool;
+		this.game=new Game();
 	}
 	
 	public void start() {
@@ -38,7 +42,7 @@ public class GameGUI {
         mainFrame.setResizable(false);
         
         //Show main screen
-        LoginScene mms = new LoginScene();//MainMenuScene();
+        LoginScene mms = new LoginScene(this,game);//MainMenuScene();
         switchScene(mms);
         //        mainFrame.setContentPane(mms.create());
        
@@ -52,7 +56,9 @@ public class GameGUI {
     
     public void switchScene(Scene scene) {
     	//mainFrame.removeAll(); //TODO this shiat doesn't work
+    	mainFrame.setContentPane(Scene.emptyMainJPanel());
     	mainFrame.add(scene.create());
+    	mainFrame.pack();
     }
     
 	

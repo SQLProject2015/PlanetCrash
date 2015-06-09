@@ -4,21 +4,36 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.SQLException;
 
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Database.DatabaseHandler;
+import Database.Users.User;
+import Database.Users.UserException;
+import Database.Users.UserHandler;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import Game.Game;
 
 public class LoginScene extends Scene{
+	
+	public LoginScene(GameGUI gameGUI, Game game) {
+		super(gameGUI, game);
+	}
+
+	JRoundedEditText usernameField;
+	JRoundedEditText passwordField;
 
 	@Override
 	public Component create() {
@@ -47,7 +62,7 @@ public class LoginScene extends Scene{
 		//Add username field
 		JPanel usernamePanel = new JPanel();
 		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Username:", 100, userpass.getSize()+20, 2);
-		JRoundedEditText usernameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
+		usernameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
 		
 		usernameLabel.setBorderColor(Color.cyan);
 		usernameField.setBorderColor(Color.cyan);
@@ -64,7 +79,7 @@ public class LoginScene extends Scene{
 		//Add password field
 		JPanel passwordPanel = new JPanel();
 		JRoundedButton passwordLabel = new JRoundedButton(userpass,"Password:", 100, userpass.getSize()+20, 2);
-		JRoundedEditText passwordField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, true);
+		passwordField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, true);
 	
 		passwordLabel.setBorderColor(Color.cyan);
 		passwordField.setBorderColor(Color.cyan);
@@ -89,17 +104,76 @@ public class LoginScene extends Scene{
 		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
 		panel.add(createBtn, new Integer(2), 3);
 		
+		//Register action listeners
+		LoginMouseListener lml = new LoginMouseListener();
+		loginBtn.addMouseListener(lml);
 
 		return panel;
 	}
 	
 	//Confirms the user
-	private void confirmUser(String user, String pass) throws SQLException {
-		DatabaseHandler dbh = new DatabaseHandler(GameGUI.mConnPool);
+	private User confirmUser(String username, String pass) {
+		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+		User user=null;
 		
+		try {
+			user = UserHandler.validate_user(username, pass, dbh);
+		} catch (UserException | SQLException e) {
+			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
+			e.printStackTrace();
+		}
+		try {
+			dbh.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		return user;
+	}
+	
+	class LoginMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if(usernameField==null||passwordField==null)
+				return;
+			User user = confirmUser(usernameField.getText(), passwordField.getText());
+			
+			if(user==null)
+				return;
+			
+			game.setUser(user);
+			
+			MainMenuScene mms = new MainMenuScene(gameGUI,game);
+			gameGUI.switchScene(mms);			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 		
-		dbh.close();
 	}
 
+	
 }

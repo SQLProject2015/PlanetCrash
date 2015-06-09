@@ -7,13 +7,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import GUI.GameGUI;
+import Game.Game;
 
 
 public abstract class Scene {
+	protected Game game;
+	protected GameGUI gameGUI;
+	
+	public Scene(GameGUI gameGUI, Game game) {
+		this.game=game;
+		this.gameGUI=gameGUI;
+	}
+	
 	public abstract Component create();
 	
 
-	protected JPanel emptyMainJPanel() {
+	public static JPanel emptyMainJPanel() {
 		JPanel ret = new JPanel();
 		ret.setSize(GameGUI.WINDOW_WIDTH, GameGUI.WINDOW_HEIGHT);
 		ret.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
