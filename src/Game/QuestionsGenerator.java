@@ -1,8 +1,10 @@
 package Game;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import Database.DatabaseHandler;
@@ -31,22 +33,24 @@ public class QuestionsGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		generateUniversityQuestions(3);
+		generateAgeQuestions(3);
 		generatePopulationSizeQuestion();
 		generateContinentQuestion();
 		generateOfficialLanguageQuestion();
 		generateOfficialCurrencyQuestion();
 		generateCapitalCityQuestion();
-		generateBornInQuestions();//up to 3 questions of this type
-		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
-		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
-		generateCommonProfessionQuestion(1);
-		generateWhosDeadQuestion(1);
+		generateBornInQuestions();
+		generatePrizeWinnerQuestions("Grammy Award",2);
+		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);
+		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);
+		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);
+		generatePrizeWinnerQuestions("Nobel Peace Prize",2);
+		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);
+		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);
+		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);
+		generateCommonProfessionQuestion(3);
+		generateWhosDeadQuestion(3);
 
 		
 	}
@@ -57,18 +61,82 @@ public class QuestionsGenerator {
 	public ArrayList<Question> getPossibleQuestions(){
 		return this.possibleQuestions;
 	}
-	private void generateProffesionQuestion(){
-		String query = "SELECT Person.idPerson, Person.Name, Person " +
-                "FROM"+this.dbname+".City, "+this.dbname+".Person_Proffesion, "+this.dbname+".Person "+
-                "WHERE Country.idCountry='"+countryId+"';";
+
+	private void generateUniversityQuestions(int i){
+		String query_in = "SELECT University.Name " +
+                "FROM "+this.dbname+".University "+
+                "WHERE University.idCountry='"+countryId+"'"+
+                " and University.Name IS NOT NULL"+
+                " ORDER BY RAND()"+
+                " LIMIT "+i+";";
+		String query_out = "SELECT University.Name " +
+                "FROM "+this.dbname+".University "+
+                "WHERE University.idCountry!='"+countryId+"'"+
+                " and University.Name IS NOT NULL"+
+                " ORDER BY RAND()"+
+                " LIMIT "+(4*i)+";";
+		try {
+			ResultSet rs_in =this.dbh.executeQuery(query_in);
+			ResultSet rs_out =this.dbh.executeQuery(query_out);
+			ArrayList<String> out=new ArrayList<String>();
+			while(rs_out.next()){
+				out.add(rs_out.getString("Name"));
+			}
+			if(out.size()<3){
+				return;
+			}
+			String name;
+			while(rs_in.next()){
+				name=rs_in.getString("Name");
+				Question q = new Question("Which of the following universities located in "+this.countryName+"?");
+				ArrayList<Integer> indexes = randomIndexes(out.size(), 3);
+				q.setCorrectAnswer(new Answer(name));
+				q.addPossibleAnswers(new Answer(name));
+				for(int j=0;j<3;j++){
+					q.addPossibleAnswers(new Answer(out.get(indexes.get(j))));
+				}
+				this.possibleQuestions.add(q);
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	private void generateYearOfBirthQuestions(){
+	
+	private void generateAgeQuestions(int i){
 		String query = "SELECT Person.Name, Person.yearOfBirth " +
                 "FROM "+this.dbname+".City, "+this.dbname+".Person "+
                 "WHERE City.idCountry='"+countryId+"' and Person.idPlaceOfBirth=City.idCity"+
                 " and Person.Name IS NOT NULL and Person.yearOfBirth IS NOT NULL"+
-                "ORDER BY RAND()"+
-                "LIMIT 3;";
+                " ORDER BY RAND()"+
+                " LIMIT "+i+";";
+		try {
+			ResultSet rs =this.dbh.executeQuery(query);
+			String name="";
+			int year;
+			int currYear = Calendar.getInstance().get(Calendar.YEAR);
+			Random r =new Random();
+			while (rs.next()){
+				name = rs.getString("Name");
+				year = rs.getInt("yearOfBirth");
+				
+				Question q = new Question("How old is "+name+"?");
+				q.setCorrectAnswer(new Answer(new Integer(currYear-year).toString()));
+				q.addPossibleAnswers(new Answer(new Integer(currYear-year).toString()));
+				q.addPossibleAnswers(new Answer(new Integer(currYear-year+r.nextInt(10)+1).toString()));
+				q.addPossibleAnswers(new Answer(new Integer((currYear-year)+r.nextInt(10)+1).toString()));
+				q.addPossibleAnswers(new Answer(new Integer((currYear-year)+15).toString()));
+				this.possibleQuestions.add(q);
+			}
+
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//jdbc
+		
 	}
 	private void generateBornInQuestions(){
 		String query_out = "SELECT Person.Name " +
@@ -95,7 +163,7 @@ public class QuestionsGenerator {
 				return;
 			}
 			while(rs_out.next()){
-				Question q = new Question("Who of the following was not born in"+countryName+"?");
+				Question q = new Question("Who of the following was not born in "+countryName+"?");
 				q.setCorrectAnswer(new Answer(rs_out.getString("Name")));
 				q.addPossibleAnswers(new Answer(rs_out.getString("Name")));
 				ArrayList<Integer> indexes = randomIndexes(born_in.size(), 3);
