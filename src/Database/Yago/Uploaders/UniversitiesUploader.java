@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import config.config;
 import Database.DatabaseHandler;
 import entities.entity_city;
 import entities.entity_country;
@@ -19,7 +20,7 @@ public class UniversitiesUploader extends AbstractUploader{
 
 	String table = "University";
 	String[] columns = {"Name","idCountry"};
-
+	config conf = new config();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
@@ -38,7 +39,7 @@ public class UniversitiesUploader extends AbstractUploader{
 		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
 
 		try{
-			country_rs = dbh.executeQuery("SELECT idCountry, Name FROM DbMysql14.Country;");
+			country_rs = dbh.executeQuery(String.format("SELECT idCountry, Name FROM %s.Country;",conf.get_db_name()));
 			while (country_rs.next()) {	        
 	            int idCountry = country_rs.getInt("idCountry");
 	            String Name = country_rs.getString("Name");

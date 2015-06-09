@@ -5,14 +5,17 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import config.config;
+
 /*
  * Pools DB connections
  */
 public class ConnectionPool {
-
-	private static final String CONNPATH = "jdbc:mysql://localhost:3305/DbMysql14"; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
-	private static final String USER = "DbMysql14"; //TODO: change this
-	private static final String PASS = "DbMysql14"; //TODO: change this
+	config conf = new config();
+	
+	private static String CONNPATH; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
+	private static String USER; //TODO: change this
+	private static String PASS; //TODO: change this
 
 	private AtomicInteger POOLMAX = new AtomicInteger(5);
 	private AtomicInteger POOLMIN = new AtomicInteger(3);
@@ -28,6 +31,9 @@ public class ConnectionPool {
 	}
 	
 	public void init() {
+		CONNPATH = String.format("jdbc:mysql://localhost:%s/%s",conf.get_port(),conf.get_db_name());
+		USER = conf.get_user_name();
+		PASS = conf.get_password();
 		this.cStack = new Stack<Connection>();
 		this.count.set(0);
 

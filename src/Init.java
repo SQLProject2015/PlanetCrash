@@ -35,7 +35,7 @@ public class Init {
 
 	public static final int BATCHSIZE=1000;
 	private static List<Object[]> batch;
-	
+	static config conf = new config();
 	
 	public static void Init(DatabaseHandler dbh, config properties){		
 		
@@ -110,7 +110,7 @@ public class Init {
 		
 		ResultSet rs;
 		try{
-			rs = dbh.executeQuery("SELECT Name FROM DbMysql14.Award;");
+			rs = dbh.executeQuery(String.format("SELECT Name FROM %s.Award;",conf.get_db_name()));
 			while (rs.next()) {	        
 	            String Name = rs.getString("Name");
 	            awards_set.add(Name);

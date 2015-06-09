@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import config.config;
 import Database.DatabaseHandler;
 import entities.entity_country;
 
@@ -16,7 +17,7 @@ public class CapitalsUploader extends AbstractUploader{
 
 	String table = "Country";
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize","currentLeader"};
-
+	config conf = new config();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
@@ -31,7 +32,6 @@ public class CapitalsUploader extends AbstractUploader{
 	 */
 	public void upload() {
 		Collection<entity_country> countries = cmap.values();
-
 		for(entity_country country : countries) {
 
 			//Get relevant ids
@@ -53,7 +53,7 @@ public class CapitalsUploader extends AbstractUploader{
 					continue;
 				}
 				
-				String query = String.format("UPDATE DbMysql14.Country SET idCapital=%d WHERE idCountry=%d", idCity,idCountry);
+				String query = String.format("UPDATE %s.Country SET idCapital=%d WHERE idCountry=%d", conf.get_db_name(),idCity,idCountry);
 				dbh.executeUpdate(query);
 
 			} catch (SQLException e) {
