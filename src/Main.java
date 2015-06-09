@@ -45,14 +45,22 @@ public class Main {
 	public static void main(String args[]) {
 		
 		//Game GUI
-				GameGUI gg = new GameGUI();
-				gg.start();
+//				GameGUI gg = new GameGUI();
+//				gg.start();
+		
+		String username;
+		System.out.println("Enter username");
 		
 		//Init connection pool
 		mConnPool = new ConnectionPool();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 		config properties = new config();
+		
+		try{
+			UserHandler.add_new_user("osher", "1234", dbh);
+		}catch(Exception ex){
+		}
 
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();
