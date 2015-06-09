@@ -24,7 +24,7 @@ public class Star {
 	public void paint(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(color);
-		((Graphics2D)g).fillOval(x, y, 2, 2);
+		((Graphics2D)g).fillOval(x, y, 3, 3);
 		g.setColor(c);
 	}
 	

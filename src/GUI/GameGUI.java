@@ -19,6 +19,7 @@ import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.LayeredPaneLayout;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.LoginScene;
 import GUI.Scenes.MainMenuScene;
 import GUI.Scenes.Scene;
 
@@ -45,7 +46,7 @@ public class GameGUI {
         mainFrame.setResizable(false);
         
         //Show main screen
-        MainMenuScene mms = new MainMenuScene();
+        LoginScene mms = new LoginScene();//MainMenuScene();
         switchScene(mms);
         //        mainFrame.setContentPane(mms.create());
        
