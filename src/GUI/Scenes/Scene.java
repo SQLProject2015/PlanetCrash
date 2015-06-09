@@ -3,6 +3,7 @@ package GUI.Scenes;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -24,6 +25,15 @@ public abstract class Scene {
 
 	public static JPanel emptyMainJPanel() {
 		JPanel ret = new JPanel();
+		ret.setSize(GameGUI.WINDOW_WIDTH, GameGUI.WINDOW_HEIGHT);
+		ret.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
+		ret.setBorder(new EmptyBorder(-5, -5, -5, -5));
+
+		return ret;
+	}
+	
+	public static JLayeredPane emptyMainJLayeredPane() {
+		JLayeredPane ret = new JLayeredPane();
 		ret.setSize(GameGUI.WINDOW_WIDTH, GameGUI.WINDOW_HEIGHT);
 		ret.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
 		ret.setBorder(new EmptyBorder(-5, -5, -5, -5));

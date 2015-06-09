@@ -120,7 +120,6 @@ public class LoginScene extends Scene{
 			user = UserHandler.validate_user(username, pass, dbh);
 		} catch (UserException | SQLException e) {
 			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
-			e.printStackTrace();
 		}
 		try {
 			dbh.close();

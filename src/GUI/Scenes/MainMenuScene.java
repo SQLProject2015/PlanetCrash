@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -69,8 +71,61 @@ public class MainMenuScene extends Scene {
 		welcomeMsg.setOpaque(false);
 		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
 		panel.add(welcomeMsg, new Integer(3),0);
+		
+		//register listeners
+		playBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.PLAY));
+		settingBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.SETTINGS));
+		quitBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.QUIT));
+		
 		return panel;
 	}
 
+	
+	class MainMenuMouseListener implements MouseListener {
+		public static final int PLAY=0,SETTINGS=1,QUIT=2;
+		int mode;
+		public MainMenuMouseListener(int mode) {
+			this.mode=mode;
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			switch(mode) {
+			case PLAY:
+				gameGUI.switchScene(new DifficultySelectScene(gameGUI, game));
+				break;
+			case SETTINGS:
+				break;
+			case QUIT:
+				break;
+			}
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }
 

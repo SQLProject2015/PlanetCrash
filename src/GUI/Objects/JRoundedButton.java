@@ -61,4 +61,8 @@ public class JRoundedButton extends JRounded {
 		this.borderColor=c;
 		label.setForeground(borderColor);
 	}	
+	
+	public void setLabelFont(Font font) {
+		this.label.setFont(font);
+	}
 }
