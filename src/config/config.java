@@ -155,6 +155,7 @@ public class config {
 	public String get_yago_tag_wiki_len(){
 		return configFile.getProperty("FACT_WIKILEN");
 	}
+
 	
 	
 

@@ -31,6 +31,7 @@ import Database.Yago.Uploaders.CurrenciesUploader;
 import Database.Yago.Uploaders.LanguagesUploader;
 import Database.Yago.Uploaders.PersonProfessionUploader;
 import Database.Yago.Uploaders.PersonsUploader;
+import Database.Yago.Uploaders.UniversitiesUploader;
 import GUI.GameGUI;
 
 
@@ -273,14 +274,14 @@ public class Main {
 		//		
 //		
 //		//Currency
-//		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
-//		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
-//		currencyUploader.upload();
+		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
+		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
+		currencyUploader.upload();
 //		
 ////		//Language
-//		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
-//		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
-//		languageUploader.upload();
+		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
+		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
+		languageUploader.upload();
 //		
 //		//CITIES
 //		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
@@ -288,9 +289,9 @@ public class Main {
 //		citiesUploader.upload();
 		
 //		//PERSONS
-//		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
-//		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
-//		pUploader.upload();
+		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
+		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
+		pUploader.upload();
 		
 		//COUNTRIES_CITIES
 //		System.out.println("inserting countries_city " + (System.currentTimeMillis()-start)/1000f);
@@ -298,14 +299,19 @@ public class Main {
 //		ccUploader.upload();
 	
 		//PERSONS_PROFESSION
-//		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
-//		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, dbh);
-//		ppUploader.upload();
+		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
+		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, dbh);
+		ppUploader.upload();
 		
 		//AWARD_WINNERS
-//		System.out.println("inserting award winners " + (System.currentTimeMillis()-start)/1000f);
-//		AwardWinnersUploader awUploader = new AwardWinnersUploader(lite_persons_map, dbh);
-//		awUploader.upload();
+		System.out.println("inserting award winners " + (System.currentTimeMillis()-start)/1000f);
+		AwardWinnersUploader awUploader = new AwardWinnersUploader(lite_persons_map, dbh);
+		awUploader.upload();
+		
+		//AWARD_WINNERS
+		System.out.println("inserting universities  " + (System.currentTimeMillis()-start)/1000f);
+		UniversitiesUploader uniUploader = new UniversitiesUploader(universities_map, dbh);
+		uniUploader.upload();		
 		
 		int i =0;
 		if (i == 0){

@@ -128,6 +128,11 @@ public class parser_yago_facts extends AbstractYagoParser{
 				per.setPlaceOfBirth(clean_rentity);
 				flag = true;
 			}
+			
+			else if (toParse.relation.equals(properties.get_yago_tag_leader())){
+				lite_persons_map.put(clean_lentity,per);
+				flag = true;
+			}
 		}
 		
 
