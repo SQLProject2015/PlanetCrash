@@ -32,8 +32,10 @@ public class parser_yago_literal_facts extends AbstractYagoParser{
 				while (m.find()) {
 				  population = Integer.parseInt((m.group(1)));
 				}
-				country.setPopulation_size(population);
-				return true;
+				if (population > 3000){
+					country.setPopulation_size(population);
+					return true;
+				}
 			}
 		}	
 		return false;

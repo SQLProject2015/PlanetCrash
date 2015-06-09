@@ -109,7 +109,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 					flag=true;
 				}
 			}
-			if (toParse.relation.equals(properties.get_yago_tag_wiki_len())) {
+			else if (toParse.relation.equals(properties.get_yago_tag_wiki_len())) {
 				int population = 0;
 				Pattern p = Pattern.compile("\"([^\"]*)\"");
 				Matcher m = p.matcher(toParse.rentity);
@@ -122,7 +122,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 				}
 				
 			}
-			if (toParse.relation.equals(properties.get_yago_tag_birth_place())){
+			else if (toParse.relation.equals(properties.get_yago_tag_birth_place())){
 				per.setPlaceOfBirth(clean_rentity);
 				flag = true;
 			}
