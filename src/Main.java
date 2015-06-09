@@ -25,6 +25,7 @@ import Database.Yago.parser_yago_facts;
 import Database.Yago.parser_yago_facts2;
 import Database.Yago.parser_yago_literal_facts;
 import Database.Yago.Uploaders.AwardWinnersUploader;
+import Database.Yago.Uploaders.CapitalsUploader;
 import Database.Yago.Uploaders.CitiesUploader;
 import Database.Yago.Uploaders.CountriesCitiesUploader;
 import Database.Yago.Uploaders.CountriesUploader;
@@ -273,14 +274,13 @@ public class Main {
 // 			}
 // 		}
 		
-		//		
-//		
-//		//Currency
+		
+		//Currency
 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
 		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
 		currencyUploader.upload();
-//		
-////		//Language
+		
+		//Language
 		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
 		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
 		languageUploader.upload();
@@ -291,12 +291,17 @@ public class Main {
 		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
 		cUploader.upload();
 		
-//		//CITIES
+		//CITIES
 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
 		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
 		citiesUploader.upload();
 		
-//		//PERSONS
+		//CAPITALS
+		System.out.println("updating capitals " + (System.currentTimeMillis()-start)/1000f);
+		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, dbh);
+		capitalsUploader.upload();
+		
+		//PERSONS
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
 		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
 		pUploader.upload();
