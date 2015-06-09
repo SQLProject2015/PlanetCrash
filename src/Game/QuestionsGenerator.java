@@ -257,8 +257,9 @@ public class QuestionsGenerator {
 				q.setCorrectAnswer(new Answer(officialLanguage));
 				q.addPossibleAnswers(new Answer(officialLanguage));
 				query = "SELECT DISTINCT Language.Name " +
-			               "FROM "+this.dbname+".Language "+
-			               "WHERE Language.Name!='"+officialLanguage+"' and Language.Name IS NOT NULL"+               
+			               "FROM "+this.dbname+".Language ,"+this.dbname+".Country "+
+			               "WHERE Language.Name!='"+officialLanguage+"' and Language.idLanguage = Country.idLanguage"
+			               	+" and Language.Name IS NOT NULL"+               
 			               " ORDER BY RAND()"+
 			               " LIMIT 3;";
 				rs =this.dbh.executeQuery(query);//jdbc
@@ -290,8 +291,7 @@ public class QuestionsGenerator {
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
 			if (rs.next()){
-				String[] officialcuerrncySplit = rs.getString("Name").split(" ");
-				String officialCurrency = officialcuerrncySplit[officialcuerrncySplit.length-1];
+				String officialCurrency = rs.getString("Name");
 				q.setCorrectAnswer(new Answer(officialCurrency));
 				q.addPossibleAnswers(new Answer(officialCurrency));
 				query = "SELECT DISTINCT Currency.Name " +
@@ -305,8 +305,7 @@ public class QuestionsGenerator {
 				int i =0;
 				while (rs.next()){
 					i++;
-					String[] cuerrncySplit = rs.getString("Name").split(" ");
-					String currency = cuerrncySplit[cuerrncySplit.length-1];
+					String currency = rs.getString("Name");
 					q.addPossibleAnswers(new Answer(currency));
 				}
 				if (i==3){
