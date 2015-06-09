@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -98,7 +99,8 @@ public class Main {
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Chemistry"});
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Peace Prize"});
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"FIFA World Player of the Year"});
-
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"World Music Awards"});
+			
 		} catch (SQLException e) {
 
 		}
@@ -282,21 +284,22 @@ public class Main {
 		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
 		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
 		languageUploader.upload();
-//		
+
+		
+		//COUNTRIES
+		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
+		CountriesUploader cUploader = new CountriesUploader(countries_map, dbh);
+		cUploader.upload();
+		
 //		//CITIES
-//		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
-//		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
-//		citiesUploader.upload();
+		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
+		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
+		citiesUploader.upload();
 		
 //		//PERSONS
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
 		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
 		pUploader.upload();
-		
-		//COUNTRIES_CITIES
-//		System.out.println("inserting countries_city " + (System.currentTimeMillis()-start)/1000f);
-//		CountriesCitiesUploader ccUploader = new CountriesCitiesUploader(countries_cities_map, dbh);
-//		ccUploader.upload();
 	
 		//PERSONS_PROFESSION
 		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
@@ -308,7 +311,7 @@ public class Main {
 		AwardWinnersUploader awUploader = new AwardWinnersUploader(lite_persons_map, dbh);
 		awUploader.upload();
 		
-		//AWARD_WINNERS
+		//UNIVERSIIES
 		System.out.println("inserting universities  " + (System.currentTimeMillis()-start)/1000f);
 		UniversitiesUploader uniUploader = new UniversitiesUploader(universities_map, dbh);
 		uniUploader.upload();		
