@@ -290,12 +290,14 @@ public class QuestionsGenerator {
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
 			if (rs.next()){
-				String officialCurrency = rs.getString("Name");
+				String[] officialcuerrncySplit = rs.getString("Name").split(" ");
+				String officialCurrency = officialcuerrncySplit[officialcuerrncySplit.length-1];
 				q.setCorrectAnswer(new Answer(officialCurrency));
 				q.addPossibleAnswers(new Answer(officialCurrency));
 				query = "SELECT DISTINCT Currency.Name " +
-			               "FROM "+this.dbname+".Currency "+
+			               "FROM "+this.dbname+".Currency, "+this.dbname+".Country "+
 			               "WHERE Currency.Name!='"+officialCurrency+"'"+
+			               " and Currency.idCurrency=Country.idCurrency"+
 			               " and Currency.Name IS NOT NULL"+
 			               " ORDER BY RAND()"+
 			               " LIMIT 3;";
@@ -303,7 +305,8 @@ public class QuestionsGenerator {
 				int i =0;
 				while (rs.next()){
 					i++;
-					String currency = rs.getString("Name");
+					String[] cuerrncySplit = rs.getString("Name").split(" ");
+					String currency = cuerrncySplit[cuerrncySplit.length-1];
 					q.addPossibleAnswers(new Answer(currency));
 				}
 				if (i==3){
