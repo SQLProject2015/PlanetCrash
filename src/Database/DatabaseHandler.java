@@ -125,7 +125,7 @@ public class DatabaseHandler {
 		return count;
 	}
 
-	public void singleInsert(String table, String[] columns, String[] values) throws SQLException {
+	public void singleInsert(String table, String[] columns, Object[] values) throws SQLException {
 		if(columns.length!=values.length) {
 			System.out.println("Mismatching colums-values");
 			return;

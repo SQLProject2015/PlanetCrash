@@ -53,8 +53,8 @@ public class CapitalsUploader extends AbstractUploader{
 					continue;
 				}
 				
-				String query = String.format("UPDATE `DbMysql14`.`Country` SET `idCapital`='%d' WHERE `idCountry`='%d'", idCity,idCountry);
-				dbh.executeQuery(query);
+				String query = String.format("UPDATE DbMysql14.Country SET idCapital=%d WHERE idCountry=%d", idCity,idCountry);
+				dbh.executeUpdate(query);
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
