@@ -75,7 +75,8 @@ public class Init {
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Chemistry"});
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Peace Prize"});
 			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"FIFA World Player of the Year"});
-
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"World Music Awards"});
+			
 		} catch (SQLException e) {
 
 		}
