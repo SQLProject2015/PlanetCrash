@@ -31,20 +31,20 @@ public class QuestionsGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		generatePopulationSizeQuestion();
-//		generateContinentQuestion();
-//		generateOfficialLanguageQuestion();
-//		generateOfficialCurrencyQuestion();
-//		generateCapitalCityQuestion();
-//		generateBornInQuestions();//up to 3 questions of this type
-//		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
-//		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
+		generatePopulationSizeQuestion();
+		generateContinentQuestion();
+		generateOfficialLanguageQuestion();
+		generateOfficialCurrencyQuestion();
+		generateCapitalCityQuestion();
+		generateBornInQuestions();//up to 3 questions of this type
+		generatePrizeWinnerQuestions("Grammy Award",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Grammy Lifetime Achievement Award",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Academy Award for Best Actor",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Academy Award for Best Actress",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Peace Prize",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("FIFA World Player of the Year",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Prize in Physics",2);//up to 2 questions of this type
+		generatePrizeWinnerQuestions("Nobel Prize in Chemistry",2);//up to 2 questions of this type
 		generateCommonProfessionQuestion(1);
 		generateWhosDeadQuestion(1);
 
@@ -71,17 +71,17 @@ public class QuestionsGenerator {
                 "LIMIT 3;";
 	}
 	private void generateBornInQuestions(){
-		String query_out = "Person.Name" +
+		String query_out = "SELECT Person.Name " +
                 "FROM "+this.dbname+".City, "+this.dbname+".Person "+
-                "WHERE City.idCountry!='"+countryId+"'"+"Person.idBirthPlace=City.idCountry "+
+                "WHERE City.idCountry!='"+countryId+"'"+" and Person.idPlaceOfBirth=City.idCity "+
                 "and Person.Name IS NOT NULL "+
-                "ORDER BY RAND()"+
+                "ORDER BY RAND() "+
                 "LIMIT 3";
-		String query_in = "Person.Name" +
+		String query_in = "SELECT Person.Name " +
                 "FROM "+this.dbname+".City, "+this.dbname+".Person "+
-                "WHERE City.idCountry='"+countryId+"'"+"Person.idBirthPlace=City.idCountry "+
+                "WHERE City.idCountry='"+countryId+"'"+" and Person.idPlaceOfBirth=City.idCity "+
                 "and Person.Name IS NOT NULL "+
-                "ORDER BY RAND()"+
+                "ORDER BY RAND() "+
                 "LIMIT 15";
 
 		ArrayList<String> born_in= new ArrayList<String>();
@@ -90,6 +90,9 @@ public class QuestionsGenerator {
 			ResultSet rs_out =this.dbh.executeQuery(query_out);//jdbc
 			while(rs_in.next()){
 				born_in.add(rs_in.getString("Name"));
+			}
+			if (born_in.size()<3){
+				return;
 			}
 			while(rs_out.next()){
 				Question q = new Question("Who of the following was not born in"+countryName+"?");
@@ -117,13 +120,14 @@ public class QuestionsGenerator {
 		
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
-			if (rs.next()){				
+			if (rs.next()){	
+				Random r =new Random();
 				Integer populationSize = rs.getInt("PopulationSize");
 				q.setCorrectAnswer(new Answer(populationSize.toString()));
 				q.addPossibleAnswers(new Answer(populationSize.toString()));
-				q.addPossibleAnswers(new Answer(((Integer)(populationSize/2)).toString()));
-				q.addPossibleAnswers(new Answer(((Integer)(populationSize*2)).toString()));
-				q.addPossibleAnswers(new Answer(((Integer)(populationSize*4)).toString()));
+				q.addPossibleAnswers(new Answer(((Integer)(populationSize/(r.nextInt(4)+1))).toString()));
+				q.addPossibleAnswers(new Answer(((Integer)(populationSize*(r.nextInt(4)+1))).toString()));
+				q.addPossibleAnswers(new Answer(((Integer)(populationSize/6)).toString()));
 				q.setQuestionAsReady();
 				possibleQuestions.add(q);
 			}
