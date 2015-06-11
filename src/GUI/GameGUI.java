@@ -1,15 +1,17 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import Database.ConnectionPool;
-import GUI.Objects.Effects.Faders;
-import GUI.Objects.Effects.Faders.OutFader;
+import GUI.Objects.Effects.Fader;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
 import Game.Game;
@@ -52,7 +54,7 @@ public class GameGUI {
 		switchScene(mms);
 		//        mainFrame.setContentPane(mms.create());
 
-		fadeSwitchScene(mms);
+//		fadeSwitchScene(mms);
 
 		mainFrame.pack();
 
@@ -77,14 +79,47 @@ public class GameGUI {
 	}
 
 	//Switches scenes with a fade effect
-	public void fadeSwitchScene(Scene scene) {
+	public void fadeSwitchScene(final Scene scene) {
+		final long duration = 500;
 		
-		Faders.OutFader of = new Faders.OutFader(1000);
-		JPanel shit = Scene.emptyMainJPanel();
-		shit.setOpaque(false);
-		shit.add(of);
-		mJLPane.add(shit,new Integer(1),0);
+		final Fader of = new Fader(duration, true);
+		final Fader inf = new Fader(duration,false);
+		
+		final JPanel container = Scene.emptyMainJPanel();
+		container.setOpaque(false);
+		container.add(of);
+		mJLPane.add(container,new Integer(1),0);
+		
 		new Thread(of).start();
+		
+		Timer t1 =new Timer((int)duration, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				switchScene(scene);
+				mJLPane.remove(container);
+
+				final JPanel containerr = Scene.emptyMainJPanel();
+				containerr.setOpaque(false);
+				containerr.add(inf);
+				mJLPane.add(containerr, new Integer(2),0);
+				new Thread(inf).start();
+				
+				Timer t2 = new Timer((int)duration, new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						mJLPane.remove(containerr);
+					}
+					
+				});
+				
+				t2.setRepeats(false);
+				t2.start();
+			}
+		});
+		
+		t1.setRepeats(false);
+		t1.start();
 	}
 
 }

@@ -65,4 +65,12 @@ public abstract class JRounded extends JPanel{
 	public void setBackgroundColor(Color c) {
 		this.backgroundColor=c;
 	}
+	
+	public Color getBorderColor() {
+		return this.borderColor;
+	}
+	
+	public Color getBackgroundColor() {
+		return this.backgroundColor;
+	}
 }

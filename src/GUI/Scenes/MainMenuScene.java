@@ -92,7 +92,7 @@ public class MainMenuScene extends Scene {
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
 			case PLAY:
-				gameGUI.switchScene(new DifficultySelectScene(gameGUI, game));
+				gameGUI.fadeSwitchScene(new DifficultySelectScene(gameGUI, game));
 				break;
 			case SETTINGS:
 				break;

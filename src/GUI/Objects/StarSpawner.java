@@ -13,7 +13,7 @@ import GUI.GameGUI;
 
 public class StarSpawner extends JPanel implements Runnable{
 
-	List<Star> stars, dump, newStars;
+	List<Star> toPaint,stars, dump, newStars;
 	int starLimit;
 	int x,y,startVelocity=3;
 	float acceleration;
@@ -60,16 +60,15 @@ public class StarSpawner extends JPanel implements Runnable{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		for (Star s : stars)
+		
+		for (Star s : toPaint)
 			s.paint(g);
 	}
 
 	private void cycle(long timeDelay) {
 		if(stars.size()<starLimit)
 			spawnStar();
-		for (Star s : newStars)
-			stars.add(s);
+		stars.addAll(newStars);
 		newStars = new ArrayList<Star>();
 
 		double delay = timeDelay/1000d;
@@ -91,6 +90,7 @@ public class StarSpawner extends JPanel implements Runnable{
 			stars.remove(s);
 		dump = new ArrayList<Star>();
 
+		toPaint = new ArrayList<Star>(stars);
 	}
 
 

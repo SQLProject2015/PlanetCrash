@@ -64,6 +64,7 @@ public class LoginScene extends Scene{
 		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Username:", 100, userpass.getSize()+20, 2);
 		usernameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
 		
+		usernameLabel.isButton(false);
 		usernameLabel.setBorderColor(Color.cyan);
 		usernameField.setBorderColor(Color.cyan);
 		
@@ -81,6 +82,7 @@ public class LoginScene extends Scene{
 		JRoundedButton passwordLabel = new JRoundedButton(userpass,"Password:", 100, userpass.getSize()+20, 2);
 		passwordField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, true);
 	
+		passwordLabel.isButton(false);
 		passwordLabel.setBorderColor(Color.cyan);
 		passwordField.setBorderColor(Color.cyan);
 		
@@ -145,7 +147,8 @@ public class LoginScene extends Scene{
 			game.setUser(user);
 			
 			MainMenuScene mms = new MainMenuScene(gameGUI,game);
-			gameGUI.switchScene(mms);			
+//			gameGUI.switchScene(mms);		
+			gameGUI.fadeSwitchScene(mms);
 		}
 
 		@Override
