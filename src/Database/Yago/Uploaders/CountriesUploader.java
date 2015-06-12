@@ -13,6 +13,7 @@ import entities.entity_country;
 
 public class CountriesUploader extends AbstractUploader{
 	Map<String, entity_country> cmap;
+	
 
 	String table = "Country";
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize"};
