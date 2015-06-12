@@ -53,6 +53,7 @@ public class Init {
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Africa"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Central America"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Oceania"});
 
