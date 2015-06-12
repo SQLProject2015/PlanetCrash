@@ -3,11 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
 import config.config;
-import Database.ConnectionPool;
 import Database.DatabaseHandler;
 import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
@@ -26,7 +23,6 @@ import entities.entity_city;
 import entities.entity_country;
 import entities.entity_person;
 import entities.entity_university;
-import config.config;
 
 
 public class Init {
@@ -34,10 +30,10 @@ public class Init {
 	
 
 	public static final int BATCHSIZE=1000;
-	private static List<Object[]> batch;
+	//private static List<Object[]> batch;
 	static config conf = new config();
 	
-	public static void Init(DatabaseHandler dbh, config properties){		
+	public Init(DatabaseHandler dbh, config properties){		
 		
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();
@@ -47,7 +43,6 @@ public class Init {
 		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>();
 		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
 		HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
-		HashSet<String> lite_city_set = new HashSet<String>();
 		HashSet<String> awards_set = new HashSet<String>();
 
 		long start = System.currentTimeMillis();
@@ -120,30 +115,30 @@ public class Init {
 		}
 
 	
-		//Currency
+		//CURRENCY
 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
 		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
 		currencyUploader.upload();
 				
-		//Language
+		//LANGUAGE
 		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
 		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
 		languageUploader.upload();
+				
+		//COUNTRIES
+		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
+		CountriesUploader countriesUploader = new CountriesUploader(countries_map, dbh);
+		countriesUploader.upload();
 			
 		//CITIES
 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
 		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
 		citiesUploader.upload();
-		
-		//COUNTRIES
-		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
-		CountriesUploader countriesUploader = new CountriesUploader(countries_map, dbh);
-		citiesUploader.upload();
-		
+
 		//CAPITALS
 		System.out.println("inserting capitals " + (System.currentTimeMillis()-start)/1000f);
 		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, dbh);
-		citiesUploader.upload();
+		capitalsUploader.upload();
 
 		//PERSONS
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);

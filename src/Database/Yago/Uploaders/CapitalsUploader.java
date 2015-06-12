@@ -16,7 +16,7 @@ public class CapitalsUploader extends AbstractUploader{
 	Map<String, entity_country> cmap;
 
 	String table = "Country";
-	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize","currentLeader"};
+	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize"};
 	config conf = new config();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database

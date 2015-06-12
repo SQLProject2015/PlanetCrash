@@ -56,7 +56,7 @@ public class Main {
 //		gg.start();
 
 		
-		Init.Init(dbh, properties);
+		Init init = new Init(dbh, properties);
 
 		try{
 			ManualUpdater.add_Person("tomer baruch", "1989", "0", "Rome", dbh);
