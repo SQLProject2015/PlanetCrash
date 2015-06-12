@@ -11,6 +11,7 @@ import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
 import Database.Yago.parser_yago_facts;
 import Database.Yago.parser_yago_literal_facts;
+import Database.Yago.parser_yago_wikipedia_info;
 import Database.Yago.Uploaders.AwardWinnersUploader;
 import Database.Yago.Uploaders.CapitalsUploader;
 import Database.Yago.Uploaders.CitiesUploader;
@@ -101,6 +102,12 @@ public class Init {
 			parser_yago_facts d = new parser_yago_facts(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_map,universities_map,persons_map, lite_persons_map, awards_set);
 			d.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
+			
+			System.out.println("parsing wikipedia info " + (System.currentTimeMillis()-start)/1000f);
+			parser_yago_wikipedia_info k = new parser_yago_wikipedia_info(properties.get_yago_wikipedia_info_path(),persons_map, lite_persons_map);
+			k.populate();
+			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
+			
 
 			System.out.println("parsing literal facts " + (System.currentTimeMillis()-start)/1000f);
 			parser_yago_literal_facts g = new parser_yago_literal_facts(properties.get_yago_literal_facts_path(), countries_map);
