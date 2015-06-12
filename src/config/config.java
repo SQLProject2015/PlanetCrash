@@ -88,9 +88,17 @@ public class config {
 	public String get_yago_tag_language(){
 		return configFile.getProperty("LANGUAGE");
 	}
+	/** get the yago tag name for "language" type **/
+	public String get_yago_tag_language2(){
+		return configFile.getProperty("LANGUAGE2");
+	}
 	/** get the yago tag name for "currency" type **/
 	public String get_yago_tag_currency(){
 		return configFile.getProperty("CURRENCY");
+	}
+	/** get the yago tag name for "currency" type **/
+	public String get_yago_tag_currency2(){
+		return configFile.getProperty("CURRENCY2");
 	}
 	/** get the yago tag name for "population" type **/
 	public String get_yago_tag_population(){

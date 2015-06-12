@@ -81,11 +81,11 @@ public class parser_transitive_types extends AbstractYagoParser{
 			return true;
 			//System.out.println(clean_lentity);
 		}
-		else if (toParse.rentity.equals(properties.get_yago_tag_currency())){
+		else if ( toParse.rentity.equals(properties.get_yago_tag_currency()) || toParse.rentity.equals(properties.get_yago_tag_currency2()) ){
 			currency_set.add(clean_lentity);
 			return true;
 		}
-		else if (toParse.rentity.equals(properties.get_yago_tag_language())){
+		else if ( toParse.rentity.equals(properties.get_yago_tag_language()) || toParse.rentity.equals(properties.get_yago_tag_language2()) ){
 			language_set.add(clean_lentity);
 			return true;
 		}
