@@ -22,6 +22,8 @@ public abstract class AbstractUploader {
 			dbh.batchInsert(table, columns, batch);
 			batch = new ArrayList<Object[]>();
 		} catch (SQLException e) {
+			System.out.println("BATCH FAILED.");
+			e.printStackTrace();
 			for(Object[] arr : batch) { //insert individually
 				StringBuilder sql = new StringBuilder();
 				try { 
