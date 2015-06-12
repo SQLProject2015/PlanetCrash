@@ -31,6 +31,7 @@ public class CurrenciesUploader extends AbstractUploader{
 	 * Upload all country entities to the database
 	 */
 	public void upload() {
+		int c=0;
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(String curr : cset) {
 
@@ -50,6 +51,9 @@ public class CurrenciesUploader extends AbstractUploader{
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
+				c+=BATCHSIZE;
+				System.out.println("total "+c);
+				batch = new ArrayList<Object[]>();
 			}
 			batch.add(values);
 		}

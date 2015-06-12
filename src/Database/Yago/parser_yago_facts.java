@@ -57,8 +57,11 @@ public class parser_yago_facts extends AbstractYagoParser{
 		
 		if (country != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
-				country.setContinent(clean_rentity);
-				flag=true;
+				if (country.getContinent() == null){
+					country.setContinent(clean_rentity);
+					flag=true;
+				}
+				
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_has_currency())){
 				country.setCurrency(clean_rentity);
@@ -92,14 +95,6 @@ public class parser_yago_facts extends AbstractYagoParser{
 			}
 		}
 		
-//		Set<String> list = countries_cities_map.get(clean_rentity);
-//		if (list!=null){
-//			if (toParse.relation.equals(properties.get_yago_tag_located_in()) && cities_set.contains(clean_lentity)){
-//				list.add(clean_lentity);
-//				flag=true;
-//			}
-//		}
-		
 		entity_university university = universities_map.get(clean_lentity);
 		if(university != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
@@ -119,19 +114,19 @@ public class parser_yago_facts extends AbstractYagoParser{
 					flag=true;
 				}
 			}
-			else if (toParse.relation.equals(properties.get_yago_tag_wiki_len())) {
-				int population = 0;
-				Pattern p = Pattern.compile("\"([^\"]*)\"");
-				Matcher m = p.matcher(toParse.rentity);
-				while (m.find()) {
-				  population = Integer.parseInt((m.group(1)));
-				}
-				if (population > 20000){
-					lite_persons_map.put(clean_lentity,per);
-					flag=true;
-				}
-				
-			}
+//			else if (toParse.relation.equals(properties.get_yago_tag_wiki_len())) {
+//				int population = 0;
+//				Pattern p = Pattern.compile("\"([^\"]*)\"");
+//				Matcher m = p.matcher(toParse.rentity);
+//				while (m.find()) {
+//				  population = Integer.parseInt((m.group(1)));
+//				}
+//				if (population > 20000){
+//					lite_persons_map.put(clean_lentity,per);
+//					flag=true;
+//				}
+//				
+//			}
 			else if (toParse.relation.equals(properties.get_yago_tag_birth_place())){
 				per.setPlaceOfBirth(clean_rentity);
 				flag = true;
