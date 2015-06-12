@@ -17,6 +17,7 @@ import entities.entity_person;
 public class PersonsUploader extends AbstractUploader{
 	Map<String, entity_person> pmap;
 	config conf = new config();
+	HashMap<String, Integer> city_id_name_map;
 
 	String table = "Person";
 	String[] columns = {"Name","yearOfBirth", "yearOfDeath","idPlaceOfBirth"};
@@ -25,9 +26,10 @@ public class PersonsUploader extends AbstractUploader{
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
 	 */
-	public PersonsUploader(HashMap<String, entity_person> lite_persons_map, DatabaseHandler dbh) {
+	public PersonsUploader(HashMap<String, entity_person> lite_persons_map, HashMap<String, Integer> city_id_name_map, DatabaseHandler dbh) {
 		super(dbh);
 		this.pmap=lite_persons_map;
+		this.city_id_name_map = city_id_name_map;
 	}
 
 	/**
@@ -36,21 +38,6 @@ public class PersonsUploader extends AbstractUploader{
 	public void upload() {
 		Collection<entity_person> persons = pmap.values();
 		
-		ResultSet city_rs;
-		HashMap<String, Integer> city_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			city_rs = dbh.executeQuery(String.format("SELECT idCity, Name FROM %s.City;",conf.get_db_name()));
-			while (city_rs.next()) {	        
-	            int idCity = city_rs.getInt("idCity");
-	            String Name = city_rs.getString("Name");
-	            city_id_name_map.put(Name, idCity);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
-		
-
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(entity_person person : persons) {
 			//Get relevant ids

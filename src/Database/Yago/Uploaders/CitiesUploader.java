@@ -19,14 +19,16 @@ public class CitiesUploader extends AbstractUploader{
 	config conf = new config();
 	String table = "City";
 	String[] columns = {"Name","idCountry"};
+	HashMap<String, Integer> country_id_name_map;
 
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
 	 */
-	public CitiesUploader(Map<String, entity_city> cities_map, DatabaseHandler dbh) {
+	public CitiesUploader(Map<String, entity_city> cities_map, HashMap<String, Integer> country_id_name_map, DatabaseHandler dbh) {
 		super(dbh);
 		this.cmap=cities_map;
+		this.country_id_name_map = country_id_name_map; 
 	}
 
 	/**
@@ -34,19 +36,6 @@ public class CitiesUploader extends AbstractUploader{
 	 */
 	public void upload() {
 		int c=0;
-		ResultSet country_rs;
-		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			country_rs = dbh.executeQuery(String.format("SELECT idCountry, Name FROM %s.Country;",conf.get_db_name()));
-			while (country_rs.next()) {	        
-	            int idCountry = country_rs.getInt("idCountry");
-	            String Name = country_rs.getString("Name");
-	            country_id_name_map.put(Name, idCountry);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
 
 		Collection<entity_city> cities = cmap.values();
 		List<Object[]> batch = new ArrayList<Object[]>();

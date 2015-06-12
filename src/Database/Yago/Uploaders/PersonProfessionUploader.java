@@ -11,12 +11,15 @@ import java.util.Map;
 import java.util.Set;
 
 
+
+
 import Database.DatabaseHandler;
 import entities.entity_country;
 import entities.entity_person;
 
 public class PersonProfessionUploader extends AbstractUploader{
 	HashMap<String, entity_person> pmap;
+	HashMap<String, Integer> persons_id_name_map;
 
 	String table = "Person_Profession";
 	String[] columns = {"idPerson","idProfession"};
@@ -25,9 +28,10 @@ public class PersonProfessionUploader extends AbstractUploader{
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
 	 */
-	public PersonProfessionUploader(HashMap<String, entity_person> persons_map, DatabaseHandler dbh) {
+	public PersonProfessionUploader(HashMap<String, entity_person> persons_map, HashMap<String, Integer> persons_id_name_map, DatabaseHandler dbh) {
 		super(dbh);
 		this.pmap=persons_map;
+		this.persons_id_name_map = persons_id_name_map;
 	}
 
 	/**
@@ -45,21 +49,23 @@ public class PersonProfessionUploader extends AbstractUploader{
 	        entity_person person_details = (entity_person)pair.getValue();
 	        
 	        ResultSet rs;
-	        int person_id=0;
-	        	        
-	        try{
-				//idCountry
-				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name = \""+person+"\"");
-				if(rs.first())
-					person_id = rs.getInt(1);
-	        }catch(SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Error initializing country: "+person);
-				e.printStackTrace();
-				continue;        	
-	        }
+	        Integer person_id=0;
 	        
-	        if(person_id==0){
+	        person_id = persons_id_name_map.get(person);
+	        	        
+//	        try{
+//				//idCountry
+//				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name = \""+person+"\"");
+//				if(rs.first())
+//					person_id = rs.getInt(1);
+//	        }catch(SQLException e) {
+//				// TODO Auto-generated catch block
+//				System.out.println("Error initializing country: "+person);
+//				e.printStackTrace();
+//				continue;        	
+//	        }
+	        
+	        if(person_id==null){
 	        	continue;
 	        }
 	        

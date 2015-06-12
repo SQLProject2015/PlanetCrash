@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
 import config.config;
 import Database.DatabaseHandler;
 import Database.Yago.parser_transitive_types;
@@ -116,8 +117,79 @@ public class Init {
 		}
 		
 
+		ResultSet city_rs;
+		HashMap<String, Integer> city_id_name_map = new HashMap<String, Integer>();
 
-	
+		try{
+			city_rs = dbh.executeQuery(String.format("SELECT idCity, Name FROM %s.City;",conf.get_db_name()));
+			while (city_rs.next()) {	        
+	            int idCity = city_rs.getInt("idCity");
+	            String Name = city_rs.getString("Name");
+	            city_id_name_map.put(Name, idCity);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		
+		ResultSet country_rs;
+		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			country_rs = dbh.executeQuery(String.format("SELECT idCountry, Name FROM %s.Country;",conf.get_db_name()));
+			while (country_rs.next()) {	        
+	            int idCountry = country_rs.getInt("idCountry");
+	            String Name = country_rs.getString("Name");
+	            country_id_name_map.put(Name, idCountry);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		
+		ResultSet persons_rs;
+		HashMap<String, Integer> persons_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			persons_rs = dbh.executeQuery(String.format("SELECT idPerson, Name FROM %s.Person;",conf.get_db_name()));
+			while (persons_rs.next()) {	        
+	            int idPerson = persons_rs.getInt("idPerson");
+	            String Name = persons_rs.getString("Name");
+	            persons_id_name_map.put(Name, idPerson);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		
+		
+
+		ResultSet currency_rs;
+		HashMap<String, Integer> currency_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			currency_rs = dbh.executeQuery(String.format("SELECT idCurrency, Name FROM %s.Currency;",conf.get_db_name()));
+			while (currency_rs.next()) {	        
+	            int idCurrency = currency_rs.getInt("idCurrency");
+	            String Name = currency_rs.getString("Name");
+	            currency_id_name_map.put(Name, idCurrency);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		
+		ResultSet language_rs;
+		HashMap<String, Integer> language_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			language_rs = dbh.executeQuery(String.format("SELECT idLanguage, Name FROM %s.Language;",conf.get_db_name()));
+			while (language_rs.next()) {	        
+	            int idLanguage = language_rs.getInt("idPerson");
+	            String Name = language_rs.getString("Name");
+	            language_id_name_map.put(Name, idLanguage);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		
+		
 		//CURRENCY
 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
 		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
@@ -130,32 +202,32 @@ public class Init {
 				
 		//COUNTRIES
 		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
-		CountriesUploader countriesUploader = new CountriesUploader(countries_map, dbh);
+		CountriesUploader countriesUploader = new CountriesUploader(countries_map, language_id_name_map, currency_id_name_map, dbh);
 		countriesUploader.upload();
 			
 		//CITIES
 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
-		CitiesUploader citiesUploader = new CitiesUploader(cities_map, dbh);
+		CitiesUploader citiesUploader = new CitiesUploader(cities_map, country_id_name_map, dbh);
 		citiesUploader.upload();
 
 		//CAPITALS
 		System.out.println("inserting capitals " + (System.currentTimeMillis()-start)/1000f);
-		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, dbh);
+		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, country_id_name_map, city_id_name_map, dbh);
 		capitalsUploader.upload();
 
 		//PERSONS
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
-		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, dbh);
+		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, city_id_name_map, dbh);
 		pUploader.upload();
 
 		//PERSONS_PROFESSION
 		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
-		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, dbh);
+		PersonProfessionUploader ppUploader = new PersonProfessionUploader(lite_persons_map, persons_id_name_map, dbh);
 		ppUploader.upload();
 
 		//AWARD_WINNERS
 		System.out.println("inserting award winners " + (System.currentTimeMillis()-start)/1000f);
-		AwardWinnersUploader awUploader = new AwardWinnersUploader(lite_persons_map, dbh);
+		AwardWinnersUploader awUploader = new AwardWinnersUploader(lite_persons_map, persons_id_name_map, dbh);
 		awUploader.upload();
 
 		//UNIVERSITIES
