@@ -78,6 +78,17 @@ public class Init {
 
 
 		try{
+			ResultSet rs;
+			try{
+				rs = dbh.executeQuery(String.format("SELECT Name FROM %s.Award;",conf.get_db_name()));
+				while (rs.next()) {	        
+		            String Name = rs.getString("Name");
+		            awards_set.add(Name);
+		        }
+			}catch(SQLException e){
+				System.out.println("Error");
+			}
+			
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
 			parser_transitive_types c = new parser_transitive_types(properties.get_yago_transitive_types_path(), countries_map,
 					persons_map, cities_map, currency_set, language_set, countries_cities_map, universities_map);		
@@ -103,16 +114,7 @@ public class Init {
 			e.printStackTrace();
 		}
 		
-		ResultSet rs;
-		try{
-			rs = dbh.executeQuery(String.format("SELECT Name FROM %s.Award;",conf.get_db_name()));
-			while (rs.next()) {	        
-	            String Name = rs.getString("Name");
-	            awards_set.add(Name);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
+
 
 	
 		//CURRENCY
