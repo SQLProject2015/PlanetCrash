@@ -36,6 +36,11 @@ public class config {
 	public String get_yago_date_facts_path(){
 		return configFile.getProperty("YagoDateFactsFilePath");
 	}
+	/** get the path of the file yagoDateFacts.tsv */
+	public String get_yago_wikipedia_info_path(){
+		return configFile.getProperty("YagoWikipediaInfoPath");
+	}
+	
 
 	/** get the server address */
 	public String get_host_address(){
@@ -163,6 +168,10 @@ public class config {
 	public String get_yago_tag_wiki_len(){
 		return configFile.getProperty("FACT_WIKILEN");
 	}
+	public int get_min_wiki_len(){
+		return Integer.parseInt(configFile.getProperty("MIN_WIKILEN"));
+	}
+	
 
 	
 	
