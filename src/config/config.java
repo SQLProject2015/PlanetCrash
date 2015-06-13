@@ -23,7 +23,24 @@ public class config {
 	}
 	
 	
+	/** get the state of the DB */
+	public String get_db_ready(){		
+		return configFile.getProperty("DbReady");
+	}
+	/** set the state of the DB  */
+	public void set_db_ready(String state){		
+	    try {
 
+	    	configFile.setProperty("DbReady", state);
+	        File f = new File("src/config.properties");
+	        OutputStream out = new FileOutputStream( f );
+	        configFile.store(out, null);
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	    }
+	    catch (Exception e ) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	/** get the path of the file yago_transitive_types.tsv */
 	public String get_yago_transitive_types_path(){		
