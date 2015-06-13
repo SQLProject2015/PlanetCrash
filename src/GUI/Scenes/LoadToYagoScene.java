@@ -122,7 +122,12 @@ public class LoadToYagoScene extends Scene{
 			
 			new Thread(new Runnable(){
 				public void run(){
-					Importer i = new Importer(dbh, config);	
+					try {
+						Importer i = new Importer(dbh, config);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
 					MainMenuScene mms = new MainMenuScene(gameGUI,game);
 					gameGUI.switchScene(mms);		
 					gameGUI.fadeSwitchScene(mms);
