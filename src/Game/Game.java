@@ -4,6 +4,7 @@ import Database.Users.User;
 
 public class Game {
 	User user;
+	int difficulty;
 	
 	public Game() {
 		
@@ -15,5 +16,9 @@ public class Game {
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public void setDifficulty(int difficulty) {
+		this.difficulty=difficulty;
 	}
 }

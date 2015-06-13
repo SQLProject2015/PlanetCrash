@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -65,7 +67,7 @@ public class DifficultySelectScene extends Scene{
 //		hardBtn.setLabelFont(font);
 		panel.add(hardBtn, new Integer(3), 0);
 
-		//add welcome message
+		//add difficulty message
 		JTextField welcomeMsg = new JTextField("Please choose difficulty:");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
@@ -76,6 +78,47 @@ public class DifficultySelectScene extends Scene{
 		panel.add(welcomeMsg, new Integer(3),0);
 
 		return panel;
+	}
+	
+	public class DifficultyListener implements MouseListener {
+		int difficulty;
+		
+		public DifficultyListener(int difficulty) {
+			this.difficulty=difficulty;
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			game.setDifficulty(difficulty);
+			
+			//TODO: switch scene
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }
