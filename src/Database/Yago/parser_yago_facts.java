@@ -90,8 +90,11 @@ public class parser_yago_facts extends AbstractYagoParser{
 		entity_city city = cities_map.get(clean_lentity);
 		if (city!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
-				city.setCountry(clean_rentity);
-				flag=true;
+				if (countries_map.containsKey(clean_rentity)){
+					city.setCountry(clean_rentity);
+					flag=true;
+				}
+				
 			}
 		}
 		
