@@ -96,6 +96,7 @@ public class MainMenuScene extends Scene {
 				gameGUI.fadeSwitchScene(new DifficultySelectScene(gameGUI, game));
 				break;
 			case SETTINGS:
+				gameGUI.fadeSwitchScene(new SettingsScene(gameGUI, game));
 				break;
 			case QUIT:
 				break;

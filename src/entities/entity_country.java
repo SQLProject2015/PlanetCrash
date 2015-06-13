@@ -25,6 +25,14 @@ public class entity_country {
 		this.population_size = population_size;
 		this.leader = leader;
 	}
+	public entity_country(String yago_name,String continent,String currency,String language,String capital,int population_size){
+		this.yago_name = yago_name;
+		this.continent = continent;
+		this.currency = currency;
+		this.language = language;
+		this.capital = capital;
+		this.population_size = population_size;
+	}
 
 	public String getYagoName() {
 		return yago_name;
