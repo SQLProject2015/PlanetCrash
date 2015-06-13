@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.sun.jndi.toolkit.dir.ContainmentFilter;
 
+import entities.entity_country;
 import Database.DatabaseHandler;
 import Database.Updates.ManualUpdater;
 import Database.Updates.ManualUpdates;
@@ -68,23 +69,36 @@ public class EditCountryScene extends Scene{
 		//init user/pass font
 		Font userpass = new Font(null, Font.BOLD, 14);
 		
-		//Add name field
+		//Add country name field
 		JPanel namePanel = new JPanel();
-		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Name:", 100, userpass.getSize()+20, 2);
+		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Enter Country:", 180, userpass.getSize()+20, 2);
 		nameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
 		
 		usernameLabel.isButton(false);
-		usernameLabel.setBorderColor(Color.cyan);
-		nameField.setBorderColor(Color.cyan);
+		usernameLabel.setBorderColor(Color.pink);
+		nameField.setBorderColor(Color.pink);
 		
 		namePanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight()));
-		namePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)namePanel.getPreferredSize().getWidth())/2,
+		namePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)namePanel.getPreferredSize().getWidth())/2 -38,
 				loginy, usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight());
 		namePanel.setOpaque(false);
 		namePanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
 		namePanel.add(usernameLabel);
 		namePanel.add(nameField);
 		panel.add(namePanel, new Integer(2),0);
+
+		
+		
+		//Add load button
+		JRoundedButton loadBtn = new JRoundedButton(new Font(null, Font.BOLD, 20),"Load", 80, 40, 2);
+		loadBtn.setBorderColor(Color.green);
+		loadBtn.setBounds((GameGUI.WINDOW_WIDTH-loadBtn.getWidth())/2+200, loginy, loadBtn.getWidth(), loadBtn.getHeight());
+		panel.add(loadBtn, new Integer(2), 2);
+		//Register action listeners
+		LoadMouseListener lml = new LoadMouseListener();
+		loadBtn.addMouseListener(lml);
+		loadBtn.setBorderColor(Color.pink);
+
 		
 		//Add Continent field
 		JPanel continentPanel = new JPanel();
@@ -178,8 +192,8 @@ public class EditCountryScene extends Scene{
 		
 		
 		
-		//Add login button
-		JRoundedButton addBtn = new JRoundedButton("Add", 220, 60, 2);
+		//Add update button
+		JRoundedButton addBtn = new JRoundedButton("Update", 220, 60, 2);
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
@@ -190,8 +204,8 @@ public class EditCountryScene extends Scene{
 //		panel.add(createBtn, new Integer(2), 3);
 		
 		//Register action listeners
-		LoginMouseListener lml = new LoginMouseListener();
-		addBtn.addMouseListener(lml);
+		UpdateMouseListener eml = new UpdateMouseListener();
+		addBtn.addMouseListener(eml);
 
 		return panel;
 	}
@@ -216,13 +230,92 @@ public class EditCountryScene extends Scene{
 		return user;
 	}
 	
-	class LoginMouseListener implements MouseListener {
+	class UpdateMouseListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 			try{
-				ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
+				if (check_not_empty_fields()){
+					ManualUpdater.update_country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
+					JOptionPane.showMessageDialog(gameGUI.mainFrame, "Update Succeeded :)");
+					nameField.setText("");
+					continetField.setText("");
+					currencyField.setText("");
+					languageField.setText("");
+					capitalField.setText("");
+					populationField.setText("");
+				}
+
+			}catch(NotFoundException | SQLException ex){
+				JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
+			}catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
+			}
+//			if(usernameField==null||passwordField==null)
+//				return;
+//			User user = confirmUser(usernameField.getText(), passwordField.getText());
+//			
+//			if(user==null)
+//				return;
+//			
+//			game.setUser(user);
+//			
+//			MainMenuScene mms = new MainMenuScene(gameGUI,game);
+////			gameGUI.switchScene(mms);		d
+//			gameGUI.fadeSwitchScene(mms);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public boolean check_not_empty_fields(){
+			if (continetField.getText().isEmpty() || currencyField.getText().isEmpty() || 
+				languageField.getText().isEmpty() || capitalField.getText().isEmpty() ||
+				populationField.getText().isEmpty() || nameField.getText().isEmpty())
+			{
+				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Don't leave fields empty!");
+				return false;
+			}
+			return true;
+		}
+		
+	}
+	class LoadMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+			try{
+				entity_country country_res = ManualUpdater.get_country_details(nameField.getText(), dbh);
+				
+				continetField.setText(country_res.getContinent());
+				currencyField.setText(country_res.getCurrency());
+				languageField.setText(country_res.getLanguage());
+				capitalField.setText(country_res.getCapital());
+				populationField.setText(Integer.toString(country_res.getPopulation_size()));
+				
 			}catch(NotFoundException | SQLException ex){
 				JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
 			}catch(NumberFormatException e){
@@ -267,6 +360,8 @@ public class EditCountryScene extends Scene{
 		}
 		
 	}
+	
+
 
 	
 }

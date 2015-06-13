@@ -15,7 +15,7 @@ public class ManualUpdates {
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	
 	
-	private static void updateFromYago(DatabaseHandler dbh,config conf){
+	private static void updateFromYago(DatabaseHandler dbh,config conf) throws SQLException{
 		backupManualUpdates(dbh,conf.get_db_name());
 		deleteAllYagoData(dbh,conf.get_db_name());
 		Importer i = new Importer(dbh, conf);

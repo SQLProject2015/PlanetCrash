@@ -94,6 +94,7 @@ public class ManualUpdater {
 		else{
 			throw new NotFoundException(String.format("Country %s not found in DB", countryName));
 		}
+		rs.close();
 		
 		// get continent name from DB
 		String continent = getNameFromDB("Continent", "Name", idContinent, dbh);
@@ -117,24 +118,28 @@ public class ManualUpdater {
 		if(rs.first())
 			retId = rs.getInt(1);
 		else{
+			rs.close();
 			throw new NotFoundException(String.format("'%s' was not found in the DB", valueToSearch));
 		}
+		rs.close();
 		return retId;
 		
 	}
-	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh){
-		ResultSet rs;
+	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh) throws SQLException{
+		ResultSet rs = null;
 		String retString = "";
 		try {
 			rs=dbh.executeFormatQuery(tableName, new String[]{column}, "WHERE id"+tableName+" ='"+valueToSearch+"'");
 			if(rs.first()){
 				retString = rs.getString(1);
+				rs.close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			rs.close();
 		}
-
+		
 		return retString;
 		
 	}
