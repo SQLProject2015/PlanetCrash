@@ -55,9 +55,6 @@ public abstract class JRounded extends JPanel{
 		return height;
 	}
 	
-	public void setText(String text) {
-	}
-	
 	public void setBorderColor(Color c) {
 		this.borderColor=c;
 	}

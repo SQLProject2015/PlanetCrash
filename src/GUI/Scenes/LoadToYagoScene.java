@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import com.sun.org.apache.xml.internal.security.Init;
@@ -74,6 +76,12 @@ public class LoadToYagoScene extends Scene{
 		importBtn.setBorderColor(Color.green);
 		importBtn.setBounds((GameGUI.WINDOW_WIDTH-importBtn.getWidth())/2, 375, importBtn.getWidth(), importBtn.getHeight());
 		panel.add(importBtn, new Integer(2), 2);
+		
+		//Add login button
+		JRoundedButton perBtn = new JRoundedButton("Loading...", 500, 60, 2);
+		perBtn.setBorderColor(Color.green);
+		perBtn.setBounds((GameGUI.WINDOW_WIDTH-perBtn.getWidth())/2, 450, perBtn.getWidth(), perBtn.getHeight());
+		panel.add(perBtn, new Integer(2), 2);
 	
 				
 		//Register action listeners
@@ -119,58 +127,62 @@ public class LoadToYagoScene extends Scene{
 				}
 				
 				}).start();
-			
-			
-			new Thread(new Runnable(){
-				public void run(){
+						
+			Timer t = new Timer(1000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
 					int per = 0;
 					System.out.println("Started parsing");
 					
-					while (Importer.parsing_finished != -1){
-						try {
-						    Thread.sleep(100);  
+					if (Importer.parsing_finished != -1){
+
 						    if (Importer.parsing_finished==-1){
-						    	break;
+						    	((Timer)e.getSource()).stop();
 						    }
 						    int temp = Math.round((Importer.parsing_finished * 100.0f) / config.get_files_size());		
 						    if (temp!= per){
 						    	per = temp;
 						    	System.out.println(String.format("finished %d percenteges", (per)));
+						    	perBtn.setText(String.format("finished %d percenteges", (per)));
 						    }
-						    
-						    
-						    //1000 milliseconds is one second.
-						} catch(InterruptedException ex) {
-						    Thread.currentThread().interrupt();
-						}
 					}
-					
+				
 					
 					System.out.println("Finished parsing");
+				}
+			});
+			
+			
+			Timer t2 = new Timer(1000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int per = 0;
 					System.out.println("Started uploading");
 					per=0;
 					
-					while (Importer.uploading_finished != -1){
-						try {
-						    Thread.sleep(100);
-						    if (Importer.uploading_finished==-1){
-						    	break;
-						    }
-						    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
-						    if (temp!= per){
-						    	per = temp;
-						    	System.out.println(String.format("finished %d percenteges", (per)));
-						    }
-						    
-						    
-						    //1000 milliseconds is one second.
-						} catch(InterruptedException ex) {
-						    Thread.currentThread().interrupt();
-						}
+					if (Importer.uploading_finished != -1){
+					   
+					    if (Importer.uploading_finished==-1){
+					    	((Timer)e.getSource()).stop();
+					    }
+					    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
+					    if (temp!= per){
+					    	per = temp;
+					    	System.out.println(String.format("finished %d percenteges", (per)));
+					    	perBtn.setText(String.format("finished %d percenteges", (per)));
+					    }												    												   
 					}
-				}
 				
-				}).start();
+					
+					System.out.println("Finished parsing");
+				}
+			});
+					
+			
+			
+
 			
 		}
 
