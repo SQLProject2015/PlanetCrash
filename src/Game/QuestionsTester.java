@@ -9,10 +9,10 @@ public class QuestionsTester {
 		ConnectionPool mConnPool = new ConnectionPool();
 		mConnPool.init();
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		ManualUpdates.deleteAllYagoData(dbh, "DbMysql14");
-		//QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");
-		//for(int i=0 ;i<qg.getPossibleQuestions().size();i++){
-			//qg.getPossibleQuestions().get(i).printQuestion();
-		//}
+//		ManualUpdates.deleteAllYagoData(dbh, "DbMysql14");
+		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");
+		for(int i=0 ;i<qg.getPossibleQuestions().size();i++){
+			qg.getPossibleQuestions().get(i).printQuestion();
+		}
 	}
 }
