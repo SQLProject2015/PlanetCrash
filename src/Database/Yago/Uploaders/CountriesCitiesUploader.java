@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 
 public class CountriesCitiesUploader extends AbstractUploader{
@@ -78,6 +79,7 @@ public class CountriesCitiesUploader extends AbstractUploader{
 				if(batch.size()>=BATCHSIZE) {
 					insertBatch(batch, table, columns);
 				}
+				Importer.finished++;
 				batch.add(values);
 			}	        
 	    }

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import config.config;
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_city;
 import entities.entity_country;
 import entities.entity_university;
@@ -63,6 +64,7 @@ public class UniversitiesUploader extends AbstractUploader{
 				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
+			Importer.finished++;
 			batch.add(values);
 		}
 		if(batch.size()>0) //empty what's left

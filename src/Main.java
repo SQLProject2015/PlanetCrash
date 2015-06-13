@@ -52,11 +52,11 @@ public class Main {
 		
 		
 		//Game GUI
-//		GameGUI gg = new GameGUI(mConnPool);
-//		gg.start();
+		GameGUI gg = new GameGUI(mConnPool);
+		gg.start();
 
 		
-		Init init = new Init(dbh, properties);
+		//Init init = new Init(dbh, properties);
 
 		try{
 			ManualUpdater.add_Person("tomer baruch", "1989", "0", "Rome", dbh);

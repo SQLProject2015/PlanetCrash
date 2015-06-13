@@ -1,3 +1,4 @@
+package Database.Updates;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ import entities.entity_person;
 import entities.entity_university;
 
 
-public class Init {
+public class Importer {
 	
 	
 
@@ -35,7 +36,9 @@ public class Init {
 	//private static List<Object[]> batch;
 	static config conf = new config();
 	
-	public Init(DatabaseHandler dbh, config properties){		
+	public static int finished = 0;
+	
+	public Importer(DatabaseHandler dbh, config properties){		
 		
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();

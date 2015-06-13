@@ -11,6 +11,7 @@ import java.util.Set;
 
 import config.config;
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 
 public class CapitalsUploader extends AbstractUploader{
@@ -62,7 +63,7 @@ public class CapitalsUploader extends AbstractUploader{
 //				else{
 //					continue;
 //				}
-				
+				Importer.finished++;
 				String query = String.format("UPDATE %s.Country SET idCapital=%d WHERE idCountry=%d", conf.get_db_name(),idCity,idCountry);
 				dbh.executeUpdate(query);
 

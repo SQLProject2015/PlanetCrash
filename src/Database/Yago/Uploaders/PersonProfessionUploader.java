@@ -13,7 +13,9 @@ import java.util.Set;
 
 
 
+
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 import entities.entity_person;
 
@@ -94,6 +96,7 @@ public class PersonProfessionUploader extends AbstractUploader{
 					insertBatch(batch, table, columns);
 					batch = new ArrayList<Object[]>();
 				}
+				Importer.finished++;
 				batch.add(values);
 			}	        
 	    }

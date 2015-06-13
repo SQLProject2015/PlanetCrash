@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
+import GUI.Scenes.LoadToYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
 import Game.Game;
@@ -49,9 +50,16 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 
+		
+		LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
+		switchScene(mms);		
+		
+		
 		//Show main screen
-		LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-		switchScene(mms);
+//		LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+//		switchScene(mms);
+		
+		
 		//        mainFrame.setContentPane(mms.create());
 
 //		fadeSwitchScene(mms);

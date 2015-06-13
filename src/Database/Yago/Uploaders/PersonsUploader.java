@@ -11,6 +11,7 @@ import java.util.Set;
 
 import config.config;
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 import entities.entity_person;
 
@@ -67,6 +68,7 @@ public class PersonsUploader extends AbstractUploader{
 				insertBatch(batch, table, columns);
 				batch = new ArrayList<Object[]>();
 			}
+			Importer.finished++;
 			batch.add(values);
 		}
 		if(batch.size()>0) //empty what's left

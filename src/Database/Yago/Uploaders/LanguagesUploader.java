@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 
 public class LanguagesUploader extends AbstractUploader{
@@ -52,9 +53,10 @@ public class LanguagesUploader extends AbstractUploader{
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
 				c+=BATCHSIZE;
-				System.out.println("total "+c);
+				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
+			Importer.finished++;
 			batch.add(values);
 		}
 		if(batch.size()>0) //empty what's left

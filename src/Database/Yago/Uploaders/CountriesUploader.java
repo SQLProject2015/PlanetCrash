@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import Database.DatabaseHandler;
+import Database.Updates.Importer;
 import entities.entity_country;
 
 public class CountriesUploader extends AbstractUploader{
@@ -78,6 +79,7 @@ public class CountriesUploader extends AbstractUploader{
 //				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name =\""+country.getLeader()+"\"");
 //				if(rs.first())
 //					values[6]=rs.getInt(1);
+				Importer.finished++;
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
