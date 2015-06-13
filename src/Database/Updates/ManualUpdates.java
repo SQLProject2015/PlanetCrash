@@ -28,7 +28,7 @@ public class ManualUpdates {
 		return retString;
 		
 	}
-	public static void backupManualUpdates(DatabaseHandler dbh,String dbname){
+	private static void backupManualUpdates(DatabaseHandler dbh,String dbname){
 		/*backup person manual updates*/
 		String personQuery = "SELECT * FROM "+dbname+".Person WHERE Person.isManual=1";
 		try {
@@ -66,7 +66,7 @@ public class ManualUpdates {
 			e.printStackTrace();
 		}
 	}
-	public static void deleteAllYagoData(DatabaseHandler dbh,String dbname){
+	private static void deleteAllYagoData(DatabaseHandler dbh,String dbname){
 		String tablesQuery = "SHOW TABLES FROM "+dbname+";";
 		try {
 			ResultSet rs = dbh.executeQuery(tablesQuery);
