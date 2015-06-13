@@ -18,6 +18,10 @@ public class config {
 		}
 	}
 	
+	
+	public void set_db_name(String dbname){		
+		configFile.setProperty("DbName",dbname);
+	}
 	/** get the path of the file yago_transitive_types.tsv */
 	public String get_yago_transitive_types_path(){		
 		return configFile.getProperty("YagoTransitiveTypeFilePath");
