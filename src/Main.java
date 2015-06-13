@@ -18,6 +18,7 @@ import entities.entity_person;
 import entities.entity_university;
 import Database.ConnectionPool;
 import Database.DatabaseHandler;
+import Database.Updates.ManualUpdater;
 import Database.Users.UserHandler;
 import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
@@ -40,6 +41,7 @@ public class Main {
 
 	public static ConnectionPool mConnPool;
 
+	
 	public static void main(String args[]) {
 		
 		
@@ -58,20 +60,20 @@ public class Main {
 		
 		//Init init = new Init(dbh, properties);
 
-		try{
-			ManualUpdater.add_Country("China", "Asia", "Chinese yuan", "Chinese language", "Beijing", 1000000000, dbh);
-			ManualUpdater.add_Person("tomer baruch", 1989, 0, "Haifa","Musician", dbh);
-
-		}
-		catch(Exception ex){
-			System.out.println(ex.getMessage());
-		}
-		
-		
-		try{
-			UserHandler.add_new_user("osher", "1234", dbh);
-		}catch(Exception ex){
-		}
+//		try{
+//			ManualUpdater.add_Country("China", "Asia", "Chinese yuan", "Chinese language", "Beijing", 1000000000, dbh);
+//			ManualUpdater.add_Person("tomer baruch", 1989, 0, "Haifa","Musician", dbh);
+//
+//		}
+//		catch(Exception ex){
+//			System.out.println(ex.getMessage());
+//		}
+//		
+//		
+//		try{
+//			UserHandler.add_new_user("osher", "1234", dbh);
+//		}catch(Exception ex){
+//		}
 
 
 	}

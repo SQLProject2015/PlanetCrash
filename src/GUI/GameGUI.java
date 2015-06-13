@@ -16,6 +16,7 @@ import GUI.Objects.Effects.Fader;
 import GUI.Scenes.LoadToYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
+import GUI.Scenes.AddCountryScene;
 import Game.Game;
 
 public class GameGUI {
@@ -53,15 +54,20 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 
-		if (config.get_db_ready().equals("0")){
-			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
-			switchScene(mms);	
-		}
-		else{
-			//Show main screen
-			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-			switchScene(mms);		
-		}
+		
+		AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
+		switchScene(mms);	
+		
+		
+//		if (config.get_db_ready().equals("0")){
+//			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
+//			switchScene(mms);	
+//		}
+//		else{
+//			//Show main screen
+//			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+//			switchScene(mms);		
+//		}
 		
 		
 
