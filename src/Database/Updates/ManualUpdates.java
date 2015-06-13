@@ -9,6 +9,7 @@ import config.config;
 import entities.entity_country;
 import entities.entity_person;
 import Database.DatabaseHandler;
+import Exceptions.NotFoundException;
 
 public class ManualUpdates {
 	public static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
@@ -23,7 +24,48 @@ public class ManualUpdates {
 	}
 	private static void insertManualBackupData(DatabaseHandler dbh,String dbname){
 		//insert manual updates about persons
-		//for(<String, entity_person> person::)
+		for(String personName:persons_map_bck.keySet()){
+			entity_person person = persons_map_bck.get(personName);
+			String existsQuery = String.format("SELECT * FROM %s.Country WHERE Name=\"%s\";", dbname,personName);
+			ResultSet rs;
+			try {
+				rs = dbh.executeQuery(existsQuery);
+				if(rs.first()){
+					String updateQuery = "UPDATE "+dbname+".Person "
+							+ "SET idPlaceOfBirth="+getIdFromDB("Person","idPlaceOfBirth",person.getPlaceOfBirth(),dbh)
+							+ ", yearOfBirth="+person.getYearOfBirth()+ ", yearOfBirth="+person.getYearOfDeath()+
+							", isManual=1"+"WHERE Person.Name = "+personName+";";
+					rs.close();
+					int update = dbh.executeUpdate(updateQuery);
+				}
+				else{
+					String insertQuery = "INSERT INTO "+dbname+".Person "
+							+ "VALUES ("+personName+","+person.getPlaceOfBirth()+","+person.getYearOfDeath()+
+							"'"+getIdFromDB("Person","idPlaceOfBirth",person.getPlaceOfBirth(),dbh)+");";
+					int insert = dbh.executeUpdate(insertQuery);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+	public static int getIdFromDB(String tableName, String column, String valueToSearch, DatabaseHandler dbh) {
+		ResultSet rs;
+		int retId = 0;
+		try {
+			rs=dbh.executeFormatQuery(tableName, new String[]{column}, "WHERE Name = \""+valueToSearch+"\"");
+			if(rs.first()){
+				retId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return retId;
+		
 	}
 	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh){
 		ResultSet rs;

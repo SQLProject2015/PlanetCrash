@@ -566,4 +566,8 @@ public class QuestionsGenerator {
 		}
 		return picked;
 	}
+	
+	public String getCountry() {
+		return countryName;
+	}
 }

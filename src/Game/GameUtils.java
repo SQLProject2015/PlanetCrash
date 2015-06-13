@@ -25,13 +25,13 @@ public class GameUtils {
 				String countryName = rs.getString("Name");
 				qg =  new QuestionsGenerator(countryName,dbh,dbName);
 				optionalQuestions =qg.getPossibleQuestions();
-				if(difficulty == 1 && optionalQuestions.size()>=5){
+				if(difficulty == 5 && optionalQuestions.size()>=5){
 					return qg;
 				}
-				if(difficulty == 2 && optionalQuestions.size()>=10){
+				if(difficulty == 10 && optionalQuestions.size()>=10){
 					return qg;
 				}
-				if(difficulty == 3 && optionalQuestions.size()>=15){
+				if(difficulty == 15 && optionalQuestions.size()>=15){
 					return qg;
 				}
 			}
