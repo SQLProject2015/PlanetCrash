@@ -183,7 +183,7 @@ public class AddCountryScene extends Scene{
 		
 		
 		
-		//Add login button
+		//Add add button
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
@@ -227,14 +227,39 @@ public class AddCountryScene extends Scene{
 			case ADD_COUNTRY:
 				DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 				try{
-					ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
+					
+					if (check_not_empty_fields()){
+						ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
+						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Country was added :)");
+						nameField.setText("");
+						continetField.setText("");
+						currencyField.setText("");
+						languageField.setText("");
+						capitalField.setText("");
+						populationField.setText("");
+					}	
+					
+					
 				}catch(NotFoundException | SQLException ex){
 					JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
 				}catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
 				}
 				break;
-			}									
+			}
+			
+			
+		}
+		
+		public boolean check_not_empty_fields(){
+			if (continetField.getText().isEmpty() || currencyField.getText().isEmpty() || 
+				languageField.getText().isEmpty() || capitalField.getText().isEmpty() ||
+				populationField.getText().isEmpty() || nameField.getText().isEmpty())
+			{
+				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Don't leave fields empty!");
+				return false;
+			}
+			return true;
 		}
 
 		@Override
