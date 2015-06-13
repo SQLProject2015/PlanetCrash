@@ -38,6 +38,7 @@ public class Importer {
 	
 	public static int uploading_finished = 0;
 	public static int parsing_finished = 0;
+	private static DatabaseHandler dbh;
 	
 	public Importer(DatabaseHandler dbh, config properties){		
 		
@@ -50,38 +51,10 @@ public class Importer {
 		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
 		HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
 		HashSet<String> awards_set = new HashSet<String>();
-
+		Importer.dbh = dbh;
 		long start = System.currentTimeMillis();
-
-		try {			
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Europe"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Asia"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Africa"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Central America"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
-			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Oceania"});
-
-			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Musician"});
-			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Scientist"});
-			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Politician"});
-			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Athlete"});
-			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Actor"});
-
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Grammy Award"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Grammy Lifetime Achievement Award"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Academy Award for Best Actor"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Academy Award for Best Actress"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Physics"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Chemistry"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Peace Prize"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"FIFA World Player of the Year"});
-			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"World Music Awards"});
-			
-		} catch (SQLException e) {
-
-		}
+		inertManualData();
+		
 
 
 		try{
@@ -138,101 +111,43 @@ public class Importer {
 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
 		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
 		currencyUploader.upload();
+		HashMap<String, Integer> currency_id_name_map = get_currency_id_name_map();
 		
-		ResultSet currency_rs;
-		HashMap<String, Integer> currency_id_name_map = new HashMap<String, Integer>();
 
-		try{
-			currency_rs = dbh.executeQuery(String.format("SELECT idCurrency, Name FROM %s.Currency;",conf.get_db_name()));
-			while (currency_rs.next()) {	        
-	            int idCurrency = currency_rs.getInt("idCurrency");
-	            String Name = currency_rs.getString("Name");
-	            currency_id_name_map.put(Name, idCurrency);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
+
 				
 		//LANGUAGE
 		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
 		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
 		languageUploader.upload();
+		HashMap<String, Integer> language_id_name_map = get_language_id_name_map();
 		
-		ResultSet language_rs;
-		HashMap<String, Integer> language_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			language_rs = dbh.executeQuery(String.format("SELECT idLanguage, Name FROM %s.Language;",conf.get_db_name()));
-			while (language_rs.next()) {	        
-	            int idLanguage = language_rs.getInt("idLanguage");
-	            String Name = language_rs.getString("Name");
-	            language_id_name_map.put(Name, idLanguage);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
-				
 		//COUNTRIES
 		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
 		CountriesUploader countriesUploader = new CountriesUploader(countries_map, language_id_name_map, currency_id_name_map, dbh);
 		countriesUploader.upload();
+		HashMap<String, Integer> country_id_name_map = get_country_id_name_map();
 		
-		ResultSet country_rs;
-		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			country_rs = dbh.executeQuery(String.format("SELECT idCountry, Name FROM %s.Country;",conf.get_db_name()));
-			while (country_rs.next()) {	        
-	            int idCountry = country_rs.getInt("idCountry");
-	            String Name = country_rs.getString("Name");
-	            country_id_name_map.put(Name, idCountry);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
 			
 		//CITIES
 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
 		CitiesUploader citiesUploader = new CitiesUploader(cities_map, country_id_name_map, dbh);
 		citiesUploader.upload();
-		
-		ResultSet city_rs;
-		HashMap<String, Integer> city_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			city_rs = dbh.executeQuery(String.format("SELECT idCity, Name FROM %s.City;",conf.get_db_name()));
-			while (city_rs.next()) {	        
-	            int idCity = city_rs.getInt("idCity");
-	            String Name = city_rs.getString("Name");
-	            city_id_name_map.put(Name, idCity);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
+		HashMap<String, Integer> city_id_name_map =  get_city_id_name_map();
+	
 
 		//CAPITALS
 		System.out.println("inserting capitals " + (System.currentTimeMillis()-start)/1000f);
 		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, country_id_name_map, city_id_name_map, dbh);
 		capitalsUploader.upload();
-
+		
+		
 		//PERSONS
 		System.out.println("inserting persons " + (System.currentTimeMillis()-start)/1000f);
 		PersonsUploader pUploader = new PersonsUploader(lite_persons_map, city_id_name_map, dbh);
 		pUploader.upload();
+		HashMap<String, Integer> persons_id_name_map = get_persons_id_name_map();
 		
-		ResultSet persons_rs;
-		HashMap<String, Integer> persons_id_name_map = new HashMap<String, Integer>();
-
-		try{
-			persons_rs = dbh.executeQuery(String.format("SELECT idPerson, Name FROM %s.Person;",conf.get_db_name()));
-			while (persons_rs.next()) {	        
-	            int idPerson = persons_rs.getInt("idPerson");
-	            String Name = persons_rs.getString("Name");
-	            persons_id_name_map.put(Name, idPerson);
-	        }
-		}catch(SQLException e){
-			System.out.println("Error");
-		}
 
 		//PERSONS_PROFESSION
 		System.out.println("inserting person_profession " + (System.currentTimeMillis()-start)/1000f);
@@ -257,5 +172,118 @@ public class Importer {
 		}
 		
 		uploading_finished=-1;
+	}
+	public static void inertManualData(){
+		try {			
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Europe"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Asia"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Africa"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Australia"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"North America"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Central America"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"South America"});
+			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Oceania"});
+
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Musician"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Scientist"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Politician"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Athlete"});
+			dbh.singleInsert("Profession", new String[]{"Name"}, new String[]{"Actor"});
+
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Grammy Award"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Grammy Lifetime Achievement Award"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Academy Award for Best Actor"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Academy Award for Best Actress"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Physics"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Prize in Chemistry"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"Nobel Peace Prize"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"FIFA World Player of the Year"});
+			dbh.singleInsert("Award", new String[]{"Name"}, new String[]{"World Music Awards"});
+			
+		} catch (SQLException e) {
+
+		}
+	}
+	public HashMap<String, Integer> get_currency_id_name_map(){
+		ResultSet currency_rs;
+		HashMap<String, Integer> currency_id_name_map = new HashMap<String, Integer>();
+		try{
+			currency_rs = dbh.executeQuery(String.format("SELECT idCurrency, Name FROM %s.Currency;",conf.get_db_name()));
+			while (currency_rs.next()) {	        
+	            int idCurrency = currency_rs.getInt("idCurrency");
+	            String Name = currency_rs.getString("Name");
+	            currency_id_name_map.put(Name, idCurrency);
+	        }
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		return currency_id_name_map;
+	}
+	public HashMap<String, Integer> get_language_id_name_map(){
+		ResultSet language_rs;
+		HashMap<String, Integer> language_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			language_rs = dbh.executeQuery(String.format("SELECT idLanguage, Name FROM %s.Language;",conf.get_db_name()));
+			while (language_rs.next()) {	        
+				int idLanguage = language_rs.getInt("idLanguage");
+				String Name = language_rs.getString("Name");
+				language_id_name_map.put(Name, idLanguage);
+			}
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		return language_id_name_map;
+	}
+	
+	public HashMap<String, Integer> get_country_id_name_map(){
+		ResultSet country_rs;
+		HashMap<String, Integer> country_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			country_rs = dbh.executeQuery(String.format("SELECT idCountry, Name FROM %s.Country;",conf.get_db_name()));
+			while (country_rs.next()) {	        
+				int idCountry = country_rs.getInt("idCountry");
+				String Name = country_rs.getString("Name");
+				country_id_name_map.put(Name, idCountry);
+			}
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		return country_id_name_map;
+	}
+	
+	public HashMap<String, Integer> get_city_id_name_map(){
+		ResultSet city_rs;
+		HashMap<String, Integer> city_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			city_rs = dbh.executeQuery(String.format("SELECT idCity, Name FROM %s.City;",conf.get_db_name()));
+			while (city_rs.next()) {	        
+				int idCity = city_rs.getInt("idCity");
+				String Name = city_rs.getString("Name");
+				city_id_name_map.put(Name, idCity);
+			}
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		return city_id_name_map;
+	}
+	
+	public HashMap<String, Integer> get_persons_id_name_map(){
+		ResultSet persons_rs;
+		HashMap<String, Integer> persons_id_name_map = new HashMap<String, Integer>();
+
+		try{
+			persons_rs = dbh.executeQuery(String.format("SELECT idPerson, Name FROM %s.Person;",conf.get_db_name()));
+			while (persons_rs.next()) {	        
+				int idPerson = persons_rs.getInt("idPerson");
+				String Name = persons_rs.getString("Name");
+				persons_id_name_map.put(Name, idPerson);
+			}
+		}catch(SQLException e){
+			System.out.println("Error");
+		}
+		return persons_id_name_map;
 	}
 }

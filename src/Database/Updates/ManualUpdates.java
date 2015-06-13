@@ -22,7 +22,8 @@ public class ManualUpdates {
 		
 	}
 	private static void insertManualBackupData(DatabaseHandler dbh,String dbname){
-		
+		//insert manual updates about persons
+		//for(<String, entity_person> person::)
 	}
 	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh){
 		ResultSet rs;
@@ -47,11 +48,21 @@ public class ManualUpdates {
 			ResultSet rs = dbh.executeQuery(personQuery);
 			while(rs.next()){
 				entity_person person = new entity_person();
+				int idPerson = rs.getInt("idPerson");
 				person.setYearOfBirth(rs.getInt("yearOfBirth"));
 				person.setYearOfDeath(rs.getInt("yearOfDeath"));
 				String name = rs.getString("Name");
 				person.setName(name);
 				person.setPlaceOfBirth(getNameFromDB("City", "Name", rs.getInt("idPlaceOfBirth"), dbh));
+				String professionQuery = "SELECT Profession.Name "+
+										"FROM "+dbname+".Person_Profession, "+dbname+".Profession"+
+										" WHERE Profession.idProfession = Person_Profession.idProfession and"+
+										" Person_Profession.idProfession ='"+idPerson+"';";
+				rs.close();
+				rs = dbh.executeQuery(professionQuery);
+				while(rs.next()){
+					person.addProfession(rs.getString("Name"));
+				}
 				persons_map_bck.put(name, person);
 			}
 		} catch (SQLException e) {
