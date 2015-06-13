@@ -13,7 +13,6 @@ import javax.swing.Timer;
 import config.config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
-import GUI.Scenes.LoadToYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.MainMenuScene;
 import GUI.Scenes.Scene;
@@ -61,10 +60,16 @@ public class GameGUI {
 		switchScene(mms);
 		
 //		AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
+<<<<<<< HEAD
 //		switchScene(mms);	
 		
 //		SettingsScene mms = new SettingsScene(this,game);//MainMenuScene();
 //		switchScene(mms);
+=======
+		LoginScene mms = new LoginScene(this, game);
+		switchScene(mms);	
+		
+>>>>>>> origin/master
 		
 //		if (config.get_db_ready().equals("0")){
 //			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
