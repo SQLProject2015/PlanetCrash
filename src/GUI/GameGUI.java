@@ -56,20 +56,20 @@ public class GameGUI {
 		mainFrame.setResizable(false);
 
 		
-		MainMenuScene mms = new MainMenuScene(this,game);//MainMenuScene();
-		switchScene(mms);
+		//MainMenuScene mms = new MainMenuScene(this,game);//MainMenuScene();
+		//switchScene(mms);
 		
 //		AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
-<<<<<<< HEAD
+
 //		switchScene(mms);	
 		
 //		SettingsScene mms = new SettingsScene(this,game);//MainMenuScene();
 //		switchScene(mms);
-=======
+
 		LoginScene mms = new LoginScene(this, game);
 		switchScene(mms);	
 		
->>>>>>> origin/master
+
 		
 //		if (config.get_db_ready().equals("0")){
 //			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
