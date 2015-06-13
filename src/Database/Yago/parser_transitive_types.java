@@ -15,9 +15,7 @@ import entities.entity_university;
 
 
 public class parser_transitive_types extends AbstractYagoParser{
-	
-	private final int persons_limit = 1000000;
-	
+		
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, entity_city> cities_map;
 	HashMap<String, entity_university> universities_map;
@@ -66,18 +64,17 @@ public class parser_transitive_types extends AbstractYagoParser{
 		else if (toParse.rentity.equals(properties.get_yago_tag_musician()) || toParse.rentity.equals(properties.get_yago_tag_scientist()) ||
 				toParse.rentity.equals(properties.get_yago_tag_politician()) || toParse.rentity.equals(properties.get_yago_tag_actor()) ||
 				toParse.rentity.equals(properties.get_yago_tag_athlete())){
-			if (persons_map.size() != persons_limit){
-				entity_person person = persons_map.get(clean_lentity);
-				if (person!=null){
-					person.addProfession(profession_tags.get(toParse.rentity));
-				}
-				else{
-					entity_person new_person = new entity_person();
-					new_person.setName(clean_lentity);
-					new_person.addProfession(profession_tags.get(toParse.rentity));
-					persons_map.put(clean_lentity, new_person);					
-				}
-			}
+					entity_person person = persons_map.get(clean_lentity);
+					if (person!=null){
+						person.addProfession(profession_tags.get(toParse.rentity));
+					}
+					else{
+						entity_person new_person = new entity_person();
+						new_person.setName(clean_lentity);
+						new_person.addProfession(profession_tags.get(toParse.rentity));
+						persons_map.put(clean_lentity, new_person);					
+					}
+			
 			return true;
 			//System.out.println(clean_lentity);
 		}

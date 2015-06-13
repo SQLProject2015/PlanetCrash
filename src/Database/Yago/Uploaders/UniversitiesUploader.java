@@ -64,7 +64,7 @@ public class UniversitiesUploader extends AbstractUploader{
 				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
-			Importer.finished++;
+			Importer.uploading_finished++;
 			batch.add(values);
 		}
 		if(batch.size()>0) //empty what's left

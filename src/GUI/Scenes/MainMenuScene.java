@@ -63,7 +63,8 @@ public class MainMenuScene extends Scene {
 
 		//add welcome message
 		Font font = new Font(null, Font.PLAIN, 20);
-		JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
+		//JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
+		JTextField welcomeMsg = new JTextField("Welcome back");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
 		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 240,

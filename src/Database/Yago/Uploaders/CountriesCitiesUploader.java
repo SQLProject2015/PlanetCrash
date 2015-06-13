@@ -79,7 +79,7 @@ public class CountriesCitiesUploader extends AbstractUploader{
 				if(batch.size()>=BATCHSIZE) {
 					insertBatch(batch, table, columns);
 				}
-				Importer.finished++;
+				Importer.uploading_finished++;
 				batch.add(values);
 			}	        
 	    }

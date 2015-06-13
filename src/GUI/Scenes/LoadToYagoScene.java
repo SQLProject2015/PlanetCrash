@@ -124,11 +124,39 @@ public class LoadToYagoScene extends Scene{
 			new Thread(new Runnable(){
 				public void run(){
 					int per = 0;
+					System.out.println("Started parsing");
 					
-					while (per < 99){
+					while (Importer.parsing_finished != -1){
 						try {
-						    Thread.sleep(1000);  
-						    int temp = Math.round((Importer.finished * 100.0f) / 180000);		
+						    Thread.sleep(100);  
+						    if (Importer.parsing_finished==-1){
+						    	break;
+						    }
+						    int temp = Math.round((Importer.parsing_finished * 100.0f) / config.get_files_size());		
+						    if (temp!= per){
+						    	per = temp;
+						    	System.out.println(String.format("finished %d percenteges", (per)));
+						    }
+						    
+						    
+						    //1000 milliseconds is one second.
+						} catch(InterruptedException ex) {
+						    Thread.currentThread().interrupt();
+						}
+					}
+					
+					
+					System.out.println("Finished parsing");
+					System.out.println("Started uploading");
+					per=0;
+					
+					while (Importer.uploading_finished != -1){
+						try {
+						    Thread.sleep(100);
+						    if (Importer.uploading_finished==-1){
+						    	break;
+						    }
+						    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
 						    if (temp!= per){
 						    	per = temp;
 						    	System.out.println(String.format("finished %d percenteges", (per)));

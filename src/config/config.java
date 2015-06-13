@@ -304,6 +304,9 @@ public class config {
 	public int get_min_wiki_len(){
 		return Integer.parseInt(configFile.getProperty("MIN_WIKILEN"));
 	}
+	public int get_files_size(){
+		return Integer.parseInt(configFile.getProperty("TOTAL_FILES_SIZE"));
+	}
 	
 
 	

@@ -68,7 +68,7 @@ public class PersonsUploader extends AbstractUploader{
 				insertBatch(batch, table, columns);
 				batch = new ArrayList<Object[]>();
 			}
-			Importer.finished++;
+			Importer.uploading_finished++;
 			batch.add(values);
 		}
 		if(batch.size()>0) //empty what's left

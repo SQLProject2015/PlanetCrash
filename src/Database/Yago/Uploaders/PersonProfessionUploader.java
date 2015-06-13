@@ -96,7 +96,7 @@ public class PersonProfessionUploader extends AbstractUploader{
 					insertBatch(batch, table, columns);
 					batch = new ArrayList<Object[]>();
 				}
-				Importer.finished++;
+				Importer.uploading_finished++;
 				batch.add(values);
 			}	        
 	    }

@@ -79,7 +79,7 @@ public class CountriesUploader extends AbstractUploader{
 //				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name =\""+country.getLeader()+"\"");
 //				if(rs.first())
 //					values[6]=rs.getInt(1);
-				Importer.finished++;
+				Importer.uploading_finished++;
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
