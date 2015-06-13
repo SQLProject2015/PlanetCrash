@@ -13,6 +13,7 @@ import javax.swing.Timer;
 import config.config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
+import GUI.Scenes.EditCountryScene;
 import GUI.Scenes.LoadToYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
@@ -55,9 +56,14 @@ public class GameGUI {
 		mainFrame.setResizable(false);
 
 		
+<<<<<<< HEAD
 		//AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
 //		LoginScene mms = new LoginScene(this, game);
 //		switchScene(mms);	
+=======
+//		EditCountryScene mms = new EditCountryScene(this,game);//MainMenuScene();
+//		switchScene(mms);
+>>>>>>> origin/master
 		
 		
 		if (config.get_db_ready().equals("0")){
