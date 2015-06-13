@@ -117,8 +117,8 @@ public class LoadToYagoScene extends Scene{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-			config config = new config();
+			final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+			final config config = new config();
 			
 			new Thread(new Runnable(){
 				public void run(){
@@ -136,7 +136,7 @@ public class LoadToYagoScene extends Scene{
 				}).start();
 			
 			per = 0;			
-			Timer t2 = new Timer(1000, new ActionListener() {
+			final Timer t2 = new Timer(1000, new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {

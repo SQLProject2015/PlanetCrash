@@ -1,16 +1,20 @@
 package Game;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.List;
 
 import Database.Users.User;
 
 public class Game {
 	User user;
-	int difficulty;
+	int difficulty, lives;
 	Color backdrop,land;
 	String country;
-	List<Question> questions;
+	List<Question> questions=null;
+	int currentQuestion;
+
+	File soldier;
 	
 	public static final Color[] BACKDROPS = {Color.CYAN, Color.pink, Color.gray, Color.blue};
 	public static final Color[] LANDS = {Color.green, Color.magenta};
@@ -55,6 +59,10 @@ public class Game {
 		this.questions=questions;
 	}
 	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	
 	public Question getQuestion(int i) {
 		return questions.get(i);
 	}
@@ -65,5 +73,29 @@ public class Game {
 	
 	public String getCountry() {
 		return country;
+	}
+	
+	public void setSoldier(File soldier) {
+		this.soldier=soldier;
+	}
+	
+	public File getSoldier() {
+		return soldier;
+	}
+	
+	public void setLives(int lives) {
+		this.lives=lives;
+	}
+	
+	public int getLives() {
+		return lives;
+	}
+	
+	public void setCurrentQuestion(int crnt) {
+		currentQuestion = crnt;
+	}
+	
+	public int getCurrentQuestion() {
+		return currentQuestion;
 	}
 }
