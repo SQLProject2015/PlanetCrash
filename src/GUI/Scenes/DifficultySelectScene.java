@@ -11,10 +11,13 @@ import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Database.DatabaseHandler;
+import Database.Updates.ManualUpdater;
+import Exceptions.NotFoundException;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
@@ -25,6 +28,8 @@ import Game.QuestionsGenerator;
 import config.config;
 
 public class DifficultySelectScene extends Scene{
+	
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 
 	public DifficultySelectScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
@@ -81,11 +86,16 @@ public class DifficultySelectScene extends Scene{
 		welcomeMsg.setOpaque(false);
 		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
 		panel.add(welcomeMsg, new Integer(3),0);
+		
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
 
 		//Register the mouse listeners
 		easyBtn.addMouseListener(new DifficultyListener(5));
 		mediumBtn.addMouseListener(new DifficultyListener(10));
 		hardBtn.addMouseListener(new DifficultyListener(15));
+		backBtn.addMouseListener(new BackListener());
 
 		return panel;
 	}
@@ -160,4 +170,44 @@ public class DifficultySelectScene extends Scene{
 
 	}
 
+	public class BackListener implements MouseListener {
+
+		public static final int BACK=0,ADD_COUNTRY=1;
+		int mode;
+		public BackListener() {
+		}		
+		
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+				MainMenuScene mms = new MainMenuScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms);									
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }

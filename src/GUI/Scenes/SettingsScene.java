@@ -31,6 +31,7 @@ import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.MainMenuScene.MainMenuMouseListener;
 import Game.Game;
 
 public class SettingsScene extends Scene{
@@ -48,6 +49,7 @@ public class SettingsScene extends Scene{
 	JRoundedButton reloadBtn = new JRoundedButton("Reload entire YAGO", 500, 60, 2);
 	JRoundedButton addBtn = new JRoundedButton("Add country", 500, 60, 2);
 	JRoundedButton editBtn = new JRoundedButton("Edit country", 500, 60, 2);
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 	JRoundedEditText usernameField = new JRoundedEditText(userpass,"Test", 220, 60, 2, false);
 	
 	@Override
@@ -92,16 +94,17 @@ public class SettingsScene extends Scene{
 		editBtn.setBorderColor(Color.green);
 		editBtn.setBounds((GameGUI.WINDOW_WIDTH-editBtn.getWidth())/2, 400, editBtn.getWidth(), editBtn.getHeight());
 		panel.add(editBtn, new Integer(2), 2);
+		
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
 								
 		//Register action listeners
-		LoadToYagoListener lml = new LoadToYagoListener();
-		reloadBtn.addMouseListener(lml);
-		
-		AddCountryListener aml = new AddCountryListener();
-		addBtn.addMouseListener(aml);
-		
-		EditCountryListener eml = new EditCountryListener();
-		editBtn.addMouseListener(eml);
+		//LoadToYagoListener lml = new LoadToYagoListener();
+		reloadBtn.addMouseListener(new MainListener(MainListener.ADD_ALL));
+		addBtn.addMouseListener(new MainListener(MainListener.ADD_COUNTRY));
+		editBtn.addMouseListener(new MainListener(MainListener.EDIT_COUNTRY));
+		backBtn.addMouseListener(new MainListener(MainListener.BACK));
 
 		return panel;
 	}
@@ -143,12 +146,34 @@ public class SettingsScene extends Scene{
 	}
 	
 	
-	class AddCountryListener implements MouseListener {
-
+	class MainListener implements MouseListener {
+		public static final int ADD_ALL=0,ADD_COUNTRY=1,EDIT_COUNTRY=2,BACK=3;
+		int mode;
+		public MainListener(int mode) {
+			this.mode=mode;
+		}
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			AddCountryScene mms = new AddCountryScene(gameGUI,game);	
-			gameGUI.fadeSwitchScene(mms);
+			switch(mode) {
+			case ADD_ALL:
+				LoadToYagoScene mms = new LoadToYagoScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms);		
+				break;
+			case ADD_COUNTRY:
+				AddCountryScene mms2 = new AddCountryScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms2);
+				break;
+			case EDIT_COUNTRY:
+				EditCountryScene mms3 = new EditCountryScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms3);
+				break;
+			case BACK:
+				MainMenuScene mms4 = new MainMenuScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms4);
+				break;
+			}	
+			
+
 		}		
 		
 

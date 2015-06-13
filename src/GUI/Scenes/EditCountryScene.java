@@ -29,6 +29,7 @@ import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.AddCountryScene.MainListener;
 import Game.Game;
 
 public class EditCountryScene extends Scene{
@@ -43,6 +44,8 @@ public class EditCountryScene extends Scene{
 	JRoundedEditText languageField;
 	JRoundedEditText capitalField;
 	JRoundedEditText populationField;
+	
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 
 	@Override
 	public Component create() {
@@ -183,63 +186,35 @@ public class EditCountryScene extends Scene{
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
+		
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
 //		
 //		//Add create user button
 //		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
 //		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
 //		panel.add(createBtn, new Integer(2), 3);
 		
-		//Register action listeners
-		LoginMouseListener lml = new LoginMouseListener();
-		addBtn.addMouseListener(lml);
+		//Register action listeners		
+		addBtn.addMouseListener(new MainListener(MainListener.EDIT_COUNTRY));
+		backBtn.addMouseListener(new MainListener(MainListener.BACK));
 
 		return panel;
 	}
 	
-	//Confirms the user
-	private User confirmUser(String username, String pass) {
-		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-		User user=null;
-		
-		try {
-			user = UserHandler.validate_user(username, pass, dbh);
-		} catch (UserException | SQLException e) {
-			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
-		}
-		try {
-			dbh.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return user;
-	}
-	
-	class LoginMouseListener implements MouseListener {
 
+	
+	class MainListener implements MouseListener {
+		public static final int BACK=0,EDIT_COUNTRY=1;
+		int mode;
+		public MainListener(int mode) {
+			this.mode=mode;
+		}	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-			try{
-				ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
-			}catch(NotFoundException | SQLException ex){
-				JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
-			}catch(NumberFormatException e){
-				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
-			}
-//			if(usernameField==null||passwordField==null)
-//				return;
-//			User user = confirmUser(usernameField.getText(), passwordField.getText());
-//			
-//			if(user==null)
-//				return;
-//			
-//			game.setUser(user);
-//			
-//			MainMenuScene mms = new MainMenuScene(gameGUI,game);
-////			gameGUI.switchScene(mms);		d
-//			gameGUI.fadeSwitchScene(mms);
+			SettingsScene mms = new SettingsScene(gameGUI,game);	
+			gameGUI.fadeSwitchScene(mms);	
 		}
 
 		@Override
