@@ -73,6 +73,7 @@ public class JRoundedButton extends JRounded {
 	public void setText(String text) {
 		this.text=text;
 		label.setText(text);
+		this.repaint();
 	}
 
 	public void setBorderColor(Color c) {
