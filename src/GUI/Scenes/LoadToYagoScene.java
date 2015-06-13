@@ -74,15 +74,7 @@ public class LoadToYagoScene extends Scene{
 		importBtn.setBorderColor(Color.green);
 		importBtn.setBounds((GameGUI.WINDOW_WIDTH-importBtn.getWidth())/2, 375, importBtn.getWidth(), importBtn.getHeight());
 		panel.add(importBtn, new Integer(2), 2);
-		
-		//Add login button
-		
-		
-		panel.add(usernameField, new Integer(2), 3);
-		
-		perBtn.setBorderColor(Color.green);
-		perBtn.setBounds((GameGUI.WINDOW_WIDTH-importBtn.getWidth())/2, 375+60+20, perBtn.getWidth(), perBtn.getHeight());
-		panel.add(perBtn, new Integer(2), 3);
+	
 				
 		//Register action listeners
 		ImportListener lml = new ImportListener();
@@ -121,6 +113,9 @@ public class LoadToYagoScene extends Scene{
 			new Thread(new Runnable(){
 				public void run(){
 					Importer i = new Importer(dbh, config);	
+					MainMenuScene mms = new MainMenuScene(gameGUI,game);
+					gameGUI.switchScene(mms);		
+					gameGUI.fadeSwitchScene(mms);
 				}
 				
 				}).start();
@@ -149,10 +144,6 @@ public class LoadToYagoScene extends Scene{
 				
 				}).start();
 			
-						
-//			MainMenuScene mms = new MainMenuScene(gameGUI,game);
-////			gameGUI.switchScene(mms);		
-//			gameGUI.fadeSwitchScene(mms);
 		}
 
 		@Override

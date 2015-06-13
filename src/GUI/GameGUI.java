@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import config.config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
 import GUI.Scenes.LoadToYagoScene;
@@ -31,6 +32,8 @@ public class GameGUI {
 	public JFrame mainFrame;
 	
 	private JLayeredPane mJLPane;
+	
+	config config = new config();
 
 	public GameGUI(ConnectionPool cpool) {
 		this.mConnPool=cpool;
@@ -50,14 +53,18 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 
+		if (config.get_db_ready().equals("0")){
+			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
+			switchScene(mms);	
+		}
+		else{
+			//Show main screen
+			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+			switchScene(mms);		
+		}
 		
-		LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
-		switchScene(mms);		
 		
-		
-		//Show main screen
-//		LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-//		switchScene(mms);
+
 		
 		
 		//        mainFrame.setContentPane(mms.create());

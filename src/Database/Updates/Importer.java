@@ -240,6 +240,8 @@ public class Importer {
 		System.out.println("inserting universities  " + (System.currentTimeMillis()-start)/1000f);
 		UniversitiesUploader uniUploader = new UniversitiesUploader(universities_map, dbh);
 		uniUploader.upload();		
+		
+		conf.set_db_ready("1");
 
 		int i =0;
 		if (i == 0){
