@@ -12,7 +12,7 @@ public class QuestionsTester {
 		ConnectionPool mConnPool = new ConnectionPool();
 		mConnPool.init();
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		ManualUpdates.backupManualUpdates(dbh,"DbMysql14");
+//		ManualUpdates.backupManualUpdates(dbh,"DbMysql14");
 //		ManualUpdates.deleteAllYagoData(dbh, "DbMysql14");
 //		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");
 //		QuestionsGenerator qg = GameUtils.generateCountry(1, "DbMysql14", dbh, 3);

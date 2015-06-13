@@ -3,7 +3,9 @@ package Database.Updates;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Properties;
 
+import config.config;
 import entities.entity_country;
 import entities.entity_person;
 import Database.DatabaseHandler;
@@ -13,10 +15,13 @@ public class ManualUpdates {
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	
 	
-	private static void updateFromYago(DatabaseHandler dbh,String dbname){
-		backupManualUpdates(dbh,dbname);
-		deleteAllYagoData(dbh,dbname);
-		//Importer i = new Importer(dbh, config);
+	private static void updateFromYago(DatabaseHandler dbh,config conf){
+		backupManualUpdates(dbh,conf.get_db_name());
+		deleteAllYagoData(dbh,conf.get_db_name());
+		Importer i = new Importer(dbh, conf);
+		
+	}
+	private static void insertManualBackupData(DatabaseHandler dbh,String dbname){
 		
 	}
 	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh){
