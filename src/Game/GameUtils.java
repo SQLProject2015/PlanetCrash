@@ -13,10 +13,12 @@ public class GameUtils {
 		QuestionsGenerator qg =null;
 		ArrayList<Question> optionalQuestions=null;
 		String query= "Select Country.Name "+
-                "FROM "+dbName+".Country, "+dbName+".user_country_completed"+
-                "WHERE user_country_completed.idUser='"+idUser+"'"+
-                " and Country.idCountry!=user_country_completed.idCountry"+
+                "FROM "+dbName+".Country "+
+				"WHERE country.idCountry NOT IN ( SELECT user_country_completed.idCountry "+
+                "FROM "+dbName+".user_country_completed "+
+				"WHERE  user_country_completed.idUser='"+idUser+"')"+
                 " ORDER BY RAND();";
+
 		try {
 			ResultSet rs = dbh.executeQuery(query);
 			while(rs.next()){

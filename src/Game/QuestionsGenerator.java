@@ -110,6 +110,7 @@ public class QuestionsGenerator {
                 "FROM "+this.dbname+".City, "+this.dbname+".Person "+
                 "WHERE City.idCountry='"+countryId+"' and Person.idPlaceOfBirth=City.idCity"+
                 " and Person.Name IS NOT NULL and Person.yearOfBirth IS NOT NULL"+
+                " and Person.yearOfDeath =0"+
                 " ORDER BY RAND()"+
                 " LIMIT "+i+";";
 		try {
@@ -244,7 +245,7 @@ public class QuestionsGenerator {
 		}
 	}
 	private void generateOfficialLanguageQuestion(){
-		Question q = new Question("What is the official language in "+countryName);
+		Question q = new Question("What is the official language in "+countryName+"?");
 		String query = "SELECT Language.Name " +
                    "FROM "+this.dbname+".Country, "+this.dbname+".Language "+
                    "WHERE Country.idCountry='"+countryId+"' and Country.idLanguage=Language.idLanguage"+
@@ -282,7 +283,7 @@ public class QuestionsGenerator {
 		}
 	}
 	private void generateOfficialCurrencyQuestion(){
-		Question q = new Question("What is the official currency of "+countryName);
+		Question q = new Question("What is the official currency of "+countryName+"?");
 		String query = "SELECT Currency.Name " +
                    "FROM "+this.dbname+".Country,"+this.dbname+".Currency "+
                    "WHERE Country.idCountry='"+countryId+"' and Country.idCurrency=Currency.idCurrency"+
@@ -321,7 +322,7 @@ public class QuestionsGenerator {
 		}
 	}
 	private void generateCapitalCityQuestion(){
-		Question q = new Question("What is the capital city of "+countryName);
+		Question q = new Question("What is the capital city of "+countryName+"?");
 		String query = "SELECT City.Name " +
                    "FROM "+this.dbname+".Country, "+this.dbname+".City "+
                    "WHERE City.idCountry='"+countryId+"' and Country.idCapital=City.idCity"+
