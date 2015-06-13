@@ -30,6 +30,7 @@ import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.AddCountryScene.MainListener;
 import Game.Game;
 
 public class EditCountryScene extends Scene{
@@ -44,6 +45,8 @@ public class EditCountryScene extends Scene{
 	JRoundedEditText languageField;
 	JRoundedEditText capitalField;
 	JRoundedEditText populationField;
+	
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 
 	@Override
 	public Component create() {
@@ -197,19 +200,31 @@ public class EditCountryScene extends Scene{
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
+		
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
 //		
 //		//Add create user button
 //		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
 //		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
 //		panel.add(createBtn, new Integer(2), 3);
 		
+<<<<<<< HEAD
+		//Register action listeners		
+		addBtn.addMouseListener(new MainListener(MainListener.EDIT_COUNTRY));
+		backBtn.addMouseListener(new MainListener(MainListener.BACK));
+=======
 		//Register action listeners
 		UpdateMouseListener eml = new UpdateMouseListener();
 		addBtn.addMouseListener(eml);
+>>>>>>> origin/master
 
 		return panel;
 	}
 	
+<<<<<<< HEAD
+=======
 	//Confirms the user
 	private User confirmUser(String username, String pass) {
 		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
@@ -303,9 +318,21 @@ public class EditCountryScene extends Scene{
 		
 	}
 	class LoadMouseListener implements MouseListener {
+>>>>>>> origin/master
 
+	
+	class MainListener implements MouseListener {
+		public static final int BACK=0,EDIT_COUNTRY=1;
+		int mode;
+		public MainListener(int mode) {
+			this.mode=mode;
+		}	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
+<<<<<<< HEAD
+			SettingsScene mms = new SettingsScene(gameGUI,game);	
+			gameGUI.fadeSwitchScene(mms);	
+=======
 			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 			try{
 				entity_country country_res = ManualUpdater.get_country_details(nameField.getText(), dbh);
@@ -333,6 +360,7 @@ public class EditCountryScene extends Scene{
 //			MainMenuScene mms = new MainMenuScene(gameGUI,game);
 ////			gameGUI.switchScene(mms);		d
 //			gameGUI.fadeSwitchScene(mms);
+>>>>>>> origin/master
 		}
 
 		@Override
