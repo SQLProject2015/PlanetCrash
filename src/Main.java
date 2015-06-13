@@ -44,8 +44,10 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
+		
 		mConnPool = new ConnectionPool();
-		mConnPool.init();	
+		//Init connection pool
+		mConnPool.init();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 		config properties = new config();

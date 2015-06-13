@@ -13,11 +13,10 @@ import javax.swing.Timer;
 import config.config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
+import GUI.Scenes.LoadToYagoScene;
 import GUI.Scenes.LoginScene;
-import GUI.Scenes.MainMenuScene;
 import GUI.Scenes.Scene;
 import GUI.Scenes.AddCountryScene;
-import GUI.Scenes.SettingsScene;
 import Game.Game;
 
 public class GameGUI {
@@ -56,20 +55,10 @@ public class GameGUI {
 		mainFrame.setResizable(false);
 
 		
-		//MainMenuScene mms = new MainMenuScene(this,game);//MainMenuScene();
-		//switchScene(mms);
-		
-//		AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
-
-//		switchScene(mms);	
-		
-//		SettingsScene mms = new SettingsScene(this,game);//MainMenuScene();
-//		switchScene(mms);
-
+		//AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
 		LoginScene mms = new LoginScene(this, game);
 		switchScene(mms);	
 		
-
 		
 //		if (config.get_db_ready().equals("0")){
 //			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();

@@ -40,7 +40,7 @@ public class Importer {
 	public static int parsing_finished = 0;
 	private static DatabaseHandler dbh;
 	
-	public Importer(DatabaseHandler dbh, config properties){		
+	public Importer(DatabaseHandler dbh, config properties) throws SQLException{		
 		
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();
@@ -58,15 +58,17 @@ public class Importer {
 
 
 		try{
-			ResultSet rs;
+			ResultSet rs = null;
 			try{
 				rs = dbh.executeQuery(String.format("SELECT Name FROM %s.Award;",conf.get_db_name()));
 				while (rs.next()) {	        
 		            String Name = rs.getString("Name");
 		            awards_set.add(Name);
 		        }
+				rs.close();
 			}catch(SQLException e){
 				System.out.println("Error");
+				rs.close();
 			}
 			
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);

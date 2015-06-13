@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -118,25 +119,46 @@ public class DifficultySelectScene extends Scene{
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
+					QuestionsGenerator qg = null;
+					while(qg==null) {
+						config cfg = new config();
+						DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+						qg = GameUtils.generateCountry(game.getUser().getId(), cfg.get_db_name(), dbh, game.getDifficulty());
+						if (qg==null)
+							continue;
+						game.setCountry(qg.getCountry());
+						game.setQuestions(qg.getPossibleQuestions());
 
-					config cfg = new config();
-					DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-					QuestionsGenerator qg = GameUtils.generateCountry(game.getUser().getId(), cfg.get_db_name(), dbh, game.getDifficulty());
-					game.setCountry(qg.getCountry());
-					game.setQuestions(qg.getPossibleQuestions());
-					try {
-						dbh.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						try {
+							dbh.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-
 				}
 			}).start();
-			
-			//Set planet variablis
+
+			//Set planet variables
 			game.setBackdrop(Game.BACKDROPS[(int)(Math.random()*Game.BACKDROPS.length)]);
 			game.setLand(Game.LANDS[(int)(Math.random()*Game.LANDS.length)]);
+
+			//Set soldiers
+			try{
+				File soldiersDir = new File(GameGUI.ASSETS+"soldiers");
+				if(!soldiersDir.isDirectory() || !soldiersDir.exists())
+					throw new FileNotFoundException("Could not find soldiers directory.");
+				File[] soldiers = soldiersDir.listFiles();
+				File soldierImg = soldiers[(int)(Math.random()*soldiers.length)];
+				game.setSoldier(soldierImg);
+
+			} catch(Exception e) {
+				//Show dialog here
+				return;
+			}
+
+			//Set lives
+			game.setLives(4);
 
 			//load the scene
 			GameScene gs = new GameScene(gameGUI, game);

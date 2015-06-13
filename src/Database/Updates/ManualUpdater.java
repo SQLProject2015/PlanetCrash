@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import config.config;
+import entities.entity_country;
 import Database.DatabaseHandler;
 import Exceptions.NotFoundException;
 
@@ -79,7 +80,7 @@ public class ManualUpdater {
 	 * @throws SQLException 
 	 * @throws NotFoundException 
 	 */
-	public static Object[] get_country_details(String countryName, DatabaseHandler dbh) throws SQLException, NotFoundException{
+	public static entity_country get_country_details(String countryName, DatabaseHandler dbh) throws SQLException, NotFoundException{
 		//get details from the db (by id's)
 		
 		String query = String.format("SELECT * FROM %s.Country WHERE Name=\"%s\";", conf.get_db_name(),countryName);
@@ -108,7 +109,7 @@ public class ManualUpdater {
 		// get capital name from DB
 		String capitalCity = getNameFromDB("City", "Name", idCapital, dbh);
 		
-		return new Object[]{continent, currency, language, capitalCity, populationSize};
+		return new entity_country(countryName,continent, currency, language, capitalCity, populationSize);
 	}
 
 	public static int getIdFromDB(String tableName, String column, String valueToSearch, DatabaseHandler dbh) throws NotFoundException, SQLException{
