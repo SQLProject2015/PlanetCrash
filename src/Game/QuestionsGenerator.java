@@ -76,8 +76,8 @@ public class QuestionsGenerator {
                 " ORDER BY RAND()"+
                 " LIMIT "+(4*i)+";";
 		try {
-			ResultSet rs_in =this.dbh.executeQuery(query_in);
-			ResultSet rs_out =this.dbh.executeQuery(query_out);
+			ResultSet rs_in = this.dbh.executeQuery(query_in);
+			ResultSet rs_out = this.dbh.executeQuery(query_out);
 			ArrayList<String> out=new ArrayList<String>();
 			while(rs_out.next()){
 				out.add(rs_out.getString("Name"));
