@@ -56,19 +56,19 @@ public class GameGUI {
 
 		
 		//AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
-		LoginScene mms = new LoginScene(this, game);
-		switchScene(mms);	
+//		LoginScene mms = new LoginScene(this, game);
+//		switchScene(mms);	
 		
 		
-//		if (config.get_db_ready().equals("0")){
-//			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
-//			switchScene(mms);	
-//		}
-//		else{
-//			//Show main screen
-//			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-//			switchScene(mms);		
-//		}
+		if (config.get_db_ready().equals("0")){
+			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
+			switchScene(mms);	
+		}
+		else{
+			//Show main screen
+			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+			switchScene(mms);		
+		}
 		
 		
 

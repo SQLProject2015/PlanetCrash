@@ -210,40 +210,18 @@ public class EditCountryScene extends Scene{
 //		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
 //		panel.add(createBtn, new Integer(2), 3);
 		
-<<<<<<< HEAD
+
 		//Register action listeners		
-		addBtn.addMouseListener(new MainListener(MainListener.EDIT_COUNTRY));
-		backBtn.addMouseListener(new MainListener(MainListener.BACK));
-=======
+		backBtn.addMouseListener(new BackListener());
+
 		//Register action listeners
 		UpdateMouseListener eml = new UpdateMouseListener();
 		addBtn.addMouseListener(eml);
->>>>>>> origin/master
+
 
 		return panel;
 	}
 	
-<<<<<<< HEAD
-=======
-	//Confirms the user
-	private User confirmUser(String username, String pass) {
-		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-		User user=null;
-		
-		try {
-			user = UserHandler.validate_user(username, pass, dbh);
-		} catch (UserException | SQLException e) {
-			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
-		}
-		try {
-			dbh.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return user;
-	}
 	
 	class UpdateMouseListener implements MouseListener {
 
@@ -318,21 +296,8 @@ public class EditCountryScene extends Scene{
 		
 	}
 	class LoadMouseListener implements MouseListener {
->>>>>>> origin/master
-
-	
-	class MainListener implements MouseListener {
-		public static final int BACK=0,EDIT_COUNTRY=1;
-		int mode;
-		public MainListener(int mode) {
-			this.mode=mode;
-		}	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-<<<<<<< HEAD
-			SettingsScene mms = new SettingsScene(gameGUI,game);	
-			gameGUI.fadeSwitchScene(mms);	
-=======
 			DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 			try{
 				entity_country country_res = ManualUpdater.get_country_details(nameField.getText(), dbh);
@@ -360,7 +325,45 @@ public class EditCountryScene extends Scene{
 //			MainMenuScene mms = new MainMenuScene(gameGUI,game);
 ////			gameGUI.switchScene(mms);		d
 //			gameGUI.fadeSwitchScene(mms);
->>>>>>> origin/master
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
+	class BackListener implements MouseListener {
+		
+		public BackListener(){
+			
+		}
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			SettingsScene mms = new SettingsScene(gameGUI,game);	
+			gameGUI.fadeSwitchScene(mms);		
 		}
 
 		@Override

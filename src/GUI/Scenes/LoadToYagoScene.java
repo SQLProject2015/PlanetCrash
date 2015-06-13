@@ -23,17 +23,23 @@ import com.sun.org.apache.xml.internal.security.Init;
 import config.config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
+import Database.Updates.ManualUpdater;
 import Database.Users.User;
 import Database.Users.UserException;
 import Database.Users.UserHandler;
+import Exceptions.NotFoundException;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.AddCountryScene.MainListener;
 import Game.Game;
 
 public class LoadToYagoScene extends Scene{
+	
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
+	config config = new config();
 	
 	public LoadToYagoScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
@@ -80,111 +86,115 @@ public class LoadToYagoScene extends Scene{
 		importBtn.setBounds((GameGUI.WINDOW_WIDTH-importBtn.getWidth())/2, 375, importBtn.getWidth(), importBtn.getHeight());
 		panel.add(importBtn, new Integer(2), 2);
 		
+		if (config.get_db_ready().equals("1")){
+			backBtn.setBorderColor(Color.green);
+			backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+			panel.add(backBtn, new Integer(2), 2);
+		}
+		
 		//Add login button
 		//JRoundedButton perBtn = new JRoundedButton("Loading...", 500, 60, 2);
 //		perBtn.setBorderColor(Color.green);
 //		perBtn.setBounds((GameGUI.WINDOW_WIDTH-perBtn.getWidth())/2, 450, perBtn.getWidth(), perBtn.getHeight());
 //		panel.add(perBtn, new Integer(2), 2);
 								
-		//Register action listeners
-		ImportListener lml = new ImportListener();
-		importBtn.addMouseListener(lml);
+		//Register action listeners		
+		importBtn.addMouseListener(new MainListener(MainListener.IMPORT));
+		backBtn.addMouseListener(new MainListener(MainListener.BACK));
 
 		return panel;
 	}
 	
-	//Confirms the user
-	private User confirmUser(String username, String pass) {
-		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-		User user=null;
+	class MainListener implements MouseListener {
 		
-		try {
-			user = UserHandler.validate_user(username, pass, dbh);
-		} catch (UserException | SQLException e) {
-			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
-		}
-		try {
-			dbh.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return user;
-	}
-	
-	class ImportListener implements MouseListener {
+		public static final int BACK=0,IMPORT=1;
+		int mode;
+		public MainListener(int mode) {
+			this.mode=mode;
+		}	
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-			final config config = new config();
-			
-			new Thread(new Runnable(){
-				public void run(){
-					try {
-						Importer i = new Importer(dbh, config);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
-					MainMenuScene mms = new MainMenuScene(gameGUI,game);
-					gameGUI.switchScene(mms);		
-					gameGUI.fadeSwitchScene(mms);
-				}
+			switch(mode) {
+			case BACK:
+				SettingsScene mms = new SettingsScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms);		
+				break;
+			case IMPORT:
+				final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+				final config config = new config();
 				
-				}).start();
-			
-			per = 0;			
-			final Timer t2 = new Timer(1000, new ActionListener() {
+				new Thread(new Runnable(){
+					public void run(){
+						try {
+							Importer i = new Importer(dbh, config);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+						MainMenuScene mms = new MainMenuScene(gameGUI,game);
+						gameGUI.switchScene(mms);		
+						gameGUI.fadeSwitchScene(mms);
+					}
+					
+					}).start();
+				
+				per = 0;			
+				final Timer t2 = new Timer(1000, new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-									
-					if (Importer.uploading_finished != -1){
-					   
-					    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
-					    if (temp!= per){
-					    	per = temp;
-					    	System.out.println(String.format("finished %d percenteges", (per)));
-					    	importBtn.setText(String.format("Uploading... %d%%", (per)));
-					    }												    												   
+					@Override
+					public void actionPerformed(ActionEvent e) {
+										
+						if (Importer.uploading_finished != -1){
+						   
+						    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
+						    if (temp!= per){
+						    	per = temp;
+						    	System.out.println(String.format("finished %d percenteges", (per)));
+						    	importBtn.setText(String.format("Uploading... %d%%", (per)));
+						    }												    												   
+						}
+						else if(Importer.uploading_finished==-1){
+						    	((Timer)e.getSource()).stop();
+						}
 					}
-					else if(Importer.uploading_finished==-1){
-					    	((Timer)e.getSource()).stop();
-					}
-				}
-			});
-			
-						
-			Timer t = new Timer(1000, new ActionListener() {
+				});
+				
+							
+				Timer t = new Timer(1000, new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-									
-					if (Importer.parsing_finished != -1){
-					   
-					    int temp = Math.round((Importer.parsing_finished * 100.0f) / config.get_files_size());		
-					    if (temp!= per){
-					    	per = temp;
-					    	System.out.println(String.format("finished %d percenteges", (per)));
-					    	importBtn.setText(String.format("Parsing... %d%%", (per)));
-					    	//perBtn.setText(String.format("%d%%", (per)));
-					    }												    												   
+					@Override
+					public void actionPerformed(ActionEvent e) {
+										
+						if (Importer.parsing_finished != -1){
+						   
+						    int temp = Math.round((Importer.parsing_finished * 100.0f) / config.get_files_size());		
+						    if (temp!= per){
+						    	per = temp;
+						    	System.out.println(String.format("finished %d percenteges", (per)));
+						    	importBtn.setText(String.format("Parsing... %d%%", (per)));
+						    	//perBtn.setText(String.format("%d%%", (per)));
+						    }												    												   
+						}
+						else if(Importer.parsing_finished==-1){
+						    	((Timer)e.getSource()).stop();
+						    	per = 0;
+						    	importBtn.setText("Uploading...");
+						    	t2.start();
+						}
 					}
-					else if(Importer.parsing_finished==-1){
-					    	((Timer)e.getSource()).stop();
-					    	per = 0;
-					    	importBtn.setText("Uploading...");
-					    	t2.start();
-					}
-				}
-			});
+				});
+				
+				importBtn.setText("Parsing...");
+				t.start();
+				
+				break;
+				}	
+				
+			}	
 			
-			importBtn.setText("Parsing...");
-			t.start();
-
-			}		
+			
+	
 		
 
 		@Override
