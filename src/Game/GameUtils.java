@@ -14,7 +14,7 @@ public class GameUtils {
 		ArrayList<Question> optionalQuestions=null;
 		String query= "Select Country.Name "+
                 "FROM "+dbName+".Country "+
-				"WHERE country.idCountry NOT IN ( SELECT user_country_completed.idCountry "+
+				"WHERE Country.idCountry NOT IN ( SELECT user_country_completed.idCountry "+
                 "FROM "+dbName+".user_country_completed "+
 				"WHERE  user_country_completed.idUser='"+idUser+"')"+
                 " ORDER BY RAND();";
