@@ -12,6 +12,13 @@ public class ManualUpdates {
 	public static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	
+	
+	private static void updateFromYago(DatabaseHandler dbh,String dbname){
+		backupManualUpdates(dbh,dbname);
+		deleteAllYagoData(dbh,dbname);
+		//Importer i = new Importer(dbh, config);
+		
+	}
 	private static String getNameFromDB(String tableName, String column, int valueToSearch, DatabaseHandler dbh){
 		ResultSet rs;
 		String retString = "";
@@ -72,7 +79,7 @@ public class ManualUpdates {
 			ResultSet rs = dbh.executeQuery(tablesQuery);
 			while(rs.next()){
 				String tableName = rs.getString(1);
-				String delete = "DELETE FROM "+tableName+" WHERE "+tableName+".isManual=0;";
+				String delete = "DELETE FROM "+tableName+";";
 				int deleted = dbh.executeUpdate(delete);
 				rs.close();
 			}
