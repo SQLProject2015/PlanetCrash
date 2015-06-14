@@ -19,6 +19,8 @@ public class StarSpawner extends JPanel implements Runnable{
 	float acceleration;
 	final int DELAY = 25;
 
+	static long allowedThread;
+	
 	final Color colors[] = {Color.CYAN, Color.RED, Color.YELLOW, Color.GREEN, Color.PINK, Color.ORANGE};
 
 	//A star spawner to which all stars will relate
@@ -97,8 +99,10 @@ public class StarSpawner extends JPanel implements Runnable{
 	@Override
 	public void run() {
 		long sleep,timediff,beforetime = System.currentTimeMillis();
-
-		while(true) {
+		
+		StarSpawner.allowedThread=Thread.currentThread().getId();
+		
+		while(Thread.currentThread().getId()==StarSpawner.allowedThread) {
 			timediff = System.currentTimeMillis()-beforetime;
 			sleep = DELAY - timediff;
 			cycle(sleep>0?sleep:2);
@@ -112,6 +116,7 @@ public class StarSpawner extends JPanel implements Runnable{
 
 
 			beforetime = System.currentTimeMillis();
+//			System.out.println(Thread.currentThread().getId());
 		}
 
 	}

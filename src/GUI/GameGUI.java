@@ -90,7 +90,6 @@ public class GameGUI {
 	}
 
 	public void switchScene(Scene scene) {
-		//mainFrame.removeAll(); //TODO this shiat doesn't work
 		mJLPane = new JLayeredPane();
 		mJLPane.setPreferredSize(new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT));
 		
@@ -147,6 +146,11 @@ public class GameGUI {
 		
 		t1.setRepeats(false);
 		t1.start();
+	}
+	
+	public void quit() {
+		mConnPool.destroyPool();
+		System.exit(0);
 	}
 
 }

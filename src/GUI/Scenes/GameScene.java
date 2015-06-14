@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Collections;
 import java.util.List;
 
@@ -141,7 +142,7 @@ public class GameScene extends Scene{
 		aliens.setLayout(null);
 
 		int alx=GameGUI.WINDOW_WIDTH-(int)((new JImage(alienFile)).getWidth()*1.4),aly=20;
-		for(int i=0; i<game.getLives(); i++) {
+		for(int i=0; i<game.getDifficulty()-game.getCurrentQuestion(); i++) {
 			JImage s = new JImage(alienFile);
 			s.setOpaque(false);
 			s.setBounds(alx,aly,s.getWidth(),s.getHeight());
@@ -176,11 +177,23 @@ public class GameScene extends Scene{
 		return panel;
 	}
 
-	private File randomFile(String dirp) {
+	/**
+	 * @param dirp
+	 * @return a random .png file from the directory given
+	 */
+	public static File randomFile(String dirp) {
 		File dir = new File(dirp);
 		if(!dir.exists() || !dir.isDirectory())
 			return null;
-		File[] flist = dir.listFiles();
+		File[] flist = dir.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				if(!pathname.getName().endsWith(".png"))
+					return false;
+				return true;
+			}
+		});
 		return flist[(int)(Math.random()*flist.length)];
 
 	}

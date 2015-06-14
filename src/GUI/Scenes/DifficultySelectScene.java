@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
@@ -149,7 +150,15 @@ public class DifficultySelectScene extends Scene{
 				File soldiersDir = new File(GameGUI.ASSETS+"soldiers");
 				if(!soldiersDir.isDirectory() || !soldiersDir.exists())
 					throw new FileNotFoundException("Could not find soldiers directory.");
-				File[] soldiers = soldiersDir.listFiles();
+				File[] soldiers = soldiersDir.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						if(!pathname.getName().endsWith(".png"))
+							return false;
+						return true;
+					}
+				});
 				File soldierImg = soldiers[(int)(Math.random()*soldiers.length)];
 				game.setSoldier(soldierImg);
 

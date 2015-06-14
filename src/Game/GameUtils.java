@@ -54,14 +54,14 @@ public class GameUtils {
 		//funky vowels
 		char[] ca = name.toCharArray();
 		for(int i=0; i<ca.length; i++) {
-			if(vowels.contains(ca[i]) && Math.random()>0.7)
+			if(vowels.contains(ca[i]) && Math.random()>0.75)
 				ca[i]=vowels.get((int)(Math.random()*vowels.size()));
 			funky.append(ca[i]);
 		}
 		
 		//Garnish
 		for(int i=0;i<3;i++)
-			if(Math.random()>0.7) {
+			if(Math.random()>0.3) {
 				funky.append(" "+garnish.get((int)(Math.random()*garnish.size())));
 			}
 		

@@ -12,8 +12,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
+import Database.Users.User;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
@@ -24,6 +24,9 @@ public class MainMenuScene extends Scene {
 
 	public MainMenuScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
+		User user = game.getUser();
+		this.game=new Game();
+		this.game.setUser(user);
 	}
 
 	@Override
@@ -63,8 +66,7 @@ public class MainMenuScene extends Scene {
 
 		//add welcome message
 		Font font = new Font(null, Font.PLAIN, 20);
-		//JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
-		JTextField welcomeMsg = new JTextField("Welcome back");
+		JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
 		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 240,
@@ -99,6 +101,7 @@ public class MainMenuScene extends Scene {
 				gameGUI.fadeSwitchScene(new SettingsScene(gameGUI, game));
 				break;
 			case QUIT:
+				gameGUI.quit();
 				break;
 			}
 			
