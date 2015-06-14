@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import config.config;
 import Database.DatabaseHandler;
 
 public class QuestionsGenerator {
@@ -15,6 +16,8 @@ public class QuestionsGenerator {
 	private int countryId;
 	private DatabaseHandler dbh;
 	private String dbname;
+	
+	config config = new config();
 	
 	public QuestionsGenerator(String countryName,DatabaseHandler dbh,String dbname){
 		this.countryName=countryName;
@@ -508,12 +511,12 @@ public class QuestionsGenerator {
 			
 			// get a random dead person
 			String query = String.format("SELECT Person.Name	"
-										+ "FROM %s.Person, DbMysql14.City "
+										+ "FROM %s.Person, %s.City "
 										+ "WHERE yearOfDeath!=0 AND yearOfBirth!=0 "
 										+ "AND idPlaceOfBirth=City.idCity "
 										+ "AND City.idCountry=%d "
 										+ "ORDER BY RAND() "
-										+ "LIMIT 1;",this.dbname, countryId );
+										+ "LIMIT 1;",this.dbname, config.get_db_name() ,countryId );
 			
 			
 			try {
@@ -527,12 +530,12 @@ public class QuestionsGenerator {
 				
 				//get 3 random persons that are still alive"
 				query = String.format("SELECT Person.Name	"
-						+ "FROM %s.Person, DbMysql14.City "
+						+ "FROM %s.Person, %s.City "
 						+ "WHERE yearOfDeath=0 AND yearOfBirth!=0 "
 						+ "AND idPlaceOfBirth=City.idCity "
 						+ "AND City.idCountry=%d "
 						+ "ORDER BY RAND() "
-						+ "LIMIT 3;",this.dbname, countryId );
+						+ "LIMIT 3;",this.dbname, config.get_db_name(), countryId );
 	
 				
 				rs =this.dbh.executeQuery(query);//jdbc

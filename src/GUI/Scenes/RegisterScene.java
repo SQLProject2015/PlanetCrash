@@ -24,16 +24,18 @@ import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
+import GUI.Scenes.DifficultySelectScene.BackListener;
 import Game.Game;
 
-public class LoginScene extends Scene{
+public class RegisterScene extends Scene{
 	
-	public LoginScene(GameGUI gameGUI, Game game) {
+	public RegisterScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
 	}
 
 	JRoundedEditText usernameField;
 	JRoundedEditText passwordField;
+	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 
 	@Override
 	public Component create() {
@@ -96,33 +98,36 @@ public class LoginScene extends Scene{
 		panel.add(passwordPanel, new Integer(2),1);
 		
 		//Add login button
-		JRoundedButton loginBtn = new JRoundedButton("Login", 220, 60, 2);
-		loginBtn.setBorderColor(Color.green);
-		loginBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375, loginBtn.getWidth(), loginBtn.getHeight());
-		panel.add(loginBtn, new Integer(2), 2);
+//		JRoundedButton loginBtn = new JRoundedButton("Login", 220, 60, 2);
+//		loginBtn.setBorderColor(Color.green);
+//		loginBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375, loginBtn.getWidth(), loginBtn.getHeight());
+//		panel.add(loginBtn, new Integer(2), 2);
 		
 		//Add create user button
 		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
-		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
+		createBtn.setBounds((GameGUI.WINDOW_WIDTH/2)-110, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
 		panel.add(createBtn, new Integer(2), 3);
 		
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
+		
 		//Register action listeners
-		LoginMouseListener lml = new LoginMouseListener();
-		loginBtn.addMouseListener(lml);
-	
 		RegisterMouseListener rml = new RegisterMouseListener();
 		createBtn.addMouseListener(rml);
+		
+		backBtn.addMouseListener(new BackListener());
 
 		return panel;
 	}
 	
 	//Confirms the user
-	private User confirmUser(String username, String pass) {
+	private User createUser(String username, String pass) {
 		DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 		User user=null;
 		
 		try {
-			user = UserHandler.validate_user(username, pass, dbh);
+			user = UserHandler.add_new_user(username, pass, dbh);
 		} catch (UserException | SQLException e) {
 			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
 		}
@@ -136,16 +141,20 @@ public class LoginScene extends Scene{
 		return user;
 	}
 	
-	class LoginMouseListener implements MouseListener {
+	class RegisterMouseListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if(usernameField==null||passwordField==null)
+			if(usernameField.getText().isEmpty()||passwordField.getText().isEmpty()){
+				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Don't leave fields empty!");
 				return;
-			User user = confirmUser(usernameField.getText(), passwordField.getText());
+			}
+			User user = createUser(usernameField.getText(), passwordField.getText());
 			
 			if(user==null)
 				return;
+			
+			JOptionPane.showMessageDialog(gameGUI.mainFrame, "User created successfully");
 			
 			game.setUser(user);
 			
@@ -179,13 +188,19 @@ public class LoginScene extends Scene{
 		}
 		
 	}
+	
+	public class BackListener implements MouseListener {
 
-	class RegisterMouseListener implements MouseListener {
-
+		public static final int BACK=0,ADD_COUNTRY=1;
+		int mode;
+		public BackListener() {
+		}		
+		
+		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			RegisterScene mms = new RegisterScene(gameGUI,game);	
-			gameGUI.fadeSwitchScene(mms);	
+				LoginScene mms = new LoginScene(gameGUI,game);	
+				gameGUI.fadeSwitchScene(mms);									
 		}
 
 		@Override
@@ -213,5 +228,6 @@ public class LoginScene extends Scene{
 		}
 		
 	}
+
 	
 }
