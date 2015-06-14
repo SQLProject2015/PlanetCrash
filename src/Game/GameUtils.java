@@ -3,6 +3,8 @@ package Game;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import Database.DatabaseHandler;
 
@@ -41,5 +43,28 @@ public class GameUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static String funkName(String name) {
+		StringBuilder funky = new StringBuilder();
+		
+		List<Character> vowels = new ArrayList<Character>(Arrays.asList(new Character[]{'a','e','i','o','u'}));
+		List<String> garnish = new ArrayList<String>(Arrays.asList(new String[]{"X","Centauri","Y","1337","6","Flex","Zork","42","17","10"}));
+		
+		//funky vowels
+		char[] ca = name.toCharArray();
+		for(int i=0; i<ca.length; i++) {
+			if(vowels.contains(ca[i]) && Math.random()>0.7)
+				ca[i]=vowels.get((int)(Math.random()*vowels.size()));
+			funky.append(ca[i]);
+		}
+		
+		//Garnish
+		for(int i=0;i<3;i++)
+			if(Math.random()>0.7) {
+				funky.append(" "+garnish.get((int)(Math.random()*garnish.size())));
+			}
+		
+		return funky.toString();
 	}
 }

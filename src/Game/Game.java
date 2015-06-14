@@ -2,7 +2,9 @@ package Game;
 
 import java.awt.Color;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import Database.Users.User;
 
@@ -13,6 +15,7 @@ public class Game {
 	String country;
 	List<Question> questions=null;
 	int currentQuestion;
+	String planet;
 
 	File soldier;
 	
@@ -57,6 +60,7 @@ public class Game {
 	
 	public void setQuestions(List<Question> questions) {
 		this.questions=questions;
+		Collections.shuffle(this.questions);
 	}
 	
 	public List<Question> getQuestions() {
@@ -97,5 +101,17 @@ public class Game {
 	
 	public int getCurrentQuestion() {
 		return currentQuestion;
+	}
+	
+	public void setPlanetName(String name) {
+		this.planet=name;
+	}
+	
+	public String getPlanetName() {
+		return planet;
+	}
+	
+	public void advanceQuestion() {
+		currentQuestion++;
 	}
 }
