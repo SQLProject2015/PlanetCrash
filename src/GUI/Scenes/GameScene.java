@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -41,6 +43,7 @@ public class GameScene extends Scene{
 				//e.printStackTrace();
 			}
 		this.answers = game.getQuestion(game.getCurrentQuestion()).getPossibleAnswers();
+		Collections.shuffle(this.answers);
 
 		panel = new JLayeredPane();
 		panel.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
@@ -208,7 +211,7 @@ public class GameScene extends Scene{
 				for(int j=0; j<answersButtons[i].getMouseListeners().length;j++)
 					answersButtons[i].removeMouseListener(answersButtons[i].getMouseListeners()[j]);
 			}
-			
+
 			JLayeredPane dlg = new JLayeredPane();
 			JLayeredPane mask = emptyMainJLayeredPane();
 
@@ -225,6 +228,7 @@ public class GameScene extends Scene{
 				//Wrong answer
 				bg.setBackground(new Color(255,0,0,50));
 				dlg = createCorrectDialog(false);
+				game.decLives();
 			}
 			mask.add(bg, new Integer(0),0);
 			dlg.setBounds((int)(GameGUI.WINDOW_WIDTH-dlg.getPreferredSize().getWidth())/2,
@@ -235,7 +239,32 @@ public class GameScene extends Scene{
 
 			mask.setOpaque(false);
 
+			//Add next/quit buttons
+			JPanel buttons = new JPanel();
+			buttons.setLayout(null);
+			buttons.setOpaque(false);
+
+			int bw=90,bh=60;
+			Rectangle dlgb= dlg.getComponent(1).getBounds();
+			buttons.setPreferredSize(new Dimension(bw,bh));
+			buttons.setBounds(0,Math.min((dlgb.y+dlgb.height-bh/2)+20,GameGUI.WINDOW_HEIGHT-bh),GameGUI.WINDOW_WIDTH,bh);
+
+			JRoundedButton next = new JRoundedButton("Next", bw, bh, 2);
+			next.setBounds(Math.min((dlgb.x+dlgb.width-bw/2),GameGUI.WINDOW_WIDTH-bw),0,bw,bh);
+			next.setBorderColor(Color.GREEN);
+			buttons.add(next);
+
+			JRoundedButton quit = new JRoundedButton("Quit", bw, bh, 2);
+			quit.setBounds(Math.max(0,(dlgb.x-bw/2)),0,bw,bh);
+			quit.setBorderColor(Color.red);
+			buttons.add(quit);
+
+			mask.add(buttons, new Integer(2),0);
+
 			panel.add(mask, new Integer(5),0);
+
+			//Register listeners
+			next.addMouseListener(new NextListener());
 		}
 
 		private JLayeredPane createCorrectDialog(boolean isCorrect) {
@@ -243,7 +272,7 @@ public class GameScene extends Scene{
 			JPanel containerT = emptyMainJPanel();
 			containerT.setLayout(null);
 			containerT.setOpaque(false);
-			
+
 			//JTextField title = new JTextField("Correct!");
 			JRoundedButton title = new JRoundedButton(new Font(null, Font.BOLD, 30), (isCorrect?"Correct!":"Wrong!"), 150, 50, 2);
 			JTextField msg = new JTextField("The answer is:\n"+game.getQuestion(game.getCurrentQuestion()).getCorrectAnswer().getAnswer());
@@ -254,34 +283,34 @@ public class GameScene extends Scene{
 			title.isButton(false);
 			msg.setFont(new Font(Font.SANS_SERIF, Font.BOLD,18));
 			msg.setForeground(isCorrect?Color.green:Color.red);
-			
+
 			title.setBounds((int)(GameGUI.WINDOW_WIDTH-title.getPreferredSize().getWidth())/2,
 					220, (int)title.getPreferredSize().getWidth(), (int)title.getPreferredSize().getHeight());
 			containerT.add(title);
 			containerT.setBounds(0,0,GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT);
-			
+
 			JRounded containerM = new JRounded((int)msg.getPreferredSize().getWidth()+50,
 					(int)msg.getPreferredSize().getHeight()+50,2) {
 
-						/**
-						 * 
-						 */
-						private static final long serialVersionUID = 1L;};
-						
-			containerM.add(msg);
-			containerM.setLayout(null);
-			containerM.setBounds((int)(GameGUI.WINDOW_WIDTH-containerM.getPreferredSize().getWidth())/2,
-					250, (int)containerM.getPreferredSize().getWidth(), (int)containerM.getPreferredSize().getHeight());
-			containerM.setBorderColor(isCorrect?Color.green:Color.red);
-			
-			msg.setBounds((int)(containerM.getPreferredSize().getWidth()-msg.getPreferredSize().getWidth())/2,
-					(int)(containerM.getPreferredSize().getHeight()-msg.getPreferredSize().getHeight())/2, 
-					(int)msg.getPreferredSize().getWidth(), (int)msg.getPreferredSize().getHeight());
-			
-			master.add(containerM,new Integer(0),0);
-			master.add(containerT,new Integer(1),0);
-			
-			return master;
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;};
+
+				containerM.add(msg);
+				containerM.setLayout(null);
+				containerM.setBounds((int)(GameGUI.WINDOW_WIDTH-containerM.getPreferredSize().getWidth())/2,
+						250, (int)containerM.getPreferredSize().getWidth(), (int)containerM.getPreferredSize().getHeight());
+				containerM.setBorderColor(isCorrect?Color.green:Color.red);
+
+				msg.setBounds((int)(containerM.getPreferredSize().getWidth()-msg.getPreferredSize().getWidth())/2,
+						(int)(containerM.getPreferredSize().getHeight()-msg.getPreferredSize().getHeight())/2, 
+						(int)msg.getPreferredSize().getWidth(), (int)msg.getPreferredSize().getHeight());
+
+				master.add(containerM,new Integer(0),0);
+				master.add(containerT,new Integer(1),0);
+
+				return master;
 		}
 
 
@@ -310,38 +339,44 @@ public class GameScene extends Scene{
 		}
 
 	}
-	
+
 	class NextListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
+			if(game.getLives()<=0 ||game.getCurrentQuestion()>=game.getDifficulty()-1) { //loss or win
+				EndGameScene es = new EndGameScene(gameGUI, game);
+				gameGUI.fadeSwitchScene(es);
+			} else { //next question
+				game.advanceQuestion();
+				GameScene ns = new GameScene(gameGUI,game);
+				gameGUI.fadeSwitchScene(ns);
+			}
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
 }

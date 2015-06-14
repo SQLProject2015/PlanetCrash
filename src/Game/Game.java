@@ -95,6 +95,10 @@ public class Game {
 		return lives;
 	}
 	
+	public void decLives() {
+		this.lives--;
+	}
+	
 	public void setCurrentQuestion(int crnt) {
 		currentQuestion = crnt;
 	}
