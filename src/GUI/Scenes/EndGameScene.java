@@ -27,6 +27,10 @@ import Game.Game;
 
 public class EndGameScene extends Scene{
 
+	private String[] goodNews = {"you make a nice stew.", "you go well with bread.", "being eaten alive kinda tickles.",
+									"at least you're not a disgusting alien.", "you will get a hot bath in a cauldron."};
+	
+	
 	public EndGameScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
 	}
@@ -59,7 +63,7 @@ public class EndGameScene extends Scene{
 			bg = new JImage(new File(GameGUI.ASSETS+"loss.png"));
 			title = new JTextField("Defeat!");
 			title.setForeground(Color.red);
-			message.setText("You have failed to rise up to the aliens' challenges.\nGood news: you make a nice stew.");
+			message.setText("You have failed to rise up to the aliens' challenges.\nGood news: "+goodNews[(int)(Math.random()*goodNews.length)]);
 			message.setForeground(Color.red);
 		}
 		title.setFont(new Font(Font.SANS_SERIF,Font.BOLD,70));

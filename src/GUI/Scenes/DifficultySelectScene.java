@@ -31,7 +31,6 @@ import config.config;
 
 public class DifficultySelectScene extends Scene{
 	
-	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 
 	public DifficultySelectScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
@@ -58,28 +57,28 @@ public class DifficultySelectScene extends Scene{
 		logo.setOpaque(false);
 		panel.add(logo, new Integer(1), 0);
 
-		//Add play button
+		//Add easy button
 		JRoundedButton easyBtn = new JRoundedButton("Land", 220,60, 2);
 		easyBtn.setBounds((GameGUI.WINDOW_WIDTH-easyBtn.getWidth())/2, 280, easyBtn.getWidth(), easyBtn.getHeight());
 		easyBtn.setBorderColor(Color.green);
 		//		easyBtn.setLabelFont(font);
 		panel.add(easyBtn, new Integer(2), 0);
 
-		//Add settings button
+		//Add medium button
 		JRoundedButton mediumBtn = new JRoundedButton("Bump", 220,60, 2);
 		mediumBtn.setBounds((GameGUI.WINDOW_WIDTH-mediumBtn.getWidth())/2, 370, mediumBtn.getWidth(), mediumBtn.getHeight());
 		mediumBtn.setBorderColor(Color.yellow);
 		//		mediumBtn.setLabelFont(font);
 		panel.add(mediumBtn, new Integer(3), 0);
 
-		//Add quit button
+		//Add hard button
 		JRoundedButton hardBtn = new JRoundedButton("Crash", 220,60, 2);
 		hardBtn.setBounds((GameGUI.WINDOW_WIDTH-hardBtn.getWidth())/2, 460, hardBtn.getWidth(), hardBtn.getHeight());
 		hardBtn.setBorderColor(Color.red);
 		//		hardBtn.setLabelFont(font);
 		panel.add(hardBtn, new Integer(3), 0);
 
-		//add difficulty message
+		//Add difficulty message
 		JTextField welcomeMsg = new JTextField("Please choose difficulty:");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
@@ -89,6 +88,8 @@ public class DifficultySelectScene extends Scene{
 		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
 		panel.add(welcomeMsg, new Integer(3),0);
 		
+		//Add back button
+		JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 		backBtn.setBorderColor(Color.green);
 		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
 		panel.add(backBtn, new Integer(2), 2);
@@ -171,8 +172,9 @@ public class DifficultySelectScene extends Scene{
 			game.setLives(4);
 
 			//load the scene
-			GameScene gs = new GameScene(gameGUI, game);
-			gameGUI.fadeSwitchScene(gs);
+//			GameScene gs = new GameScene(gameGUI, game);
+			PlanetScene ps = new PlanetScene(gameGUI, game);
+			gameGUI.fadeSwitchScene(ps);
 
 		}
 

@@ -165,8 +165,8 @@ public class GameScene extends Scene{
 		sbbg.isButton(false);
 		statusbar.add(sbbg);
 		JTextField stext = new JTextField();
-		stext.setText("Lives: "+game.getLives() +"\t\t\t Questions: "+(game.getCurrentQuestion()+1)+"\\"+game.getDifficulty()
-				+"\t\t\t Planet: "+game.getPlanetName());
+		stext.setText("Lives: "+game.getLives() +"\t\t  Questions: "+(game.getCurrentQuestion()+1)+"\\"+game.getDifficulty()
+				+"\t\t  Planet: "+game.getPlanetName());
 		stext.setEditable(false);
 		stext.setBackground(sbbg.getBackgroundColor());
 		stext.setBorder(BorderFactory.createEmptyBorder());
