@@ -192,6 +192,8 @@ public class QuestionsGenerator {
 			if (rs.next()){	
 				Random r =new Random();
 				Integer populationSize = rs.getInt("PopulationSize");
+				if(populationSize == 0)
+					return;
 				q.setCorrectAnswer(new Answer(populationSize.toString()));
 				q.addPossibleAnswers(new Answer(populationSize.toString()));
 				q.addPossibleAnswers(new Answer(((Integer)(populationSize/(r.nextInt(4)+1))).toString()));
@@ -292,7 +294,7 @@ public class QuestionsGenerator {
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
 			if (rs.next()){
-				String officialCurrency = rs.getString("Name");
+				String officialCurrency = rs.getString("Name").replace(" Language", "");
 				q.setCorrectAnswer(new Answer(officialCurrency));
 				q.addPossibleAnswers(new Answer(officialCurrency));
 				query = "SELECT DISTINCT Currency.Name " +
@@ -306,7 +308,7 @@ public class QuestionsGenerator {
 				int i =0;
 				while (rs.next()){
 					i++;
-					String currency = rs.getString("Name");
+					String currency = rs.getString("Name").replace(" Language", "");
 					q.addPossibleAnswers(new Answer(currency));
 				}
 				if (i==3){

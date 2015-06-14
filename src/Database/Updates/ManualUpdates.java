@@ -16,40 +16,77 @@ public class ManualUpdates {
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	
 	
-	private static void updateFromYago(DatabaseHandler dbh,config conf) throws SQLException{
+	public static void updateFromYago(DatabaseHandler dbh,config conf){
 		backupManualUpdates(dbh,conf.get_db_name());
 		deleteAllYagoData(dbh,conf.get_db_name());
-		Importer i = new Importer(dbh, conf);
-		
+		try {
+			Importer i = new Importer(dbh, conf);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		insertManualBackupData(dbh,conf.get_db_name());
 	}
 	private static void insertManualBackupData(DatabaseHandler dbh,String dbname){
 		//insert manual updates about persons
 		for(String personName:persons_map_bck.keySet()){
 			entity_person person = persons_map_bck.get(personName);
-			String existsQuery = String.format("SELECT * FROM %s.Country WHERE Name=\"%s\";", dbname,personName);
+			String existsQuery = String.format("SELECT * FROM %s.Person WHERE Name=\"%s\";", dbname,personName);
 			ResultSet rs;
 			try {
 				rs = dbh.executeQuery(existsQuery);
 				if(rs.first()){
 					String updateQuery = "UPDATE "+dbname+".Person "
-							+ "SET idPlaceOfBirth="+getIdFromDB("Person","idPlaceOfBirth",person.getPlaceOfBirth(),dbh)
-							+ ", yearOfBirth="+person.getYearOfBirth()+ ", yearOfBirth="+person.getYearOfDeath()+
-							", isManual=1"+"WHERE Person.Name = "+personName+";";
+							+ "SET idPlaceOfBirth='"+getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)
+							+ "', yearOfBirth='"+person.getYearOfBirth()+ "', yearOfDeath='"+person.getYearOfDeath()+
+							"', isManual='1'"+" WHERE Person.Name = '"+personName+"';";
 					rs.close();
 					int update = dbh.executeUpdate(updateQuery);
 				}
 				else{
-					String insertQuery = "INSERT INTO "+dbname+".Person "
-							+ "VALUES ("+personName+","+person.getPlaceOfBirth()+","+person.getYearOfDeath()+
-							"'"+getIdFromDB("Person","idPlaceOfBirth",person.getPlaceOfBirth(),dbh)+");";
+					String insertQuery = "INSERT INTO "+dbname+".Person (`Name`, `yearOfBirth`, `yearOfDeath`, `idPlaceOfBirth`, `isManual`) "
+							+ "VALUES ('"+personName+"', '"+person.getYearOfBirth()+"', '"+person.getYearOfDeath()+"', '"+
+							getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)+"', '1');";
 					int insert = dbh.executeUpdate(insertQuery);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
+		//insert manual updates about countries
+		for (String countryName:countries_map_bck.keySet()){
+			entity_country country = countries_map_bck.get(countryName);
+			String existsQuery = String.format("SELECT * FROM %s.Person WHERE Name=\"%s\";", dbname,countryName);
+			ResultSet rs;
+			try {
+				rs = dbh.executeQuery(existsQuery);
+				if(rs.first()){
+					String updateQuery = "UPDATE "+dbname+".Country "
+							+ "SET idContinent='"+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)
+							+ "', idCurrency='"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+ 
+							"', idLanguage='"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+
+							"', idCapital='"+getIdFromDB("City","idCity",country.getCapital(),dbh)+
+							"', PopulationSize='"+country.getPopulation_size()+
+							"', isManual='1'"+" WHERE Person.Name = '"+countryName+"';";
+					rs.close();
+					int update = dbh.executeUpdate(updateQuery);
+				}
+				else{
+					String insertQuery = "INSERT INTO "+dbname+".Country (`Name`, `idContinent`, `idCurrency`, `idLanguage`, `idCapital`, `PopulationSize`, `isManual`) "
+							+ "VALUES ('"+countryName+"', "+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)+
+							"', '"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+
+							"', '"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+"', '"+
+							"', '"+getIdFromDB("City","idCity",country.getCapital(),dbh)+"', '"+
+							country.getPopulation_size()+"', '1');";
+					int insert = dbh.executeUpdate(insertQuery);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	public static int getIdFromDB(String tableName, String column, String valueToSearch, DatabaseHandler dbh) {
 		ResultSet rs;
@@ -100,10 +137,10 @@ public class ManualUpdates {
 										"FROM "+dbname+".Person_Profession, "+dbname+".Profession"+
 										" WHERE Profession.idProfession = Person_Profession.idProfession and"+
 										" Person_Profession.idProfession ='"+idPerson+"';";
-				rs.close();
-				rs = dbh.executeQuery(professionQuery);
-				while(rs.next()){
-					person.addProfession(rs.getString("Name"));
+				
+				ResultSet prof = dbh.executeQuery(professionQuery);
+				while(prof.next()){
+					person.addProfession(prof.getString("Name"));
 				}
 				persons_map_bck.put(name, person);
 			}
@@ -137,10 +174,11 @@ public class ManualUpdates {
 			ResultSet rs = dbh.executeQuery(tablesQuery);
 			while(rs.next()){
 				String tableName = rs.getString(1);
-				String delete = "DELETE FROM "+tableName+";";
+				String delete = "DELETE FROM "+dbname+"."+tableName;
 				int deleted = dbh.executeUpdate(delete);
-				rs.close();
+				
 			}
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
