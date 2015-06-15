@@ -38,6 +38,7 @@ import Game.Game;
 
 public class LoadFromYagoScene extends Scene{
 	
+	public static boolean backDisabled=false;
 	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 	config config = new config();
 	
@@ -108,6 +109,7 @@ public class LoadFromYagoScene extends Scene{
 	class MainListener implements MouseListener {
 		
 		public static final int BACK=0,IMPORT=1;
+
 		int mode;
 		public MainListener(int mode) {
 			this.mode=mode;
@@ -117,15 +119,21 @@ public class LoadFromYagoScene extends Scene{
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
 			case BACK:
+				if (backDisabled){
+					break;
+				}
 				SettingsScene mms = new SettingsScene(gameGUI,game);	
 				gameGUI.fadeSwitchScene(mms);		
 				break;
 			case IMPORT:
+				backDisabled=true;
 				final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 				final config config = new config();
 				
 				importBtn.removeMouseListener(this);
 				importBtn.isButton(false);
+				backBtn.removeMouseListener(this);
+				backBtn.isButton(false);
 				
 				new Thread(new Runnable(){
 					public void run(){
