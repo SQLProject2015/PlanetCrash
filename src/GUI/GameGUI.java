@@ -14,7 +14,7 @@ import config.config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
 import GUI.Scenes.EditCountryScene;
-import GUI.Scenes.LoadToYagoScene;
+import GUI.Scenes.LoadFromYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
 import GUI.Scenes.AddCountryScene;
@@ -66,7 +66,7 @@ public class GameGUI {
 
 		
 		if (config.get_db_ready().equals("0")){
-			LoadToYagoScene mms = new LoadToYagoScene(this,game);//MainMenuScene();
+			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
 			switchScene(mms);	
 		}
 		else{

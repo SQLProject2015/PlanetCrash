@@ -114,7 +114,7 @@ public class SettingsScene extends Scene{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			LoadToYagoScene mms = new LoadToYagoScene(gameGUI,game);	
+			LoadFromYagoScene mms = new LoadFromYagoScene(gameGUI,game);	
 			gameGUI.fadeSwitchScene(mms);
 		}		
 		
@@ -156,7 +156,7 @@ public class SettingsScene extends Scene{
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
 			case ADD_ALL:
-				LoadToYagoScene mms = new LoadToYagoScene(gameGUI,game);	
+				LoadFromYagoScene mms = new LoadFromYagoScene(gameGUI,game);	
 				gameGUI.fadeSwitchScene(mms);		
 				break;
 			case ADD_COUNTRY:

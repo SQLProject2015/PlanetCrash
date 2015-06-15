@@ -36,12 +36,12 @@ import GUI.Objects.StarryBackground;
 import GUI.Scenes.AddCountryScene.MainListener;
 import Game.Game;
 
-public class LoadToYagoScene extends Scene{
+public class LoadFromYagoScene extends Scene{
 	
 	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 	config config = new config();
 	
-	public LoadToYagoScene(GameGUI gameGUI, Game game) {
+	public LoadFromYagoScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
 	}
 	
@@ -124,6 +124,9 @@ public class LoadToYagoScene extends Scene{
 				final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 				final config config = new config();
 				
+				importBtn.removeMouseListener(this);
+				importBtn.isButton(false);
+				
 				new Thread(new Runnable(){
 					public void run(){
 						try {
@@ -167,7 +170,7 @@ public class LoadToYagoScene extends Scene{
 					public void actionPerformed(ActionEvent e) {
 										
 						if (Importer.parsing_finished != -1){
-						   
+						   importBtn.isButton(false);
 						    int temp = Math.round((Importer.parsing_finished * 100.0f) / config.get_files_size());		
 						    if (temp!= per){
 						    	per = temp;
