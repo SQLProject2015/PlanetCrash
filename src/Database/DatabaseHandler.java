@@ -207,7 +207,12 @@ public class DatabaseHandler {
 	private void genericFormatUpdate(String command, /*String table, String[] columns,*/ Object[] values) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement(command);
 		for (int i=0; i<values.length;i++)
-			ps.setString(1+i, values[i].toString());
+			if(values[i]==null)
+				ps.setNull(i+1, java.sql.Types.NULL);
+			else if(values[i] instanceof String)
+				ps.setString(i+1, (String)values[i]);
+			else if(values[i] instanceof Integer)
+				ps.setInt(i+1, (Integer)values[i]);
 		ps.executeUpdate();
 	}
 
