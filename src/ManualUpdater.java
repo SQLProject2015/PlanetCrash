@@ -65,10 +65,15 @@ public class ManualUpdater {
 		//get country id from DB
 		int idCountry = getIdFromDB("Country", "idCountry", name, dbh);
 		
-		String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
-									+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
-									conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
-		dbh.executeUpdate(query);
+//		String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
+//									+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
+//									conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
+//		dbh.executeUpdate(query);
+		dbh.singleUpdate(conf.get_db_name()+".Country", 
+				new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
+				new Object[]{idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,1},
+				new String[]{"idCountry"},
+				new Object[]{idCountry});
 		
 		return true;
 	}

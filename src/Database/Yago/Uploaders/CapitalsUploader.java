@@ -64,8 +64,9 @@ public class CapitalsUploader extends AbstractUploader{
 //					continue;
 //				}
 				Importer.uploading_finished++;
-				String query = String.format("UPDATE %s.Country SET idCapital=%d WHERE idCountry=%d", conf.get_db_name(),idCity,idCountry);
-				dbh.executeUpdate(query);
+//				String query = String.format("UPDATE %s.Country SET idCapital=%d WHERE idCountry=%d", conf.get_db_name(),idCity,idCountry);
+				//dbh.executeUpdate(query);
+				dbh.singleUpdate(conf.get_db_name()+".Country",new String[]{"idCapital"},new Integer[]{idCity}, new String[]{"idCountry"},new Integer[]{idCountry});
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

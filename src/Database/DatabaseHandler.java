@@ -1,6 +1,10 @@
 package Database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class DatabaseHandler {
@@ -61,22 +65,22 @@ public class DatabaseHandler {
 				sql.append(columns[i]+(i<columns.length-1?",":""));
 			sql.append(")");
 		}
-		
+
 		sql.append("FROM "+table+(condition==null?"":" "+condition)+";");
-		
+
 		return executeQuery(sql.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param update
 	 * @return number of rows affected by update
 	 * @throws SQLException
 	 */
-//	public int executeUpdate(String update) throws SQLException {
-//		Statement stmnt = conn.createStatement();
-//		return stmnt.executeUpdate(update);
-//	}
+	//		public int executeUpdate(String update) throws SQLException {
+	//			Statement stmnt = conn.createStatement();
+	//			return stmnt.executeUpdate(update);
+	//		}
 
 	/**
 	 * 
@@ -98,7 +102,7 @@ public class DatabaseHandler {
 		//System.out.println(sql);
 		//set auto-commit to false
 		conn.setAutoCommit(false);
-		
+
 		//Create prepared statement
 		PreparedStatement pstmnt = conn.prepareStatement(sql);
 
@@ -118,7 +122,7 @@ public class DatabaseHandler {
 			}
 			pstmnt.addBatch(); //add to batch
 		}
-		
+
 		int[] count = pstmnt.executeBatch(); //TODO: REROLL TRANSACTION IF FAILED
 		conn.commit();
 		conn.setAutoCommit(true);
@@ -126,39 +130,87 @@ public class DatabaseHandler {
 	}
 
 	public void singleUpdate(String table, String[] columns, Object[] values) throws SQLException {
-		genericFormatUpdate("UPDATE", table, columns, values);
-	}
-	
-	public void singleDelete(String table, String[] columns, Object[] values) throws SQLException {
-		genericFormatUpdate("DELETE FROM", table, columns, values);
-	}
-	
-	public void singleInsert(String table, String[] columns, Object[] values) throws SQLException {
-		genericFormatUpdate("INSERT INTO", table, columns, values);
-	}
-	
-	private void genericFormatUpdate(String command, String table, String[] columns, Object[] values) throws SQLException {
 		if(columns.length!=values.length) {
 			System.out.println("Mismatching colums-values");
 			return;
 		}
-		
+
 		StringBuilder sql = new StringBuilder();
-		sql.append(command+" "+table+" (");
+		sql.append("UPDATE "+table+" SET");
+		for(int i=0;i<columns.length;i++)
+			sql.append(" " + columns[i]+"=?"+(i<columns.length-1?",":""));
+		sql.append(";");
+
+		genericFormatUpdate(sql.toString(), values);
+	}
+
+	public void singleUpdate(String table, String[] columns, Object[] values, String[] whereCols, Object[] whereValues) throws SQLException {
+		if((columns.length!=values.length) || (whereCols!=null&&whereValues!=null&&whereCols.length!=whereValues.length)) {
+			System.out.println("Mismatching colums-values");
+			return;
+		}
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE "+table+" SET");
+		for(int i=0;i<columns.length;i++)
+			sql.append(" " + columns[i]+"=?"+(i<columns.length-1?",":""));
+		if(whereCols!=null&&whereValues!=null) {
+			sql.append(" WHERE");
+			for(int i=0;i<whereCols.length;i++)
+				sql.append(" " + whereCols[i]+"=?"+(i<whereCols.length-1?",":""));
+		}
+		sql.append(";");
+
+		Object[] vals;
+		if(whereValues==null || whereCols==null)
+			vals = values;
+		else {
+			vals = new Object[values.length+whereValues.length];
+			for(int i=0;i<values.length;i++)
+				vals[i]=values[i];
+			for(int i=0;i<whereValues.length;i++)
+				vals[values.length+i]=whereValues[i];
+		}
+
+		genericFormatUpdate(sql.toString(), vals);
+
+	}
+
+	//	public void singleDelete(String table, String[] columns, Object[] values) throws SQLException {
+	//		genericFormatUpdate("DELETE FROM", table, columns, values);
+	//	}
+
+	public void singleInsert(String table, String[] columns, Object[] values) throws SQLException {
+		if((columns.length!=values.length)) {
+			System.out.println("Mismatching colums-values");
+			return;
+		}
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO "+table+" (");
 		for(int i=0;i<columns.length;i++)
 			sql.append(columns[i]+(i<columns.length-1?",":""));
 		sql.append(") VALUES(");
 		for(int i=0;i<columns.length;i++) 
 			sql.append("?"+(i<columns.length-1?",":""));
 		sql.append(");");
-		//System.out.println(sql.toString());
-		
-		PreparedStatement ps = conn.prepareStatement(sql.toString());
+
+		genericFormatUpdate(sql.toString(), values);
+	}
+
+
+	public int deleteTable(String table) throws SQLException {
+		Statement stmnt = conn.createStatement();
+		return stmnt.executeUpdate("DELETE FROM "+table+";");
+	}
+
+	private void genericFormatUpdate(String command, /*String table, String[] columns,*/ Object[] values) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement(command);
 		for (int i=0; i<values.length;i++)
 			ps.setString(1+i, values[i].toString());
 		ps.executeUpdate();
 	}
-	
+
 	//	/*
 	//	 * Opens a new connection to the database
 	//	 */

@@ -36,18 +36,28 @@ public class ManualUpdates {
 			try {
 				rs = dbh.executeQuery(existsQuery);
 				if(rs.first()){
-					String updateQuery = "UPDATE "+dbname+".Person "
-							+ "SET idPlaceOfBirth='"+getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)
-							+ "', yearOfBirth='"+person.getYearOfBirth()+ "', yearOfDeath='"+person.getYearOfDeath()+
-							"', isManual='1'"+" WHERE Person.Name = '"+personName+"';";
+//					String updateQuery = "UPDATE "+dbname+".Person "
+//							+ "SET idPlaceOfBirth='"+getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)
+//							+ "', yearOfBirth='"+person.getYearOfBirth()+ "', yearOfDeath='"+person.getYearOfDeath()+
+//							"', isManual='1'"+" WHERE Person.Name = '"+personName+"';";
 					rs.close();
-					int update = dbh.executeUpdate(updateQuery);
+//					int update = dbh.executeUpdate(updateQuery);
+					dbh.singleUpdate(dbname+".Person", 
+							new String[]{"idPlaceOfBirth","yearOfBirth","yearOfDeath","isManual"},
+							new Object[]{getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh),
+							person.getYearOfBirth(), person.getYearOfDeath(),1},
+							new String[]{"Person.Name"}, 
+							new Object[]{personName});
 				}
 				else{
-					String insertQuery = "INSERT INTO "+dbname+".Person (`Name`, `yearOfBirth`, `yearOfDeath`, `idPlaceOfBirth`, `isManual`) "
-							+ "VALUES ('"+personName+"', '"+person.getYearOfBirth()+"', '"+person.getYearOfDeath()+"', '"+
-							getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)+"', '1');";
-					int insert = dbh.executeUpdate(insertQuery);
+//					String insertQuery = "INSERT INTO "+dbname+".Person (`Name`, `yearOfBirth`, `yearOfDeath`, `idPlaceOfBirth`, `isManual`) "
+//							+ "VALUES ('"+personName+"', '"+person.getYearOfBirth()+"', '"+person.getYearOfDeath()+"', '"+
+//							getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh)+"', '1');";
+//					int insert = dbh.executeUpdate(insertQuery);
+					dbh.singleInsert(dbname+".Person",
+							new String[]{"Name", "yearOfBirth", "yearOfDeath", "idPlaceOfBirth", "isManual"},
+							new Object[]{personName,person.getYearOfBirth(),person.getYearOfDeath(),
+									getIdFromDB("City","idCity",person.getPlaceOfBirth(),dbh),1});
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -62,24 +72,41 @@ public class ManualUpdates {
 			try {
 				rs = dbh.executeQuery(existsQuery);
 				if(rs.first()){
-					String updateQuery = "UPDATE "+dbname+".Country "
-							+ "SET idContinent='"+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)
-							+ "', idCurrency='"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+ 
-							"', idLanguage='"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+
-							"', idCapital='"+getIdFromDB("City","idCity",country.getCapital(),dbh)+
-							"', PopulationSize='"+country.getPopulation_size()+
-							"', isManual='1'"+" WHERE Person.Name = '"+countryName+"';";
-					rs.close();
-					int update = dbh.executeUpdate(updateQuery);
+//					String updateQuery = "UPDATE "+dbname+".Country "
+//							+ "SET idContinent='"+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)
+//							+ "', idCurrency='"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+ 
+//							"', idLanguage='"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+
+//							"', idCapital='"+getIdFromDB("City","idCity",country.getCapital(),dbh)+
+//							"', PopulationSize='"+country.getPopulation_size()+
+//							"', isManual='1'"+" WHERE Person.Name = '"+countryName+"';";
+//					rs.close();
+//					int update = dbh.executeUpdate(updateQuery);
+					dbh.singleUpdate(dbname+".Country",
+							new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
+							new Object[]{getIdFromDB("Continent","idContinent",country.getContinent(),dbh),
+							getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh),
+							getIdFromDB("Language","idLanguage",country.getLanguage(),dbh),
+							getIdFromDB("City","idCity",country.getCapital(),dbh),
+							country.getPopulation_size(),
+							1},
+							new String[]{"Name"},
+							new Object[]{countryName});
 				}
 				else{
-					String insertQuery = "INSERT INTO "+dbname+".Country (`Name`, `idContinent`, `idCurrency`, `idLanguage`, `idCapital`, `PopulationSize`, `isManual`) "
-							+ "VALUES ('"+countryName+"', "+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)+
-							"', '"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+
-							"', '"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+"', '"+
-							"', '"+getIdFromDB("City","idCity",country.getCapital(),dbh)+"', '"+
-							country.getPopulation_size()+"', '1');";
-					int insert = dbh.executeUpdate(insertQuery);
+//					String insertQuery = "INSERT INTO "+dbname+".Country (`Name`, `idContinent`, `idCurrency`, `idLanguage`, `idCapital`, `PopulationSize`, `isManual`) "
+//							+ "VALUES ('"+countryName+"', "+getIdFromDB("Continent","idContinent",country.getContinent(),dbh)+
+//							"', '"+getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)+
+//							"', '"+getIdFromDB("Language","idLanguage",country.getLanguage(),dbh)+"', '"+
+//							"', '"+getIdFromDB("City","idCity",country.getCapital(),dbh)+"', '"+
+//							country.getPopulation_size()+"', '1');";
+//					int insert = dbh.executeUpdate(insertQuery);
+					dbh.singleInsert(dbname+".Country", 
+							new String[]{"Name", "idContinent", "idCurrency", "idLanguage", "idCapital", "PopulationSize", "isManual"}, 
+							new Object[]{countryName,getIdFromDB("Continent","idContinent",country.getContinent(),dbh)
+							,getIdFromDB("Currency","idCurrency",country.getCurrency(),dbh)
+							,getIdFromDB("Language","idLanguage",country.getLanguage(),dbh),
+							getIdFromDB("City","idCity",country.getCapital(),dbh),
+							country.getPopulation_size(), 1});
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -174,8 +201,9 @@ public class ManualUpdates {
 			ResultSet rs = dbh.executeQuery(tablesQuery);
 			while(rs.next()){
 				String tableName = rs.getString(1);
-				String delete = "DELETE FROM "+dbname+"."+tableName;
-				int deleted = dbh.executeUpdate(delete);
+//				String delete = "DELETE FROM "+dbname+"."+tableName;
+//				int deleted = dbh.executeUpdate(delete);
+				dbh.deleteTable(dbname+"."+tableName);
 				
 			}
 			rs.close();
