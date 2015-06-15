@@ -85,13 +85,14 @@ public class GameScene extends Scene{
 		questionP.add(qlabel);
 
 		//Add question
+		Font qfont = (game.getQuestion(game.getCurrentQuestion()).getQuestion().length()>60?new Font(null, Font.PLAIN,11):ansfont);
 		JRoundedButton qst = new JRoundedButton(ansfont, game.getQuestion(game.getCurrentQuestion()).getQuestion(),3*GameGUI.WINDOW_WIDTH/4, 40, 1);
 		qst.setBounds(0,40,3*GameGUI.WINDOW_WIDTH/4,40);
 		qst.isButton(false);
 		questionP.add(qst);
 
 		//Add answers
-		int ah = 100;
+		int ah = 80;
 		JPanel answersP = emptyMainJPanel();
 		answersP.setBounds(0, GameGUI.WINDOW_HEIGHT-ah, GameGUI.WINDOW_WIDTH, GameGUI.WINDOW_HEIGHT);
 		panel.add(answersP,new Integer(3),0);
@@ -100,7 +101,8 @@ public class GameScene extends Scene{
 
 		int ax=0,ay=0;
 		for(int i=0; i<answersButtons.length; i++) {
-			JRoundedButton ans = new JRoundedButton(ansfont,answers.get(i).getAnswer(), GameGUI.WINDOW_WIDTH/2, ah/2, 1);
+			qfont = (game.getQuestion(game.getCurrentQuestion()).getQuestion().length()>60?new Font(null, Font.PLAIN,11):ansfont);
+			JRoundedButton ans = new JRoundedButton(qfont,answers.get(i).getAnswer(), GameGUI.WINDOW_WIDTH/2, ah/2, 1);
 			ans.setOpaque(false);
 			ans.setBounds(ax, ay, GameGUI.WINDOW_WIDTH/2, ah/2);
 
@@ -186,7 +188,7 @@ public class GameScene extends Scene{
 		if(!dir.exists() || !dir.isDirectory())
 			return null;
 		File[] flist = dir.listFiles(new FileFilter() {
-			
+
 			@Override
 			public boolean accept(File pathname) {
 				if(!pathname.getName().endsWith(".png"))
@@ -277,7 +279,8 @@ public class GameScene extends Scene{
 			panel.add(mask, new Integer(5),0);
 
 			//Register listeners
-			next.addMouseListener(new NextListener());
+			next.addMouseListener(new NextListener(NextListener.NEXT));
+			quit.addMouseListener(new NextListener(NextListener.QUIT));
 		}
 
 		private JLayeredPane createCorrectDialog(boolean isCorrect) {
@@ -354,16 +357,29 @@ public class GameScene extends Scene{
 	}
 
 	class NextListener implements MouseListener {
+		static final int NEXT=0,QUIT=1;
+		int mode;
+
+		public NextListener(int MODE) {
+			this.mode=MODE;
+		}
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if(game.getLives()<=0 ||game.getCurrentQuestion()>=game.getDifficulty()-1) { //loss or win
-				EndGameScene es = new EndGameScene(gameGUI, game);
-				gameGUI.fadeSwitchScene(es);
-			} else { //next question
-				game.advanceQuestion();
-				GameScene ns = new GameScene(gameGUI,game);
-				gameGUI.fadeSwitchScene(ns);
+			switch(mode) {
+			case NEXT:
+				if(game.getLives()<=0 ||game.getCurrentQuestion()>=game.getDifficulty()-1) { //loss or win
+					EndGameScene es = new EndGameScene(gameGUI, game);
+					gameGUI.fadeSwitchScene(es);
+				} else { //next question
+					game.advanceQuestion();
+					GameScene ns = new GameScene(gameGUI,game);
+					gameGUI.fadeSwitchScene(ns);
+				}
+				break;
+			case QUIT:
+				MainMenuScene mms = new MainMenuScene(gameGUI, game);
+				gameGUI.fadeSwitchScene(mms);
 			}
 		}
 

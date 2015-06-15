@@ -26,7 +26,7 @@ public class UserHandler {
 			throw new UserException("User already exists!");
 		}
 		
-		dbh.singleInsert("Users", new String[]{"Username", "Password"}, new String[]{username,password});
+		dbh.singleInsert("Users", new String[]{"Username", "password", "isManual"}, new Object[]{username,password,new Integer(1)});
 		return validate_user(username, password, dbh);
 	}
 }

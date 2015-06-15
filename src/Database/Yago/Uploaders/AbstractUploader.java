@@ -25,25 +25,9 @@ public abstract class AbstractUploader {
 			System.out.println("BATCH FAILED.");
 			e.printStackTrace();
 			for(Object[] arr : batch) { //insert individually
-				StringBuilder sql = new StringBuilder();
 				try { 
-//					dbh.executeUpdate("INSERT INTO Person (Name, yearOfBirth, yearOfDeath) VALUES(\""
-//							+arr[0]+"\",\""+arr[1]+"\",\""+arr[2]+"\");");
-					
-					//StringBuilder sql = new StringBuilder();
-					sql.append("INSERT INTO "+table+"(");
-					for(int i=0;i<columns.length;i++)
-						sql.append(columns[i]+(i<columns.length-1?",":""));
-					sql.append(") VALUES(");
-					for(int i=0;i<columns.length;i++)
-						sql.append((arr[i]==null?"NULL":"\""+arr[i]+"\"")+(i<columns.length-1?",":""));
-					sql.append(");");
-					
-					dbh.executeUpdate(sql.toString());
-					
+					dbh.singleInsert(table, columns, arr);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					//System.out.println("Failed: "+arr[0]+","+arr[1]+","+arr[2]);
 					e1.printStackTrace();
 				}
 			}

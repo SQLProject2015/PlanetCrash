@@ -73,10 +73,10 @@ public class DatabaseHandler {
 	 * @return number of rows affected by update
 	 * @throws SQLException
 	 */
-	public int executeUpdate(String update) throws SQLException {
-		Statement stmnt = conn.createStatement();
-		return stmnt.executeUpdate(update);
-	}
+//	public int executeUpdate(String update) throws SQLException {
+//		Statement stmnt = conn.createStatement();
+//		return stmnt.executeUpdate(update);
+//	}
 
 	/**
 	 * 
@@ -125,21 +125,38 @@ public class DatabaseHandler {
 		return count;
 	}
 
+	public void singleUpdate(String table, String[] columns, Object[] values) throws SQLException {
+		genericFormatUpdate("UPDATE", table, columns, values);
+	}
+	
+	public void singleDelete(String table, String[] columns, Object[] values) throws SQLException {
+		genericFormatUpdate("DELETE FROM", table, columns, values);
+	}
+	
 	public void singleInsert(String table, String[] columns, Object[] values) throws SQLException {
+		genericFormatUpdate("INSERT INTO", table, columns, values);
+	}
+	
+	private void genericFormatUpdate(String command, String table, String[] columns, Object[] values) throws SQLException {
 		if(columns.length!=values.length) {
 			System.out.println("Mismatching colums-values");
 			return;
 		}
+		
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO "+table+" (");
+		sql.append(command+" "+table+" (");
 		for(int i=0;i<columns.length;i++)
 			sql.append(columns[i]+(i<columns.length-1?",":""));
 		sql.append(") VALUES(");
 		for(int i=0;i<columns.length;i++) 
-			sql.append("\""+values[i]+"\""+(i<columns.length-1?",":""));
+			sql.append("?"+(i<columns.length-1?",":""));
 		sql.append(");");
 		//System.out.println(sql.toString());
-		executeUpdate(sql.toString());
+		
+		PreparedStatement ps = conn.prepareStatement(sql.toString());
+		for (int i=0; i<values.length;i++)
+			ps.setString(1+i, values[i].toString());
+		ps.executeUpdate();
 	}
 	
 	//	/*

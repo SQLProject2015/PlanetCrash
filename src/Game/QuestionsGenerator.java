@@ -91,7 +91,7 @@ public class QuestionsGenerator {
 			String name;
 			while(rs_in.next()){
 				name=rs_in.getString("Name");
-				Question q = new Question("Which of the following universities located in "+this.countryName+"?");
+				Question q = new Question("Which of the following universities is located in "+this.countryName+"?");
 				ArrayList<Integer> indexes = randomIndexes(out.size(), 3);
 				q.setCorrectAnswer(new Answer(name));
 				q.addPossibleAnswers(new Answer(name));
@@ -212,7 +212,7 @@ public class QuestionsGenerator {
 		}
 	}
 	private void generateContinentQuestion(){
-		Question q = new Question("In which continent "+countryName+" located?");
+		Question q = new Question("In which continent is "+countryName+" located?");
 		String query = "SELECT Continent.Name " +
                    "FROM "+this.dbname+".Country,"+this.dbname+".Continent "+
                    "WHERE Country.idCountry='"+countryId+"' and Country.idContinent=Continent.idContinent"
