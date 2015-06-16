@@ -3,8 +3,10 @@ package Database.Updates;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import config.Config;
+import entities.entity_city;
 import entities.entity_country;
 import entities.entity_person;
 import Database.ConnectionPool;
@@ -12,8 +14,12 @@ import Database.DatabaseHandler;
 
 
 public class ReloadYago {
-	public static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
-	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
+	private static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
+	private static HashMap<String, entity_city> cities_map_bck = new HashMap<String, entity_city>();
+	private static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
+	private static HashSet<String> currency_set_bck = new HashSet<String>();
+	private static HashSet<String> language_set_bck = new HashSet<String>();
+	private static HashSet<String> continent_set_bck = new HashSet<String>();
 	private static DatabaseHandler dbh;
 	
 	public static void updateFromYago(ConnectionPool pool,Config conf){
@@ -35,6 +41,53 @@ public class ReloadYago {
 		}
 	}
 	private static void insertManualBackupData(String dbname){
+		//insert manual updates about currency
+		for (String currency:currency_set_bck){
+			try {
+				dbh.singleInsert(dbname+".Currency",
+						new String[]{"Name","isManual"},
+						new Object[]{currency,1});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//insert manual updates about languages
+		for (String language:language_set_bck){
+			try {
+				dbh.singleInsert(dbname+".Language",
+						new String[]{"Name","isManual"},
+						new Object[]{language,1});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//insert manual updates about continents
+		for (String continent:continent_set_bck){
+			try {
+				dbh.singleInsert(dbname+".Continent",
+						new String[]{"Name","isManual"},
+						new Object[]{continent,1});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//insert manual updates about cities(just name)
+		for(String cityName:cities_map_bck.keySet()){
+			try {
+				dbh.singleInsert(dbname+".City",
+						new String[]{"Name","isManual"},
+						new Object[]{cityName,1});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		//insert manual updates about persons
 		for(String personName:persons_map_bck.keySet()){
 			entity_person person = persons_map_bck.get(personName);
@@ -121,6 +174,22 @@ public class ReloadYago {
 			}
 		}
 		
+		//insert manual updates about cities(just idCountry)
+		for(String cityName:cities_map_bck.keySet()){
+			entity_city city = cities_map_bck.get(cityName);
+			
+			try {
+				dbh.singleUpdate(dbname+".City",
+						new String[]{"idCountry"},
+						new Object[]{getIdFromDB("Country","idCountry",city.getCountry())},
+						new String[]{"Name"},
+						new Object[]{cityName});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	private static int getIdFromDB(String tableName, String column, String valueToSearch) {
 		ResultSet rs;
@@ -196,6 +265,56 @@ public class ReloadYago {
 				country.setCurrency(getNameFromDB("Currency", "Name", rs.getInt("idCurrency")));
 				country.setLanguage(getNameFromDB("Language", "Name", rs.getInt("idLanguage")));
 				countries_map_bck.put(countryName, country);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*backup cities manual updates*/
+		String cityQuery = "SELECT * FROM "+dbname+".City WHERE City.isManual=1";
+		try {
+			ResultSet rs = dbh.executeQuery(cityQuery);
+			while(rs.next()){				
+				String cityName = rs.getString("Name");
+				entity_city city = new entity_city(cityName);
+				city.setCountry(getNameFromDB("City", "Name", rs.getInt("idCity")));
+				cities_map_bck.put(cityName, city);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*backup continents manual updates*/
+		String continentQuery = "SELECT * FROM "+dbname+".Continent WHERE Continent.isManual=1";
+		try {
+			ResultSet rs = dbh.executeQuery(cityQuery);
+			while(rs.next()){				
+				String continentName = rs.getString("Name");
+				continent_set_bck.add(continentName);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*backup languages manual updates*/
+		String languageQuery = "SELECT * FROM "+dbname+".Language WHERE Language.isManual=1";
+		try {
+			ResultSet rs = dbh.executeQuery(languageQuery);
+			while(rs.next()){				
+				String languageName = rs.getString("Name");
+				language_set_bck.add(languageName);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*backup currency manual updates*/
+		String currencyQuery = "SELECT * FROM "+dbname+".Currency WHERE Currency.isManual=1";
+		try {
+			ResultSet rs = dbh.executeQuery(currencyQuery);
+			while(rs.next()){				
+				String currencyName = rs.getString("Name");
+				currency_set_bck.add(currencyName);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
