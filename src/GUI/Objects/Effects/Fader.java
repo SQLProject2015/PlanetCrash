@@ -36,7 +36,7 @@ public class Fader  extends JPanel implements Runnable{
 		super.paintComponent(g);
 
 		Color c = g.getColor();
-		g.setColor(new Color(R,G,B,(int)((outFader?255*percent:255-255*percent))));
+		g.setColor(new Color(R,G,B,(int)(Math.max(Math.min((outFader?255*percent:255-255*percent),255),0))));
 		g.fillRect(0, 0, width, height);
 		g.setColor(c);
 	}

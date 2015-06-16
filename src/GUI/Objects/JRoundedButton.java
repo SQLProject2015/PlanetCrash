@@ -1,18 +1,13 @@
 package GUI.Objects;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import GUI.GameGUI;
 
 public class JRoundedButton extends JRounded {
 	String text;
@@ -22,6 +17,8 @@ public class JRoundedButton extends JRounded {
 
 	MouseListener ml;
 	
+	List<MouseListener> mls = new ArrayList<MouseListener>();
+
 	public JRoundedButton(Font font, String text, int width, int height, int borderThickness) {
 		super(width, height,borderThickness);
 
@@ -38,7 +35,7 @@ public class JRoundedButton extends JRounded {
 		this.text=text;
 
 		label.setText(text);
-		
+
 		registerGraphicListener();
 	}
 
@@ -58,7 +55,7 @@ public class JRoundedButton extends JRounded {
 		this.text=text;
 
 		label.setText(text);
-		
+
 		registerGraphicListener();
 	}
 
@@ -69,7 +66,7 @@ public class JRoundedButton extends JRounded {
 		if(isButton)
 			registerGraphicListener();
 	}
-	
+
 	public void setText(String text) {
 		this.text=text;
 		label.setText(text);
@@ -80,34 +77,34 @@ public class JRoundedButton extends JRounded {
 		super.setBorderColor(c);
 		label.setForeground(borderColor);
 	}	
-	
+
 	@Override
 	public void setBackgroundColor(Color c) {
 		super.setBackgroundColor(c);
 	}
-	
+
 	public void setLabelFont(Font font) {
 		this.label.setFont(font);
 	}
-	
+
 	private void registerGraphicListener() {
 		origBGC=getBackgroundColor();
 		//origBRDC=getBorderColor();
-		
+
 		ml = new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setBackgroundColor(origBGC);
@@ -115,7 +112,7 @@ public class JRoundedButton extends JRounded {
 					label.setForeground(getBorderColor());
 				repaint();
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setBackgroundColor(origBRDC);
@@ -123,14 +120,26 @@ public class JRoundedButton extends JRounded {
 					label.setForeground(origBGC);
 				repaint();
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
-		
+
 		this.addMouseListener(ml);
+	}
+
+	@Override
+	public synchronized void addMouseListener(MouseListener l) {
+		super.addMouseListener(l);
+		mls.add(l);
+	}
+	
+	public void removeAllMouseListeners() {
+		for(MouseListener m : mls)
+			removeMouseListener(m);
+		mls=new ArrayList<MouseListener>();
 	}
 }

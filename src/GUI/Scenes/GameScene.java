@@ -143,15 +143,22 @@ public class GameScene extends Scene{
 		aliens.setOpaque(false);
 		aliens.setLayout(null);
 
-		int alx=GameGUI.WINDOW_WIDTH-(int)((new JImage(alienFile)).getWidth()*1.4),aly=20;
+		int alx=GameGUI.WINDOW_WIDTH-(int)((new JImage(alienFile)).getWidth()*1.4),aly=20,inc=0;
 		for(int i=0; i<game.getDifficulty()-game.getCurrentQuestion(); i++) {
 			JImage s = new JImage(alienFile);
 			s.setOpaque(false);
 			s.setBounds(alx,aly,s.getWidth(),s.getHeight());
 			aliens.add(s);
 
-			alx-=s.getWidth()/2;
-			aly=(aly+s.getHeight()/2)%s.getHeight();
+			
+			if(alx<GameGUI.WINDOW_WIDTH/2) {
+				alx = GameGUI.WINDOW_WIDTH-(int)((new JImage(alienFile)).getWidth()*1.4);
+				aly+=s.getHeight()/2;
+				inc+=s.getHeight()/2;
+			} else {
+				alx-=s.getWidth()/4;
+			}
+			aly=(aly+s.getHeight()/2)%/*(GameGUI.WINDOW_HEIGHT-160);*/(s.getHeight()+inc);
 		}
 
 		//Add status bar
@@ -223,8 +230,9 @@ public class GameScene extends Scene{
 		public void mouseClicked(MouseEvent e) {
 			//disable answer button listers
 			for(int i=0;i<answersButtons.length;i++) {
-				for(int j=0; j<answersButtons[i].getMouseListeners().length;j++)
-					answersButtons[i].removeMouseListener(answersButtons[i].getMouseListeners()[j]);
+//				for(int j=0; j<answersButtons[i].getMouseListeners().length;j++)
+//					answersButtons[i].removeMouseListener(answersButtons[i].getMouseListeners()[j]);
+				answersButtons[i].removeAllMouseListeners();
 			}
 
 			JLayeredPane dlg = new JLayeredPane();

@@ -31,7 +31,6 @@ public class PlanetScene extends Scene {
 
 	@Override
 	public Component create() {
-		waitForPlanetName();
 		
 		JLayeredPane panel = new JLayeredPane();
 		panel.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
@@ -94,15 +93,7 @@ public class PlanetScene extends Scene {
 		return panel;
 	}
 	
-	private void waitForPlanetName() {
-		while(game.getPlanetName()==null)
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			}
-	}
+
 	
 	private Color invertColor(Color c) {
 		int r,g,b;
