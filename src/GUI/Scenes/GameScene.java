@@ -156,7 +156,7 @@ public class GameScene extends Scene{
 				aly+=s.getHeight()/2;
 				inc+=s.getHeight()/2;
 			} else {
-				alx-=s.getWidth()/4;
+				alx-=s.getWidth()/3;
 			}
 			aly=(aly+s.getHeight()/2)%/*(GameGUI.WINDOW_HEIGHT-160);*/(s.getHeight()+inc);
 		}
