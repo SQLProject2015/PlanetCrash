@@ -1,23 +1,20 @@
 package Database.Yago.Uploaders;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
-import entities.entity_country;
+import Game.GameUtils;
 import entities.entity_person;
 
 public class PersonsUploader extends AbstractUploader{
 	Map<String, entity_person> pmap;
-	config conf = new config();
+	Config conf = GameUtils.getConfig();
 	HashMap<String, Integer> city_id_name_map;
 
 	String table = "Person";

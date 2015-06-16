@@ -1,23 +1,22 @@
 package Database.Yago.Uploaders;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
+import Game.GameUtils;
 import entities.entity_city;
-import entities.entity_country;
+
 
 public class CitiesUploader extends AbstractUploader{
 	Map<String, entity_city> cmap;
-	config conf = new config();
+	Config conf = GameUtils.getConfig();
 	String table = "City";
 	String[] columns = {"Name","idCountry"};
 	HashMap<String, Integer> country_id_name_map;

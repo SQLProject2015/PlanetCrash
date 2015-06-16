@@ -3,7 +3,8 @@ package Database.Updates;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import config.config;
+
+import config.Config;
 import entities.entity_country;
 import entities.entity_person;
 import Database.ConnectionPool;
@@ -15,7 +16,7 @@ public class ReloadYago {
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	private static DatabaseHandler dbh;
 	
-	public static void updateFromYago(ConnectionPool pool,config conf){
+	public static void updateFromYago(ConnectionPool pool,Config conf){
 		dbh =new DatabaseHandler(pool);
 		backupManualUpdates(conf.get_db_name());
 		deleteAllData(conf.get_db_name());

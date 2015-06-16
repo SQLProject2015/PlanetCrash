@@ -8,11 +8,11 @@ import java.io.OutputStream;
 import java.util.Properties;
  
 /* cofiguration handler class*/ 
-public class config {
+public class Config {
  
 	private Properties configFile = new Properties();
 	
-	public config() 
+	public Config() 
 	{
 		try {
 			configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));

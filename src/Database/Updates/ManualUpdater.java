@@ -2,14 +2,15 @@ package Database.Updates;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import config.config;
+import config.Config;
 import entities.entity_country;
 import Database.DatabaseHandler;
 import Exceptions.NotFoundException;
+import Game.GameUtils;
 
 
 public class ManualUpdater {
-	static config conf = new config();
+	static Config conf = GameUtils.getConfig();
 	
 	public static boolean add_Person(String name, int yearOfBirth, int yearOfDeath, String city, String profession, DatabaseHandler dbh) throws SQLException, NotFoundException{
 		// get city id from DB

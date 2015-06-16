@@ -10,16 +10,11 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import Database.DatabaseHandler;
-import Database.Updates.ManualUpdater;
-import Exceptions.NotFoundException;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
@@ -27,7 +22,7 @@ import GUI.Objects.StarryBackground;
 import Game.Game;
 import Game.GameUtils;
 import Game.QuestionsGenerator;
-import config.config;
+import config.Config;
 
 public class DifficultySelectScene extends Scene{
 	
@@ -123,7 +118,7 @@ public class DifficultySelectScene extends Scene{
 					// TODO Auto-generated method stub
 					QuestionsGenerator qg = null;
 					while(qg==null) {
-						config cfg = new config();
+						Config cfg = GameUtils.getConfig();
 						DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 						qg = GameUtils.generateCountry(game.getUser().getId(), cfg.get_db_name(), dbh, game.getDifficulty());
 						if (qg==null)

@@ -2,16 +2,15 @@ package Database.Yago.Uploaders;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import config.config;
+import java.util.Map;
+
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
+import Game.GameUtils;
 import entities.entity_country;
 
 public class CapitalsUploader extends AbstractUploader{
@@ -21,7 +20,7 @@ public class CapitalsUploader extends AbstractUploader{
 
 	String table = "Country";
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize"};
-	config conf = new config();
+	Config conf = GameUtils.getConfig();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map
@@ -42,7 +41,6 @@ public class CapitalsUploader extends AbstractUploader{
 		for(entity_country country : countries) {
 
 			//Get relevant ids
-			ResultSet rs;
 			Integer idCity, idCountry;
 			try {
 				

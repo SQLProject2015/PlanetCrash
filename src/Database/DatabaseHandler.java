@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import config.config;
+import Game.GameUtils;
+import config.Config;
 
 public class DatabaseHandler {
 
@@ -20,7 +21,7 @@ public class DatabaseHandler {
 	
 	public static int db_ready = 0;
 	
-	config prop = new config();
+	Config prop = GameUtils.getConfig();
 
 	public DatabaseHandler(ConnectionPool connPool) {
 		this.cPool=connPool;

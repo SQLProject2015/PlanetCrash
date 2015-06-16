@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import config.Config;
 import Database.DatabaseHandler;
 
 public class GameUtils {
 	/*return question generator object for random country that the user did not completed yet,
 	 * null in case that not found such country*/
+	private static Config config = new Config();
 	public static QuestionsGenerator generateCountry(int idUser, String dbName, DatabaseHandler dbh, int difficulty){
 		QuestionsGenerator qg =null;
 		ArrayList<Question> optionalQuestions=null;
@@ -66,5 +68,8 @@ public class GameUtils {
 			}
 		
 		return funky.toString();
+	}
+	public static Config getConfig(){
+		return config;
 	}
 }

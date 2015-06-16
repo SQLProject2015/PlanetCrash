@@ -7,13 +7,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
-import entities.entity_city;
-import entities.entity_country;
+import Game.GameUtils;
 import entities.entity_university;
 
 public class UniversitiesUploader extends AbstractUploader{
@@ -21,7 +19,7 @@ public class UniversitiesUploader extends AbstractUploader{
 
 	String table = "University";
 	String[] columns = {"Name","idCountry"};
-	config conf = new config();
+	Config conf = GameUtils.getConfig();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map

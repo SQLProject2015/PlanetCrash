@@ -4,33 +4,22 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.SQLException;
-
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.jndi.toolkit.dir.ContainmentFilter;
-
 import Database.DatabaseHandler;
 import Database.Updates.ManualUpdater;
-import Database.Updates.ReloadYago;
-import Database.Users.User;
-import Database.Users.UserException;
-import Database.Users.UserHandler;
 import Exceptions.NotFoundException;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
-import GUI.Scenes.SettingsScene.LoadToYagoListener;
-import GUI.Scenes.SettingsScene.MainListener;
 import Game.Game;
 
 public class AddCountryScene extends Scene{

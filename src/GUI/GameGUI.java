@@ -9,17 +9,14 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-import config.config;
+import config.Config;
 import Database.ConnectionPool;
-import Database.DatabaseHandler;
 import GUI.Objects.Effects.Fader;
-import GUI.Scenes.EditCountryScene;
 import GUI.Scenes.LoadFromYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
-import GUI.Scenes.AddCountryScene;
 import Game.Game;
+import Game.GameUtils;
 
 public class GameGUI {
 
@@ -54,7 +51,7 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 		
-		config config = new config();
+		Config config = GameUtils.getConfig();
 		
 		if (config.get_db_ready().equals("0")){
 			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();

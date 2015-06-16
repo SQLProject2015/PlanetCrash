@@ -5,13 +5,15 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import config.config;
+import Game.GameUtils;
+import config.Config;
+
 
 /*
  * Pools DB connections
  */
 public class ConnectionPool {
-	config conf = new config();
+	Config conf = GameUtils.getConfig();
 	
 	private static String CONNPATH; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
 	private static String USER; //TODO: change this

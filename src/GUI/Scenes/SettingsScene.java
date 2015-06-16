@@ -4,34 +4,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-
-import com.sun.org.apache.xml.internal.security.Init;
-
-import config.config;
-import Database.DatabaseHandler;
-import Database.Updates.Importer;
-import Database.Users.User;
-import Database.Users.UserException;
-import Database.Users.UserHandler;
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
-import GUI.Scenes.MainMenuScene.MainMenuMouseListener;
 import Game.Game;
 
 public class SettingsScene extends Scene{

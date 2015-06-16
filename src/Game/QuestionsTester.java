@@ -1,20 +1,21 @@
 package Game;
 
-import config.config;
+import config.Config;
 import Database.ConnectionPool;
 import Database.DatabaseHandler;
 
 
 public class QuestionsTester {
 	public static void main(String[] args){
-		config con = new config();
+//		config con = new config();
 //		con.set_db_name("blabla");
 //		ConnectionPool mConnPool = new ConnectionPool();
 //		mConnPool.init();
 //		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		System.out.println(con.get_db_ready());
-		con.set_db_ready("1");
-		System.out.println(con.get_db_ready());
+//		System.out.println(con.get_db_ready());
+//		con.set_db_ready("1");
+//		config con2 = new config();
+//		System.out.println(con2.get_db_ready());
 //		System.out.println(ManualUpdates.getIdFromDB("Language","idLanguage","Marshallese language",dbh));
 //		ManualUpdates.backupManualUpdates(dbh,"DbMysql14");
 //		ManualUpdates.deleteAllYagoData(dbh, "DbMysql14");

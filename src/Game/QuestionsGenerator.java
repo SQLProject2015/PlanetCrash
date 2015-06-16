@@ -1,13 +1,12 @@
 package Game;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 
 public class QuestionsGenerator {
@@ -17,7 +16,7 @@ public class QuestionsGenerator {
 	private DatabaseHandler dbh;
 	private String dbname;
 	
-	config config = new config();
+	Config config = GameUtils.getConfig();
 	
 	public QuestionsGenerator(String countryName,DatabaseHandler dbh,String dbname){
 		this.countryName=countryName;

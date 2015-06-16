@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Yago.parser_transitive_types;
 import Database.Yago.parser_yago_date_facts;
@@ -22,6 +22,7 @@ import Database.Yago.Uploaders.LanguagesUploader;
 import Database.Yago.Uploaders.PersonProfessionUploader;
 import Database.Yago.Uploaders.PersonsUploader;
 import Database.Yago.Uploaders.UniversitiesUploader;
+import Game.GameUtils;
 import entities.entity_city;
 import entities.entity_country;
 import entities.entity_person;
@@ -34,13 +35,13 @@ public class Importer {
 
 	public static final int BATCHSIZE=1000;
 	//private static List<Object[]> batch;
-	static config conf = new config();
+	static Config conf = GameUtils.getConfig();
 	
 	public static int uploading_finished = 0;
 	public static int parsing_finished = 0;
 	private static DatabaseHandler dbh;
 	
-	public Importer(DatabaseHandler dbh, config properties) throws SQLException{		
+	public Importer(DatabaseHandler dbh, Config properties) throws SQLException{		
 		
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();

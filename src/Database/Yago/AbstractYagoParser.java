@@ -6,13 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import config.config;
+import Game.GameUtils;
+import config.Config;
+
 
 public abstract class AbstractYagoParser implements Runnable {
 	
 	String filepath; //path of the yago TSV file
 	String litepath; //filepath of the lite file
-	config properties;
+	Config properties;
 	public static final int VARCHAR_LIMIT = 45;
 	/*
 	 * Gets a TSV filepath and parses all its rows to populate the DB
@@ -20,7 +22,7 @@ public abstract class AbstractYagoParser implements Runnable {
 	public AbstractYagoParser(String filepath) {
 		this.filepath = filepath;
 		this.litepath = filepath.substring(0, filepath.lastIndexOf("."))+".lite";
-		this.properties = new config();
+		this.properties = GameUtils.getConfig();
 	}
 	
 	public void populate() throws FileNotFoundException {
