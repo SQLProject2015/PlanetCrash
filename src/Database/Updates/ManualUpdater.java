@@ -34,49 +34,142 @@ public class ManualUpdater {
 	}
 	
 	public static boolean add_Country(String name, String continent, String currency, String language, String capital, int population_size, DatabaseHandler dbh) throws SQLException, NotFoundException{
+		int idCaptitalCity;
+		int idContinent;
+		int idCurrency;
+		int idLanguage;
+		int idCountry;
+		
 		// get capital id from DB
-		int idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		try{
+			idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("City", new String[]{"Name", "isManual"}, new Object[]{capital, 1});
+			idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		}
+		
 
 		// get continent id from DB
-		int idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+		try{
+			idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Continent", new String[]{"Name", "isManual"}, new Object[]{continent, 1});
+			idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+		}
 		
 		// get currency id from DB
-		int idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+		try{
+			idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Currency", new String[]{"Name", "isManual"}, new Object[]{currency, 1});
+			idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+		}
 		
 		// get language id from DB
-		int idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+		try{
+		idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Language", new String[]{"Name", "isManual"}, new Object[]{language, 1});
+			idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+		}
 
 		dbh.singleInsert(String.format("%s.Country",conf.get_db_name()), new String[]{"`Name`","`idContinent`","`idCurrency`","`idLanguage`","`idCapital`","`PopulationSize`","`isManual`"},
 				new Object[]{name, idContinent, idCurrency, idLanguage,idCaptitalCity, population_size,1});
+		
+		idCountry = getIdFromDB("Country", "idCountry", name, dbh);
+		
+		dbh.singleUpdate("City",new String[]{"idCountry"},new Integer[]{idCountry}, new String[]{"idCity"},new Integer[]{idCaptitalCity});
+
 		
 		return true;
 	}
 	
 	public static boolean update_country(String name, String continent, String currency, String language, String capital, int population_size, DatabaseHandler dbh) throws SQLException, NotFoundException{
-		// get continent id from DB
-		int idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+//		// get continent id from DB
+//		int idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+//		
+//		// get currency id from DB
+//		int idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+//		
+//		// get language id from DB
+//		int idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+//		
+//		// get capital id from DB
+//		int idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+//		
+
+//		
+////		String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
+////									+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
+////									conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
+////		dbh.executeUpdate(query);
+//		dbh.singleUpdate(conf.get_db_name()+".Country", 
+//				new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
+//				new Object[]{idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,1},
+//				new String[]{"idCountry"},
+//				new Object[]{idCountry});
 		
-		// get currency id from DB
-		int idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
-		
-		// get language id from DB
-		int idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
-		
-		// get capital id from DB
-		int idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		int idCaptitalCity;
+		int idContinent;
+		int idCurrency;
+		int idLanguage;
 		
 		//get country id from DB
 		int idCountry = getIdFromDB("Country", "idCountry", name, dbh);
 		
-//		String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
-//									+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
-//									conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
-//		dbh.executeUpdate(query);
+		//	String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
+		//	+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
+		//	conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
+		//dbh.executeUpdate(query);
+	
+		// get capital id from DB
+		try{
+			idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("City", new String[]{"Name", "isManual"}, new Object[]{capital, 1});
+			idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
+		}
+		
+
+		// get continent id from DB
+		try{
+			idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Continent", new String[]{"Name", "isManual"}, new Object[]{continent, 1});
+			idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
+		}
+		
+		// get currency id from DB
+		try{
+			idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Currency", new String[]{"Name", "isManual"}, new Object[]{currency, 1});
+			idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
+		}
+		
+		// get language id from DB
+		try{
+		idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+		}
+		catch(Exception e){
+			dbh.singleInsert("Language", new String[]{"Name", "isManual"}, new Object[]{language, 1});
+			idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
+		}
+		
 		dbh.singleUpdate(conf.get_db_name()+".Country", 
-				new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
-				new Object[]{idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,1},
-				new String[]{"idCountry"},
-				new Object[]{idCountry});
+		new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
+		new Object[]{idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,1},
+		new String[]{"idCountry"},
+		new Object[]{idCountry});
+		
+		dbh.singleUpdate("City",new String[]{"idCountry"},new Integer[]{idCountry}, new String[]{"idCity"},new Integer[]{idCaptitalCity});
 		
 		return true;
 	}
