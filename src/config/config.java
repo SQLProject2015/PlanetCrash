@@ -35,8 +35,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -55,8 +55,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -75,8 +75,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -95,8 +95,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -114,8 +114,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -133,8 +133,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -153,8 +153,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -172,8 +172,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -191,8 +191,8 @@ public class config {
 	        File f = new File("src/config.properties");
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
-	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	        out.close();
+	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
