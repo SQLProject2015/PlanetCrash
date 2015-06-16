@@ -36,6 +36,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -55,6 +56,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -74,6 +76,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -93,6 +96,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -111,6 +115,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -129,6 +134,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -148,6 +154,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -166,6 +173,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -184,6 +192,7 @@ public class config {
 	        OutputStream out = new FileOutputStream( f );
 	        configFile.store(out, null);
 	        configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	        out.close();
 	    }
 	    catch (Exception e ) {
 	        e.printStackTrace();
@@ -308,34 +317,4 @@ public class config {
 		return Integer.parseInt(configFile.getProperty("TOTAL_FILES_SIZE"));
 	}
 	
-
-	
-	
-
-
-//	/** get number of connections to create **/
-//	public  int get_window_height(){
-//		return Integer.parseInt(configFile.getProperty("WINDOW_HEIGHT"));
-//	}
-//	/** get number of connections to create **/
-//	public int get_window_width(){
-//		return Integer.parseInt(configFile.getProperty("WINDOW_WIDTH"));
-//	}
-//
-//	public int get_default_small_limit() {
-//		return Integer.parseInt(configFile.getProperty("DEFAULT_SMALL_LIMIT"));
-//	}
-//	
-//	public int get_default_large_limit() {
-//		String x= configFile.getProperty("DEFAULT_BIG_LIMIT");
-//		return Integer.parseInt(x);
-//	}
-//
-//	public int get_admin_userid() {
-//		return Integer.parseInt(configFile.getProperty("ADMIN_USERNAME"));
-//	}
-//	
-//	public int get_default_director_id() {
-//		return Integer.parseInt(configFile.getProperty("DEFAULT_DIRECTOR_ID"));
-//	}
 }
