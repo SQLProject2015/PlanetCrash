@@ -3,7 +3,7 @@ package Game;
 import config.config;
 import Database.ConnectionPool;
 import Database.DatabaseHandler;
-import Database.Updates.ManualUpdates;
+
 
 public class QuestionsTester {
 	public static void main(String[] args){
@@ -13,7 +13,6 @@ public class QuestionsTester {
 		mConnPool.init();
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 //		System.out.println(ManualUpdates.getIdFromDB("Language","idLanguage","Marshallese language",dbh));
-		ManualUpdates.updateFromYago(dbh,con);
 //		ManualUpdates.backupManualUpdates(dbh,"DbMysql14");
 //		ManualUpdates.deleteAllYagoData(dbh, "DbMysql14");
 //		QuestionsGenerator qg = new QuestionsGenerator("Israel",dbh,"DbMysql14");

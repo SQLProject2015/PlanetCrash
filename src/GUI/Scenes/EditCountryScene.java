@@ -20,7 +20,7 @@ import com.sun.jndi.toolkit.dir.ContainmentFilter;
 import entities.entity_country;
 import Database.DatabaseHandler;
 import Database.Updates.ManualUpdater;
-import Database.Updates.ManualUpdates;
+import Database.Updates.ReloadYago;
 import Database.Users.User;
 import Database.Users.UserException;
 import Database.Users.UserHandler;

@@ -10,7 +10,7 @@ import Database.ConnectionPool;
 import Database.DatabaseHandler;
 
 
-public class ManualUpdates {
+public class ReloadYago {
 	public static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
 	public static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
 	private static DatabaseHandler dbh;
