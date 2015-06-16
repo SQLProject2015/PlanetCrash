@@ -182,7 +182,7 @@ public class LoadFromYagoScene extends Scene{
 										
 						if (Importer.uploading_finished != -1){
 						   
-						    int temp = Math.round((Importer.uploading_finished * 100.0f) / 180000);		
+						    int temp = Math.round((Importer.uploading_finished * 100.0f) / 190200);		
 						    if (temp!= per){
 						    	per = temp;
 						    	System.out.println(String.format("finished %d percenteges", (per)));
