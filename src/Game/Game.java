@@ -18,8 +18,8 @@ public class Game {
 
 	File soldier;
 	
-	public static final Color[] BACKDROPS = {Color.CYAN, Color.pink, Color.gray, Color.blue};
-	public static final Color[] LANDS = {Color.green, Color.magenta};
+	public static final Color[] BACKDROPS = {Color.decode("#CDE1C4"),Color.decode("#8EA5FF"),Color.decode("#9B9EAF"),Color.decode("#8EAAA5"),Color.CYAN, Color.pink, Color.gray, Color.blue, Color.decode("#F9F3DF")};
+	public static final Color[] LANDS = {Color.decode("#2B1D3E"),Color.decode("#A7E755"), Color.magenta, Color.decode("#002D4E"), Color.decode("#F9F0C7"), Color.decode("#FDB9B0"), Color.decode("#EFCDB2"),Color.decode("#A78404")};
 	
 	public Game() {
 		
