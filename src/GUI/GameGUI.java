@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 import config.config;
 import Database.ConnectionPool;
+import Database.DatabaseHandler;
 import GUI.Objects.Effects.Fader;
 import GUI.Scenes.EditCountryScene;
 import GUI.Scenes.LoadFromYagoScene;
@@ -54,18 +55,15 @@ public class GameGUI {
 		mainFrame = new JFrame("Planet Crash");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
-
 		
-
-		//AddCountryScene mms = new AddCountryScene(this,game);//MainMenuScene();
-//		LoginScene mms = new LoginScene(this, game);
-//		switchScene(mms);	
-
-//		EditCountryScene mms = new EditCountryScene(this,game);//MainMenuScene();
-//		switchScene(mms);
-
 		
-		if (config.get_db_ready().equals("0")){
+		//////////////					/////////////
+		/////////////   FIX THIS UGLY   /////////////
+		/////////////					/////////////
+		
+		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
+		
+		if (!dbh.check_db_state()){
 			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
 			switchScene(mms);	
 		}
@@ -73,6 +71,13 @@ public class GameGUI {
 			//Show main screen
 			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
 			switchScene(mms);		
+		}
+		
+		try{
+			dbh.close();
+		}
+		catch(Exception e){
+			
 		}
 		
 		

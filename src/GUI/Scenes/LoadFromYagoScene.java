@@ -50,11 +50,15 @@ public class LoadFromYagoScene extends Scene{
 	JRoundedEditText passwordField;
 	
 	int per = 0;
+	
+	boolean isFirstLoad = true;
 
 	
 	//JRoundedButton perBtn = new JRoundedButton("percentage", 500, 60, 2);
 	JRoundedButton importBtn = new JRoundedButton("Import from Yago", 500, 60, 2);
 	JRoundedEditText usernameField = new JRoundedEditText(userpass,"Test", 220, 60, 2, false);
+	
+	
 	
 	@Override
 	public Component create() {
@@ -91,6 +95,7 @@ public class LoadFromYagoScene extends Scene{
 			backBtn.setBorderColor(Color.green);
 			backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
 			panel.add(backBtn, new Integer(2), 2);
+			isFirstLoad = false;
 		}
 		
 		//Add login button
@@ -102,7 +107,11 @@ public class LoadFromYagoScene extends Scene{
 		//Register action listeners		
 		importBtn.addMouseListener(new MainListener(MainListener.IMPORT));
 		backBtn.addMouseListener(new MainListener(MainListener.BACK));
-
+		
+//		if (isFirstLoad){
+//			JOptionPane.showMessageDialog(gameGUI.mainFrame, "Seems like your database is not ready, you should import YAGO to start playing");
+//		}
+		
 		return panel;
 	}
 	
@@ -135,6 +144,8 @@ public class LoadFromYagoScene extends Scene{
 				backBtn.removeMouseListener(this);
 				backBtn.isButton(false);
 				
+		
+				
 				new Thread(new Runnable(){
 					public void run(){
 						try {
@@ -143,9 +154,16 @@ public class LoadFromYagoScene extends Scene{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}	
-						MainMenuScene mms = new MainMenuScene(gameGUI,game);
-						gameGUI.switchScene(mms);		
-						gameGUI.fadeSwitchScene(mms);
+						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Database loaded successfully!");
+						
+						if (isFirstLoad){
+							LoginScene mms = new LoginScene(gameGUI,game);		
+							gameGUI.fadeSwitchScene(mms);
+						}
+						else{
+							MainMenuScene mms = new MainMenuScene(gameGUI,game);		
+							gameGUI.fadeSwitchScene(mms);						
+						}
 					}
 					
 					}).start();
@@ -167,6 +185,7 @@ public class LoadFromYagoScene extends Scene{
 						}
 						else if(Importer.uploading_finished==-1){
 						    	((Timer)e.getSource()).stop();
+						    	importBtn.setText("Uploading... 100%");
 						}
 					}
 				});

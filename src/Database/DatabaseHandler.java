@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import config.config;
+
 public class DatabaseHandler {
 
 	ConnectionPool cPool;
@@ -15,6 +17,10 @@ public class DatabaseHandler {
 	private static final String CONNPATH = "jdbc:mysql://host_addr:port/schema_name"; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
 	private static final String USER = ""; //TODO: change this
 	private static final String PASS = ""; //TODO: change this
+	
+	public static int db_ready = 0;
+	
+	config prop = new config();
 
 	public DatabaseHandler(ConnectionPool connPool) {
 		this.cPool=connPool;
@@ -245,5 +251,28 @@ public class DatabaseHandler {
 
 	public void close() throws SQLException {
 		this.cPool.disposeConnection(conn);
+	}
+	
+	public boolean check_db_state(){
+		ResultSet rs;
+		int records_count = 0;
+		try{
+			rs = executeQuery(String.format("SELECT SUM(TABLE_ROWS)FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '%s';", prop.get_db_name()));
+			if(rs.first()){
+				records_count = rs.getInt(1);
+			}
+			if (records_count<150000){
+				prop.set_db_ready("0");
+				return false;
+			}
+			else{
+				prop.set_db_ready("1");
+				return true;
+			}
+		}
+		catch(Exception e){
+			prop.set_db_ready("0");
+			return false;
+		}
 	}
 }
