@@ -10,38 +10,33 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
+
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 
-import com.sun.org.apache.xml.internal.security.Init;
-
-import config.config;
+import config.Config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
-import Database.Updates.ManualUpdater;
+
 import Database.Updates.ReloadYago;
-import Database.Users.User;
-import Database.Users.UserException;
-import Database.Users.UserHandler;
-import Exceptions.NotFoundException;
+
 import GUI.GameGUI;
 import GUI.Objects.JImage;
 import GUI.Objects.JRoundedButton;
 import GUI.Objects.JRoundedEditText;
 import GUI.Objects.StarryBackground;
-import GUI.Scenes.AddCountryScene.MainListener;
+
 import Game.Game;
+import Game.GameUtils;
 
 public class LoadFromYagoScene extends Scene{
 	
 	public static boolean backDisabled=false;
 	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
-	config config = new config();
+	Config config = GameUtils.getConfig();
 	
 	public LoadFromYagoScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
@@ -138,7 +133,7 @@ public class LoadFromYagoScene extends Scene{
 			case IMPORT:
 				backDisabled=true;
 				final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-				final config config = new config();
+				final Config config = GameUtils.getConfig();
 				
 				importBtn.removeMouseListener(this);
 				importBtn.isButton(false);
