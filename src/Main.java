@@ -50,6 +50,7 @@ public class Main {
 		mConnPool.init();
 
 		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
+		dbh.set_db_state();
 		config properties = new config();
 		
 		

@@ -24,6 +24,7 @@ import config.config;
 import Database.DatabaseHandler;
 import Database.Updates.Importer;
 import Database.Updates.ManualUpdater;
+import Database.Updates.ReloadYago;
 import Database.Users.User;
 import Database.Users.UserException;
 import Database.Users.UserHandler;
@@ -149,7 +150,12 @@ public class LoadFromYagoScene extends Scene{
 				new Thread(new Runnable(){
 					public void run(){
 						try {
-							Importer i = new Importer(dbh, config);
+							if (isFirstLoad){
+								Importer i = new Importer(dbh, config);
+							}
+							else{
+								ReloadYago.updateFromYago(gameGUI.mConnPool, config);
+							}
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

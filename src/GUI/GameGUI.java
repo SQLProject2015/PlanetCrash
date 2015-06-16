@@ -35,8 +35,6 @@ public class GameGUI {
 	public JFrame mainFrame;
 	
 	private JLayeredPane mJLPane;
-	
-	config config = new config();
 
 	public GameGUI(ConnectionPool cpool) {
 		this.mConnPool=cpool;
@@ -56,14 +54,9 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 		
+		config config = new config();
 		
-		//////////////					/////////////
-		/////////////   FIX THIS UGLY   /////////////
-		/////////////					/////////////
-		
-		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		
-		if (!dbh.check_db_state()){
+		if (config.get_db_ready().equals("0")){
 			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
 			switchScene(mms);	
 		}
@@ -71,19 +64,7 @@ public class GameGUI {
 			//Show main screen
 			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
 			switchScene(mms);		
-		}
-		
-		try{
-			dbh.close();
-		}
-		catch(Exception e){
-			
-		}
-		
-		
-
-		
-		
+		}	
 		//        mainFrame.setContentPane(mms.create());
 
 //		fadeSwitchScene(mms);

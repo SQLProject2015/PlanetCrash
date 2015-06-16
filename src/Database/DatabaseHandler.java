@@ -253,7 +253,7 @@ public class DatabaseHandler {
 		this.cPool.disposeConnection(conn);
 	}
 	
-	public boolean check_db_state(){
+	public void set_db_state(){
 		ResultSet rs;
 		int records_count = 0;
 		try{
@@ -263,16 +263,13 @@ public class DatabaseHandler {
 			}
 			if (records_count<150000){
 				prop.set_db_ready("0");
-				return false;
 			}
 			else{
 				prop.set_db_ready("1");
-				return true;
 			}
 		}
 		catch(Exception e){
 			prop.set_db_ready("0");
-			return false;
 		}
 	}
 }
