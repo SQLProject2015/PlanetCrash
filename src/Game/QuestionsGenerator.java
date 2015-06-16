@@ -258,7 +258,7 @@ public class QuestionsGenerator {
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
 			if (rs.next()){
-				String officialLanguage = rs.getString("Name");
+				String officialLanguage = rs.getString("Name").replace(" Language", "").replace(" language", "");
 				q.setCorrectAnswer(new Answer(officialLanguage));
 				q.addPossibleAnswers(new Answer(officialLanguage));
 				query = "SELECT DISTINCT Language.Name " +
@@ -271,7 +271,7 @@ public class QuestionsGenerator {
 				int i =0;
 				while (rs.next()){
 					i++;
-					String language = rs.getString("Name");
+					String language = rs.getString("Name").replace(" Language", "").replace(" language", "");
 					q.addPossibleAnswers(new Answer(language));
 				}
 				if (i==3){
@@ -296,7 +296,7 @@ public class QuestionsGenerator {
 		try {
 			ResultSet rs =this.dbh.executeQuery(query);//jdbc
 			if (rs.next()){
-				String officialCurrency = rs.getString("Name").replace(" Language", "");
+				String officialCurrency = rs.getString("Name");
 				q.setCorrectAnswer(new Answer(officialCurrency));
 				q.addPossibleAnswers(new Answer(officialCurrency));
 				query = "SELECT DISTINCT Currency.Name " +
@@ -310,7 +310,7 @@ public class QuestionsGenerator {
 				int i =0;
 				while (rs.next()){
 					i++;
-					String currency = rs.getString("Name").replace(" Language", "");
+					String currency = rs.getString("Name");
 					q.addPossibleAnswers(new Answer(currency));
 				}
 				if (i==3){
