@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -78,7 +81,7 @@ public class GameUtils {
 		return config;
 	}
 	
-	public static HashMap<String,Integer> getHishScores(ConnectionPool conn, Config config){
+	public static LinkedHashMap<String,Integer> getHishScores(ConnectionPool conn, Config config){
 		HashMap<String,Integer> highScores = new HashMap<String,Integer>();
 		String dbName = config.get_db_name();
 		String highScoreQuery = "SELECT users.Username, b.Score from "+dbName+
@@ -95,9 +98,31 @@ public class GameUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return highScores;
+		return (LinkedHashMap<String, Integer>) MapUtil.sortByValue(highScores);
 	}
-	
+	public static class MapUtil
+	{
+	    public static <K, V extends Comparable<? super V>> Map<K, V> 
+	        sortByValue( Map<K, V> map )
+	    {
+	        List<Map.Entry<K, V>> list =
+	            new LinkedList<Map.Entry<K, V>>( map.entrySet() );
+	        Collections.sort( list, new Comparator<Map.Entry<K, V>>()
+	        {
+	            public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 )
+	            {
+	                return -1*(o1.getValue()).compareTo( o2.getValue() );
+	            }
+	        } );
+
+	        Map<K, V> result = new LinkedHashMap<K, V>();
+	        for (Map.Entry<K, V> entry : list)
+	        {
+	            result.put( entry.getKey(), entry.getValue() );
+	        }
+	        return result;
+	    }
+	}
 
 
 }
