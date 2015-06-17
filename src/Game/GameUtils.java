@@ -4,9 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import config.Config;
+import Database.ConnectionPool;
 import Database.DatabaseHandler;
 
 public class GameUtils {
@@ -72,4 +77,27 @@ public class GameUtils {
 	public static Config getConfig(){
 		return config;
 	}
+	
+	public static HashMap<String,Integer> getHishScores(ConnectionPool conn, Config config){
+		HashMap<String,Integer> highScores = new HashMap<String,Integer>();
+		String dbName = config.get_db_name();
+		String highScoreQuery = "SELECT users.Username, b.Score from "+dbName+
+				".users, (SELECT user_country_completed.idUser, sum(user_country_completed.Level) as Score FROM "+
+				dbName+".user_country_completed group by idUser) as b WHERE users.idUser=b.idUser"+""
+						+ " ORDER BY b.Score DESC LIMIT 5;";
+		DatabaseHandler dbh = new DatabaseHandler(conn);
+		try {
+			ResultSet rs = dbh.executeQuery(highScoreQuery);
+			while(rs.next()){
+				highScores.put(rs.getString("Username"), rs.getInt("Score"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return highScores;
+	}
+	
+
+
 }

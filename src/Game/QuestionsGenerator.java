@@ -129,8 +129,8 @@ public class QuestionsGenerator {
 				q.setCorrectAnswer(new Answer(new Integer(currYear-year).toString()));
 				q.addPossibleAnswers(new Answer(new Integer(currYear-year).toString()));
 				q.addPossibleAnswers(new Answer(new Integer(currYear-year+r.nextInt(10)+1).toString()));
-				q.addPossibleAnswers(new Answer(new Integer((currYear-year)+r.nextInt(10)+1).toString()));
-				q.addPossibleAnswers(new Answer(new Integer((currYear-year)+15).toString()));
+				q.addPossibleAnswers(new Answer(new Integer((currYear-year)-r.nextInt(10)+1).toString()));
+				q.addPossibleAnswers(new Answer(new Integer(((currYear-year)+30)/(1+r.nextInt(3))).toString()));
 				this.possibleQuestions.add(q);
 			}
 

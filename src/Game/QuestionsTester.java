@@ -7,10 +7,11 @@ import Database.DatabaseHandler;
 
 public class QuestionsTester {
 	public static void main(String[] args){
-//		config con = new config();
+		Config con = GameUtils.getConfig();
 //		con.set_db_name("blabla");
-//		ConnectionPool mConnPool = new ConnectionPool();
-//		mConnPool.init();
+		ConnectionPool mConnPool = new ConnectionPool();
+		mConnPool.init();
+		GameUtils.getHishScores(mConnPool, con);
 //		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 //		System.out.println(con.get_db_ready());
 //		con.set_db_ready("1");
