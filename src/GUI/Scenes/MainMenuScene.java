@@ -61,14 +61,14 @@ public class MainMenuScene extends Scene {
 		//Add HOF button
 		JRoundedButton hofBtn = new JRoundedButton("Hall of fame", 220,60, 2);
 		hofBtn.setBounds((GameGUI.WINDOW_WIDTH-hofBtn.getWidth())/2, 400, hofBtn.getWidth(), hofBtn.getHeight());
-		hofBtn.setBorderColor(Color.BLUE);
+		hofBtn.setBorderColor(Color.decode("#bf00af"));
 		panel.add(hofBtn, new Integer(3), 0);		
 		
 		
 		//Add quit button
 		JRoundedButton quitBtn = new JRoundedButton("Quit", 220,60, 2);
 		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 490, quitBtn.getWidth(), quitBtn.getHeight());
-		quitBtn.setBorderColor(Color.decode("#bf00af"));
+		quitBtn.setBorderColor(Color.BLUE);
 		panel.add(quitBtn, new Integer(3), 0);
 
 
