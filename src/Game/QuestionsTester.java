@@ -13,7 +13,7 @@ public class QuestionsTester {
 //		con.set_db_name("blabla");
 		ConnectionPool mConnPool = new ConnectionPool();
 		mConnPool.init();
-		LinkedHashMap<String,Integer> l =GameUtils.getHishScores(mConnPool, con);
+		LinkedHashMap<String,Integer> l =GameUtils.getHighScores(mConnPool, con);
 //		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
 //		System.out.println(con.get_db_ready());
 //		con.set_db_ready("1");

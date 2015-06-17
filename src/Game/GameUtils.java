@@ -81,7 +81,7 @@ public class GameUtils {
 		return config;
 	}
 	
-	public static LinkedHashMap<String,Integer> getHishScores(ConnectionPool conn, Config config){
+	public static LinkedHashMap<String,Integer> getHighScores(ConnectionPool conn, Config config){
 		HashMap<String,Integer> highScores = new HashMap<String,Integer>();
 		String dbName = config.get_db_name();
 		String highScoreQuery = "SELECT users.Username, b.Score from "+dbName+

@@ -57,18 +57,18 @@ public class GameGUI {
 		Config config = GameUtils.getConfig();
 		
 		
-		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();
-		switchScene(mms);	
+//		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();
+//		switchScene(mms);	
 		
-//		if (config.get_db_ready().equals("0")){
-//			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
-//			switchScene(mms);	
-//		}
-//		else{
-//			//Show main screen
-//			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-//			switchScene(mms);		
-//		}	
+		if (config.get_db_ready().equals("0")){
+			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
+			switchScene(mms);	
+		}
+		else{
+			//Show main screen
+			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+			switchScene(mms);		
+		}	
 		//        mainFrame.setContentPane(mms.create());
 
 //		fadeSwitchScene(mms);

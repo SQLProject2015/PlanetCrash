@@ -49,27 +49,35 @@ public class MainMenuScene extends Scene {
 
 		//Add play button
 		JRoundedButton playBtn = new JRoundedButton("Play", 220,60, 2);
-		playBtn.setBounds((GameGUI.WINDOW_WIDTH-playBtn.getWidth())/2, 280, playBtn.getWidth(), playBtn.getHeight());
+		playBtn.setBounds((GameGUI.WINDOW_WIDTH-playBtn.getWidth())/2, 220, playBtn.getWidth(), playBtn.getHeight());
 		panel.add(playBtn, new Integer(2), 0);
 
 		//Add settings button
 		JRoundedButton settingBtn = new JRoundedButton("Settings", 220,60, 2);
-		settingBtn.setBounds((GameGUI.WINDOW_WIDTH-settingBtn.getWidth())/2, 370, settingBtn.getWidth(), settingBtn.getHeight());
+		settingBtn.setBounds((GameGUI.WINDOW_WIDTH-settingBtn.getWidth())/2, 310, settingBtn.getWidth(), settingBtn.getHeight());
 		settingBtn.setBorderColor(Color.GREEN);
 		panel.add(settingBtn, new Integer(3), 0);
 
+		//Add HOF button
+		JRoundedButton hofBtn = new JRoundedButton("Hall of fame", 220,60, 2);
+		hofBtn.setBounds((GameGUI.WINDOW_WIDTH-hofBtn.getWidth())/2, 400, hofBtn.getWidth(), hofBtn.getHeight());
+		hofBtn.setBorderColor(Color.BLUE);
+		panel.add(hofBtn, new Integer(3), 0);		
+		
+		
 		//Add quit button
 		JRoundedButton quitBtn = new JRoundedButton("Quit", 220,60, 2);
-		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 460, quitBtn.getWidth(), quitBtn.getHeight());
+		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 490, quitBtn.getWidth(), quitBtn.getHeight());
 		quitBtn.setBorderColor(Color.decode("#bf00af"));
 		panel.add(quitBtn, new Integer(3), 0);
+
 
 		//add welcome message
 		Font font = new Font(null, Font.PLAIN, 20);
 		JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
-		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 240,
+		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 180,
 				(int)welcomeMsg.getPreferredSize().getWidth(), (int)welcomeMsg.getPreferredSize().getHeight());
 		welcomeMsg.setOpaque(false);
 		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
@@ -79,13 +87,14 @@ public class MainMenuScene extends Scene {
 		playBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.PLAY));
 		settingBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.SETTINGS));
 		quitBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.QUIT));
+		hofBtn.addMouseListener(new MainMenuMouseListener(MainMenuMouseListener.HOF));
 		
 		return panel;
 	}
 
 	
 	class MainMenuMouseListener implements MouseListener {
-		public static final int PLAY=0,SETTINGS=1,QUIT=2;
+		public static final int PLAY=0,SETTINGS=1,QUIT=2, HOF=3;
 		int mode;
 		public MainMenuMouseListener(int mode) {
 			this.mode=mode;
@@ -103,7 +112,10 @@ public class MainMenuScene extends Scene {
 			case QUIT:
 				gameGUI.quit();
 				break;
+			case HOF:
+				gameGUI.fadeSwitchScene(new HallOfFameScene(gameGUI, game));
 			}
+			
 			
 		}
 

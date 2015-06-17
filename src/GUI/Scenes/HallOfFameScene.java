@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 
 
 
@@ -78,7 +80,7 @@ public class HallOfFameScene extends Scene{
 		Font userpass = new Font(null, Font.BOLD, 14);
 		
 		
-		HashMap<String,Integer> hof = GameUtils.getHighScores(gameGUI.mConnPool, GameUtils.getConfig());
+		LinkedHashMap<String,Integer> hof = GameUtils.getHighScores(gameGUI.mConnPool, GameUtils.getConfig());
 		
 		
 	    Iterator it = hof.entrySet().iterator();
@@ -86,161 +88,40 @@ public class HallOfFameScene extends Scene{
 	    while (it.hasNext()) {
 	    	
 	        Map.Entry pair = (Map.Entry)it.next();
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
 	        
 			//add welcome message
-			Font font = new Font(null, Font.PLAIN, 20);
-			char[] chars = new char[35 - pair.getKey().toString().length()];
-			Arrays.fill(chars, '.');
-			String c = new String(chars);			
-			JTextField welcomeMsg = new JTextField(pair.getKey().toString() + c + pair.getValue().toString());
-			welcomeMsg.setFont(font);
-			welcomeMsg.setForeground(Color.CYAN);
-			welcomeMsg.setBounds(300, i,
-					(int)welcomeMsg.getPreferredSize().getWidth(), (int)welcomeMsg.getPreferredSize().getHeight());
-			welcomeMsg.setOpaque(false);
-			welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
-			panel.add(welcomeMsg, new Integer(3),0);
+			Font font = new Font(null, Font.HANGING_BASELINE, 20);
+			
+					
+			JTextField username = new JTextField(pair.getKey().toString());
+			username.setFont(font);
+			username.setForeground(Color.CYAN);
+			username.setBounds(250, i,
+					(int)username.getPreferredSize().getWidth(), (int)username.getPreferredSize().getHeight());
+			username.setOpaque(false);
+			username.setBorder(BorderFactory.createEmptyBorder());
+			
+			JTextField score = new JTextField(pair.getValue().toString());
+			score.setFont(font);
+			score.setForeground(Color.CYAN);
+			score.setBounds(550, i,
+					(int)score.getPreferredSize().getWidth(), (int)score.getPreferredSize().getHeight());
+			score.setOpaque(false);
+			score.setBorder(BorderFactory.createEmptyBorder());
+			
+			panel.add(username, new Integer(3),0);
+			panel.add(score, new Integer(3),0);
 			
 	
-			i += 100;
+			i += 70;
 	        
 	        it.remove(); 
 	    }
-		
-		
+			
+		backBtn.setBorderColor(Color.green);
+		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
+		panel.add(backBtn, new Integer(2), 2);
 
-		
-//		//Add name field
-//		JPanel namePanel = new JPanel();
-//		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Name:", 100, userpass.getSize()+20, 2);
-//		nameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//		
-//		usernameLabel.isButton(false);
-//		usernameLabel.setBorderColor(Color.cyan);
-//		nameField.setBorderColor(Color.cyan);
-//		
-//		namePanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight()));
-//		namePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)namePanel.getPreferredSize().getWidth())/2,
-//				loginy, usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight());
-//		namePanel.setOpaque(false);
-//		namePanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		namePanel.add(usernameLabel);
-//		namePanel.add(nameField);
-//		panel.add(namePanel, new Integer(2),0);
-//		
-//		//Add Continent field
-//		JPanel continentPanel = new JPanel();
-//		JRoundedButton passwordLabel = new JRoundedButton(userpass,"Continent:", 100, userpass.getSize()+20, 2);
-//		continetField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//	
-//		passwordLabel.isButton(false);
-//		passwordLabel.setBorderColor(Color.cyan);
-//		continetField.setBorderColor(Color.cyan);
-//		
-//		continentPanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+continetField.getWidth()+50, continetField.getHeight()));
-//		continentPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)continentPanel.getPreferredSize().getWidth())/2,
-//				loginy+50, usernameLabel.getWidth()+continetField.getWidth()+50, continetField.getHeight());
-//		continentPanel.setOpaque(false);
-//		continentPanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		continentPanel.add(passwordLabel);
-//		continentPanel.add(continetField);
-//		panel.add(continentPanel, new Integer(2),1);
-//		
-//		//Add currency field
-//		JPanel currencyPanel = new JPanel();
-//		JRoundedButton currencyLabel = new JRoundedButton(userpass,"Currency:", 100, userpass.getSize()+20, 2);
-//		currencyField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//	
-//		currencyLabel.isButton(false);
-//		currencyLabel.setBorderColor(Color.cyan);
-//		currencyField.setBorderColor(Color.cyan);
-//		
-//		currencyPanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+currencyField.getWidth()+50, currencyField.getHeight()));
-//		currencyPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)currencyPanel.getPreferredSize().getWidth())/2,
-//				loginy+100, usernameLabel.getWidth()+currencyField.getWidth()+50, currencyField.getHeight());
-//		currencyPanel.setOpaque(false);
-//		currencyPanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		currencyPanel.add(currencyLabel);
-//		currencyPanel.add(currencyField);
-//		panel.add(currencyPanel, new Integer(2),1);
-//		
-//		//Add language field
-//		JPanel languagePanel = new JPanel();
-//		JRoundedButton languageLabel = new JRoundedButton(userpass,"Language:", 100, userpass.getSize()+20, 2);
-//		languageField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//	
-//		languageLabel.isButton(false);
-//		languageLabel.setBorderColor(Color.cyan);
-//		languageField.setBorderColor(Color.cyan);
-//		
-//		languagePanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+languageField.getWidth()+50, languageField.getHeight()));
-//		languagePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)languagePanel.getPreferredSize().getWidth())/2,
-//				loginy+150, usernameLabel.getWidth()+languageField.getWidth()+50, languageField.getHeight());
-//		languagePanel.setOpaque(false);
-//		languagePanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		languagePanel.add(languageLabel);
-//		languagePanel.add(languageField);
-//		panel.add(languagePanel, new Integer(2),1);
-//		
-//		//Add capital field
-//		JPanel capitalPanel = new JPanel();
-//		JRoundedButton capitalLabel = new JRoundedButton(userpass,"Capital:", 100, userpass.getSize()+20, 2);
-//		capitalField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//	
-//		capitalLabel.isButton(false);
-//		capitalLabel.setBorderColor(Color.cyan);
-//		capitalField.setBorderColor(Color.cyan);
-//		
-//		capitalPanel.setPreferredSize(new Dimension(capitalLabel.getWidth()+capitalField.getWidth()+50, capitalField.getHeight()));
-//		capitalPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)capitalPanel.getPreferredSize().getWidth())/2,
-//				loginy+200, capitalLabel.getWidth()+capitalField.getWidth()+50, capitalField.getHeight());
-//		capitalPanel.setOpaque(false);
-//		capitalPanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		capitalPanel.add(capitalLabel);
-//		capitalPanel.add(capitalField);
-//		panel.add(capitalPanel, new Integer(2),1);
-//		
-//		//Add population field
-//		JPanel populationPanel = new JPanel();
-//		JRoundedButton populationLabel = new JRoundedButton(userpass,"Population:", 100, userpass.getSize()+20, 2);
-//		populationField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-//	
-//		populationLabel.isButton(false);
-//		populationLabel.setBorderColor(Color.cyan);
-//		populationField.setBorderColor(Color.cyan);
-//		
-//		populationPanel.setPreferredSize(new Dimension(populationLabel.getWidth()+populationField.getWidth()+50, populationField.getHeight()));
-//		populationPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)populationPanel.getPreferredSize().getWidth())/2,
-//				loginy+250, populationLabel.getWidth()+populationField.getWidth()+50, populationField.getHeight());
-//		populationPanel.setOpaque(false);
-//		populationPanel.setBorder(new EmptyBorder(-5, -25, -5, -5));
-//		populationPanel.add(populationLabel);
-//		populationPanel.add(populationField);
-//		panel.add(populationPanel, new Integer(2),1);
-//		
-//		
-//		
-//		//Add add button
-//		addBtn.setBorderColor(Color.green);
-//		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
-//		panel.add(addBtn, new Integer(2), 2);
-//		
-//		backBtn.setBorderColor(Color.green);
-//		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
-//		panel.add(backBtn, new Integer(2), 2);
-////		
-////		//Add create user button
-////		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
-////		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
-////		panel.add(createBtn, new Integer(2), 3);
-//		
-//		//Register action listeners
-////		LoginMouseListener lml = new LoginMouseListener();
-////		addBtn.addMouseListener(lml);
-//
-//		//LoadToYagoListener lml = new LoadToYagoListener();
-//		addBtn.addMouseListener(new MainListener(MainListener.ADD_COUNTRY));
 		backBtn.addMouseListener(new MainListener(MainListener.BACK));
 		return panel;
 	}
@@ -259,37 +140,8 @@ public class HallOfFameScene extends Scene{
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
 			case BACK:
-				SettingsScene mms = new SettingsScene(gameGUI,game);	
+				MainMenuScene mms = new MainMenuScene(gameGUI,game);	
 				gameGUI.fadeSwitchScene(mms);		
-				break;
-			case ADD_COUNTRY:
-				DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-				try{
-					
-					if (check_not_empty_fields()){
-						ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
-						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Country was added :)");
-						nameField.setText("");
-						continetField.setText("");
-						currencyField.setText("");
-						languageField.setText("");
-						capitalField.setText("");
-						populationField.setText("");
-					}	
-					
-					
-				}catch(NotFoundException | SQLException ex){
-					JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
-				}catch(NumberFormatException e){
-					JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
-				}finally{
-					try {
-						dbh.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 				break;
 			}
 			
