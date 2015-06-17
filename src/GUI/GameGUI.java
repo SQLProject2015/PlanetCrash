@@ -9,9 +9,12 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.text.Highlighter.Highlight;
+
 import config.Config;
 import Database.ConnectionPool;
 import GUI.Objects.Effects.Fader;
+import GUI.Scenes.HallOfFameScene;
 import GUI.Scenes.LoadFromYagoScene;
 import GUI.Scenes.LoginScene;
 import GUI.Scenes.Scene;
@@ -53,15 +56,19 @@ public class GameGUI {
 		
 		Config config = GameUtils.getConfig();
 		
-		if (config.get_db_ready().equals("0")){
-			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
-			switchScene(mms);	
-		}
-		else{
-			//Show main screen
-			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-			switchScene(mms);		
-		}	
+		
+		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();
+		switchScene(mms);	
+		
+//		if (config.get_db_ready().equals("0")){
+//			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
+//			switchScene(mms);	
+//		}
+//		else{
+//			//Show main screen
+//			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
+//			switchScene(mms);		
+//		}	
 		//        mainFrame.setContentPane(mms.create());
 
 //		fadeSwitchScene(mms);
