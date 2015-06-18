@@ -32,7 +32,7 @@ import PlanetCrash.parsing.entities.entity_university;
 public class Importer {
 	
 	
-	public static boolean dbReady;
+	public static boolean dbReady = false;
 	
 	public static final int BATCHSIZE=1000;
 	//private static List<Object[]> batch;
