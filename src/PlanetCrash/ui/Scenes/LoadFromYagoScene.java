@@ -3,6 +3,7 @@ package PlanetCrash.ui.Scenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+
+
 
 
 
@@ -151,12 +155,21 @@ public class LoadFromYagoScene extends Scene{
 						if (isFirstLoad){
 							try{
 								Importer i = new Importer(dbh, config);
-							} catch (FileNotFoundException e) {
-								JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
+							} catch (FileNotFoundException | SQLException e) {
+								try {
+									EventQueue.invokeAndWait(new Runnable() {
+
+										@Override
+										public void run() {
+											JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
+										}
+										
+									});
+								} catch (InvocationTargetException
+										| InterruptedException e1) {
+									e1.printStackTrace();
+								}
 								
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							}
 						}
 						else{
