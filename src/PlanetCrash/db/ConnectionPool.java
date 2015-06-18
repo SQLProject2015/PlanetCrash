@@ -13,7 +13,7 @@ import PlanetCrash.core.config.Config;
  * Pools DB connections
  */
 public class ConnectionPool {
-	Config conf = GameUtils.getConfig();
+	Config conf = new Config();
 	
 	private static String CONNPATH; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
 	private static String USER; //TODO: change this

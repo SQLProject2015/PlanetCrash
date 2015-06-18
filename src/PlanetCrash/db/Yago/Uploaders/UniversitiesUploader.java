@@ -19,7 +19,7 @@ public class UniversitiesUploader extends AbstractUploader{
 
 	String table = "University";
 	String[] columns = {"Name","idCountry"};
-	Config conf = GameUtils.getConfig();
+	Config conf = new Config();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map

@@ -38,7 +38,7 @@ public class LoadFromYagoScene extends Scene{
 	
 	public static boolean backDisabled=false;
 	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
-	Config config = GameUtils.getConfig();
+	Config config = new Config();
 	
 	public LoadFromYagoScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
@@ -135,7 +135,7 @@ public class LoadFromYagoScene extends Scene{
 			case IMPORT:
 				backDisabled=true;
 				final DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
-				final Config config = GameUtils.getConfig();
+				final Config config = new Config();
 				
 				importBtn.removeMouseListener(this);
 				importBtn.isButton(false);

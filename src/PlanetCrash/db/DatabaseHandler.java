@@ -22,7 +22,7 @@ public class DatabaseHandler {
 	
 	public static int db_ready = 0;
 	
-	Config prop = GameUtils.getConfig();
+	Config prop = new Config();
 
 	public DatabaseHandler(ConnectionPool connPool) {
 		this.cPool=connPool;

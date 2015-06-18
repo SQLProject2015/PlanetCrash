@@ -31,11 +31,13 @@ import javax.swing.border.EmptyBorder;
 
 
 
+
 import com.mysql.jdbc.StringUtils;
 
 import PlanetCrash.core.Exceptions.NotFoundException;
 import PlanetCrash.core.Game.Game;
 import PlanetCrash.core.Game.GameUtils;
+import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
 import PlanetCrash.db.Updates.ManualUpdater;
 import PlanetCrash.ui.GameGUI;
@@ -85,7 +87,7 @@ public class HallOfFameScene extends Scene{
 		Font userpass = new Font(null, Font.BOLD, 14);
 		
 		
-		LinkedHashMap<String,Integer> hof = GameUtils.getHighScores(gameGUI.mConnPool, GameUtils.getConfig());
+		LinkedHashMap<String,Integer> hof = GameUtils.getHighScores(gameGUI.mConnPool, new Config());
 		
 		
 	    Iterator it = hof.entrySet().iterator();

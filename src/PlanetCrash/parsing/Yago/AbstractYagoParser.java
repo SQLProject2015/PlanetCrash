@@ -22,7 +22,7 @@ public abstract class AbstractYagoParser implements Runnable {
 	public AbstractYagoParser(String filepath) {
 		this.filepath = filepath;
 		this.litepath = filepath.substring(0, filepath.lastIndexOf("."))+".lite";
-		this.properties = GameUtils.getConfig();
+		this.properties = new Config();
 	}
 	
 	public void populate() throws FileNotFoundException {

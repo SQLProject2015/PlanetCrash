@@ -19,7 +19,7 @@ public class CapitalsUploader extends AbstractUploader{
 
 	String table = "Country";
 	String[] columns = {"Name","idContinent","idCurrency","idLanguage","idCapital","PopulationSize"};
-	Config conf = GameUtils.getConfig();
+	Config conf = new Config();
 	/**
 	 * Assumes all relevant data (cities, currencies etc.) is already in the database
 	 * @param countries_map

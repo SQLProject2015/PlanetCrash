@@ -16,7 +16,7 @@ public class QuestionsGenerator {
 	private DatabaseHandler dbh;
 	private String dbname;
 	
-	Config config = GameUtils.getConfig();
+	Config config = new Config();
 	
 	public QuestionsGenerator(String countryName,DatabaseHandler dbh,String dbname){
 		this.countryName=countryName;

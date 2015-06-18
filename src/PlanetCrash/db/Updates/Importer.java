@@ -36,7 +36,7 @@ public class Importer {
 	
 	public static final int BATCHSIZE=1000;
 	//private static List<Object[]> batch;
-	static Config conf = GameUtils.getConfig();
+	static Config conf = new Config();
 	
 	public static int uploading_finished = 0;
 	public static int parsing_finished = 0;

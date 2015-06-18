@@ -10,7 +10,7 @@ import PlanetCrash.parsing.entities.entity_country;
 
 
 public class ManualUpdater {
-	static Config conf = GameUtils.getConfig();
+	static Config conf = new Config();
 	
 	public static boolean add_Person(String name, int yearOfBirth, int yearOfDeath, String city, String profession, DatabaseHandler dbh) throws SQLException, NotFoundException{
 		// get city id from DB

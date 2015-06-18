@@ -120,7 +120,7 @@ public class DifficultySelectScene extends Scene{
 					// TODO Auto-generated method stub
 					QuestionsGenerator qg = null;
 					while(qg==null) {
-						Config cfg = GameUtils.getConfig();
+						Config cfg = new Config();
 						DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 						qg = GameUtils.generateCountry(game.getUser().getId(), cfg.get_db_name(), dbh, game.getDifficulty());
 						if (qg==null)

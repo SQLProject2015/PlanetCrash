@@ -77,9 +77,7 @@ public class GameUtils {
 		
 		return funky.toString();
 	}
-	public static Config getConfig(){
-		return config;
-	}
+
 	
 	public static LinkedHashMap<String,Integer> getHighScores(ConnectionPool conn, Config config){
 		HashMap<String,Integer> highScores = new HashMap<String,Integer>();

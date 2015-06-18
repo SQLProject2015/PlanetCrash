@@ -57,7 +57,7 @@ public class GameGUI {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 		
-		Config config = GameUtils.getConfig();
+		Config config = new Config();
 		
 		
 //		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();

@@ -16,7 +16,7 @@ import PlanetCrash.parsing.entities.entity_city;
 
 public class CitiesUploader extends AbstractUploader{
 	Map<String, entity_city> cmap;
-	Config conf = GameUtils.getConfig();
+	Config conf = new Config();
 	String table = "City";
 	String[] columns = {"Name","idCountry"};
 	HashMap<String, Integer> country_id_name_map;

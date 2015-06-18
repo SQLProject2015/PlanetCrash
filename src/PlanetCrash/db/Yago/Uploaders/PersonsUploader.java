@@ -15,7 +15,7 @@ import PlanetCrash.parsing.entities.entity_person;
 
 public class PersonsUploader extends AbstractUploader{
 	Map<String, entity_person> pmap;
-	Config conf = GameUtils.getConfig();
+	Config conf = new Config();
 	HashMap<String, Integer> city_id_name_map;
 
 	String table = "Person";
