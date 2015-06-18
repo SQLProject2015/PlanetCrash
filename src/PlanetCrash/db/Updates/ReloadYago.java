@@ -1,5 +1,6 @@
 package PlanetCrash.db.Updates;
 
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class ReloadYago {
 	private static HashSet<String> continent_set_bck = new HashSet<String>();
 	private static DatabaseHandler dbh;
 	
-	public static void updateFromYago(ConnectionPool pool,Config conf){
+	public static void updateFromYago(ConnectionPool pool,Config conf) throws FileNotFoundException{
 		dbh =new DatabaseHandler(pool);
 		backupManualUpdates(conf.get_db_name());
 		deleteAllData(conf.get_db_name());

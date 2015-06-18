@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
+
 
 
 
@@ -146,17 +148,26 @@ public class LoadFromYagoScene extends Scene{
 				
 				new Thread(new Runnable(){
 					public void run(){
-						try {
-							if (isFirstLoad){
+						if (isFirstLoad){
+							try{
 								Importer i = new Importer(dbh, config);
+							} catch (FileNotFoundException e) {
+								JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-							else{
+						}
+						else{
+							try {
 								ReloadYago.updateFromYago(gameGUI.mConnPool, config);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}	
+						}
+	
 						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Database loaded successfully!");
 						
 						if (isFirstLoad){

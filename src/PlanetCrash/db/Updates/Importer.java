@@ -42,7 +42,7 @@ public class Importer {
 	public static int parsing_finished = 0;
 	private static DatabaseHandler dbh;
 	
-	public Importer(DatabaseHandler dbh, Config properties) throws SQLException{		
+	public Importer(DatabaseHandler dbh, Config properties) throws SQLException, FileNotFoundException{		
 		
 		HashMap<String, entity_country> countries_map = new HashMap<String, entity_country>();
 		HashMap<String, entity_city> cities_map = new HashMap<String, entity_city>();
@@ -55,7 +55,7 @@ public class Importer {
 		HashSet<String> awards_set = new HashSet<String>();
 		Importer.dbh = dbh;
 		long start = System.currentTimeMillis();
-		inertManualData();
+		insertManualData();
 		
 
 
@@ -168,7 +168,8 @@ public class Importer {
 		UniversitiesUploader uniUploader = new UniversitiesUploader(universities_map, dbh);
 		uniUploader.upload();		
 		
-		dbReady = true;
+		//update dbReady if it is really ready
+		dbh.set_db_state();
 
 		int i =0;
 		if (i == 0){
@@ -177,7 +178,7 @@ public class Importer {
 		
 		uploading_finished=-1;
 	}
-	public static void inertManualData(){
+	public static void insertManualData(){
 		try {			
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Europe"});
 			dbh.singleInsert("Continent", new String[]{"Name"}, new String[]{"Asia"});
