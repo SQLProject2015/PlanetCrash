@@ -15,6 +15,7 @@ import PlanetCrash.core.Game.Game;
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
+import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.ui.Objects.Effects.Fader;
 import PlanetCrash.ui.Scenes.HallOfFameScene;
 import PlanetCrash.ui.Scenes.LoadFromYagoScene;
@@ -62,7 +63,7 @@ public class GameGUI {
 //		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();
 //		switchScene(mms);	
 		
-		if (config.get_db_ready().equals("0")){
+		if (Importer.dbReady == false){
 			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
 			switchScene(mms);	
 		}

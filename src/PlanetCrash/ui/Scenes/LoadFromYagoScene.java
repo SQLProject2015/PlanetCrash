@@ -89,7 +89,7 @@ public class LoadFromYagoScene extends Scene{
 		importBtn.setBounds((GameGUI.WINDOW_WIDTH-importBtn.getWidth())/2, 375, importBtn.getWidth(), importBtn.getHeight());
 		panel.add(importBtn, new Integer(2), 2);
 		
-		if (config.get_db_ready().equals("1")){
+		if (Importer.dbReady == true){
 			backBtn.setBorderColor(Color.green);
 			backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
 			panel.add(backBtn, new Integer(2), 2);

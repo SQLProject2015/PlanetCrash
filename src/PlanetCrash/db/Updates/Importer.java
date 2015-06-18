@@ -32,7 +32,8 @@ import PlanetCrash.parsing.entities.entity_university;
 public class Importer {
 	
 	
-
+	public static boolean dbReady;
+	
 	public static final int BATCHSIZE=1000;
 	//private static List<Object[]> batch;
 	static Config conf = GameUtils.getConfig();
@@ -167,7 +168,7 @@ public class Importer {
 		UniversitiesUploader uniUploader = new UniversitiesUploader(universities_map, dbh);
 		uniUploader.upload();		
 		
-		conf.set_db_ready("1");
+		dbReady = true;
 
 		int i =0;
 		if (i == 0){

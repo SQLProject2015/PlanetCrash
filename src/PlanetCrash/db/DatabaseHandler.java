@@ -9,6 +9,7 @@ import java.util.List;
 
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
+import PlanetCrash.db.Updates.Importer;
 
 public class DatabaseHandler {
 
@@ -263,14 +264,14 @@ public class DatabaseHandler {
 				records_count = rs.getInt(1);
 			}
 			if (records_count<150000){
-				prop.set_db_ready("0");
+				Importer.dbReady = false;
 			}
 			else{
-				prop.set_db_ready("1");
+				Importer.dbReady = true;
 			}
 		}
 		catch(Exception e){
-			prop.set_db_ready("0");
+			Importer.dbReady = false;
 		}
 	}
 }
