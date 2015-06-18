@@ -41,9 +41,15 @@ public class Config {
 //	    }
 //	}
 //	
-	/** get the path of the file yago_transitive_types.tsv */
-	public String get_yago_transitive_types_path(){		
-		return configFile.getProperty("YagoTransitiveTypeFilePath");
+	
+	/** get the path of the yago files directory */
+	public String get_yago_files_directory(){
+		return configFile.getProperty("YagoFilesDirectory");
+	}
+	
+	/** get the name of the file yago_transitive_types.tsv */
+	public String get_yago_transitive_types_name(){		
+		return configFile.getProperty("YagoTransitiveTypeFileName");
 	}
 	/** set the path of the file yago_transitive_types.tsv */
 //	public void set_yago_transitive_types_path(String path){		
@@ -60,10 +66,13 @@ public class Config {
 //	    }
 //	}
 	
-	/** get the path of the file yagoFacts.tsv */
-	public String get_yago_facts_path(){
-		return configFile.getProperty("YagoFactsFilePath");
+	/** get the name of the file yagoFacts.tsv */
+	public String get_yago_facts_name(){
+		return configFile.getProperty("YagoFactsFileName");
 	}
+	
+
+	
 //	/** set the path of the file yagoFacts.tsv */
 //	public void set_yago_facts_path(String path){		
 //	    try {
@@ -79,9 +88,9 @@ public class Config {
 //	    }
 //	}
 
-	/** get the path of the file yagoLiteralFacts.tsv */
-	public String get_yago_literal_facts_path(){
-		return configFile.getProperty("YagoLiteralFactsFilePath");
+	/** get the name of the file yagoLiteralFacts.tsv */
+	public String get_yago_literal_facts_name(){
+		return configFile.getProperty("YagoLiteralFactsFileName");
 	}
 	/** set the path of the file yagoLiteralFacts.tsv */
 //	public void set_yago_literal_facts_path(String path){		
@@ -97,9 +106,9 @@ public class Config {
 //	        e.printStackTrace();
 //	    }
 //	}
-	/** get the path of the file yagoDateFacts.tsv */
-	public String get_yago_date_facts_path(){
-		return configFile.getProperty("YagoDateFactsFilePath");
+	/** get the name of the file yagoDateFacts.tsv */
+	public String get_yago_date_facts_name(){
+		return configFile.getProperty("YagoDateFactsFileName");
 	}
 //	/** set the path of the file yagoDateFacts.tsv */
 //	public void set_yago_date_facts_path(String path){		
@@ -116,8 +125,8 @@ public class Config {
 //	    }
 //	}
 	/** get the path of the file YagoWikipediaInfo.tsv */
-	public String get_yago_wikipedia_info_path(){
-		return configFile.getProperty("YagoWikipediaInfoPath");
+	public String get_yago_wikipedia_info_name(){
+		return configFile.getProperty("YagoWikipediaInfoName");
 	}
 //	/** set the path of the file YagoWikipediaInfo.tsv */
 //	public void set_yago_wikipedia_info_path(String path){		

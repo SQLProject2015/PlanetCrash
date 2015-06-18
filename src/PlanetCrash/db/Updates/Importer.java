@@ -74,33 +74,33 @@ public class Importer {
 			}
 			
 			System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
-			parser_transitive_types c = new parser_transitive_types(properties.get_yago_transitive_types_path(), countries_map,
+			parser_transitive_types c = new parser_transitive_types(properties.get_yago_files_directory()+properties.get_yago_transitive_types_name(), countries_map,
 					persons_map, cities_map, currency_set, language_set, countries_cities_map, universities_map);		
 			c.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			parsing_finished+= 6483;	    
 
 			System.out.println("parsing facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_facts d = new parser_yago_facts(properties.get_yago_facts_path(),  countries_map,  countries_cities_map, cities_map,universities_map,persons_map, lite_persons_map, awards_set);
+			parser_yago_facts d = new parser_yago_facts(properties.get_yago_files_directory()+properties.get_yago_facts_name(),  countries_map,  countries_cities_map, cities_map,universities_map,persons_map, lite_persons_map, awards_set);
 			d.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			parsing_finished+= 415;	
 			
 			System.out.println("parsing wikipedia info " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_wikipedia_info k = new parser_yago_wikipedia_info(properties.get_yago_wikipedia_info_path(),persons_map, lite_persons_map);
+			parser_yago_wikipedia_info k = new parser_yago_wikipedia_info(properties.get_yago_files_directory()+properties.get_yago_wikipedia_info_name(),persons_map, lite_persons_map);
 			k.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			parsing_finished+= 4085;	
 			
 
 			System.out.println("parsing literal facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_literal_facts g = new parser_yago_literal_facts(properties.get_yago_literal_facts_path(), countries_map);
+			parser_yago_literal_facts g = new parser_yago_literal_facts(properties.get_yago_files_directory()+properties.get_yago_literal_facts_name(), countries_map);
 			g.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			parsing_finished+= 148;
 
 			System.out.println("parsing date facts " + (System.currentTimeMillis()-start)/1000f);
-			parser_yago_date_facts f = new parser_yago_date_facts(properties.get_yago_date_facts_path(), persons_map);
+			parser_yago_date_facts f = new parser_yago_date_facts(properties.get_yago_files_directory()+properties.get_yago_date_facts_name(), persons_map);
 			f.populate();
 			System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 			parsing_finished+= 305;
