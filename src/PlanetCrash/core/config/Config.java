@@ -1,8 +1,10 @@
 package PlanetCrash.core.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
  
@@ -14,7 +16,8 @@ public class Config {
 	public Config() 
 	{
 		try {
-			configFile.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+			InputStream in = new FileInputStream("config/config.properties");
+			configFile.load(in);
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
