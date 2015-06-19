@@ -333,7 +333,7 @@ public class ReloadYago {
 				}
 //				String delete = "DELETE FROM "+dbname+"."+tableName;
 //				int deleted = dbh.executeUpdate(delete);
-				dbh.deleteTable(dbname+"."+tableName);
+				dbh.truncateTable(dbname+"."+tableName);
 				
 			}
 			rs.close();

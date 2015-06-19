@@ -207,9 +207,9 @@ public class DatabaseHandler {
 	}
 
 
-	public int deleteTable(String table) throws SQLException {
+	public int truncateTable(String table) throws SQLException {
 		Statement stmnt = conn.createStatement();
-		return stmnt.executeUpdate("DELETE FROM "+table+";");
+		return stmnt.executeUpdate("TRUNCATE "+table+";");
 	}
 
 	private void genericFormatUpdate(String command, /*String table, String[] columns,*/ Object[] values) throws SQLException {
