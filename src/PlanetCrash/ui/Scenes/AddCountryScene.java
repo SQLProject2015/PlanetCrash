@@ -236,12 +236,12 @@ public class AddCountryScene extends Scene{
 				}catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
 				}finally{
-					try {
+//					try {
 						dbh.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					} catch (SQLException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
 				break;
 			}

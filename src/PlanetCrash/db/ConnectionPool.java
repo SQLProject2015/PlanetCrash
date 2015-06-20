@@ -32,7 +32,7 @@ public class ConnectionPool {
 
 	}
 	
-	public void init() {
+	public void init() throws DatabaseException {
 		CONNPATH = String.format("jdbc:mysql://%s:%s/%s",conf.get_host_address(),conf.get_port(),conf.get_db_name());
 		USER = conf.get_user_name();
 		PASS = conf.get_password();
@@ -41,12 +41,7 @@ public class ConnectionPool {
 
 		//populate stack
 		while(cStack.size()<POOLMIN.get())
-			try {
 				cStack.push(createConnection());
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 	}
 
 	private synchronized Connection createConnection() throws DatabaseException {

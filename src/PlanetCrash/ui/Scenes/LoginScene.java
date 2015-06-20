@@ -126,12 +126,12 @@ public class LoginScene extends Scene{
 		} catch (UserException | SQLException e) {
 			JOptionPane.showMessageDialog(gameGUI.mainFrame, e.getMessage());
 		}
-		try {
+//		try {
 			dbh.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return user;
 	}

@@ -130,12 +130,12 @@ public class DifficultySelectScene extends Scene{
 						game.setQuestions(qg.getPossibleQuestions());
 						game.setPlanetName(GameUtils.funkName(game.getCountry()));
 
-						try {
+//						try {
 							dbh.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						} catch (SQLException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					}
 				}
 			}).start();

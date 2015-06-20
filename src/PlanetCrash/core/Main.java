@@ -17,10 +17,10 @@ public class Main {
 		
 		mConnPool = new ConnectionPool();
 		//Init connection pool
-		mConnPool.init();
-
-		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
-		dbh.set_db_state();
+//		mConnPool.init();
+//
+//		DatabaseHandler dbh = new DatabaseHandler(mConnPool);
+//		dbh.set_db_state();
 
 		
 		

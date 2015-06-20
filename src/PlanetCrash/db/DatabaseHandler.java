@@ -228,7 +228,7 @@ public class DatabaseHandler {
 
 
 
-	public void close() throws SQLException {
+	public void close() {
 		this.cPool.disposeConnection(conn);
 	}
 	

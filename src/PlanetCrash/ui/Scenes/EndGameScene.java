@@ -56,12 +56,12 @@ public class EndGameScene extends Scene{
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					try {
+//					try {
 						dbh.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					} catch (SQLException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 					
 				}
 			}).start();

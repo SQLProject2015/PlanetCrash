@@ -3,24 +3,26 @@ package PlanetCrash.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.text.Highlighter.Highlight;
 
 import PlanetCrash.core.Game.Game;
-import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
+import PlanetCrash.db.DatabaseException;
+import PlanetCrash.db.DatabaseHandler;
 import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.ui.Objects.Effects.Fader;
-import PlanetCrash.ui.Scenes.HallOfFameScene;
 import PlanetCrash.ui.Scenes.LoadFromYagoScene;
 import PlanetCrash.ui.Scenes.LoginScene;
 import PlanetCrash.ui.Scenes.Scene;
+import PlanetCrash.ui.Scenes.WaitingScene;
 
 public class GameGUI {
 
@@ -59,22 +61,7 @@ public class GameGUI {
 		
 		Config config = new Config();
 		
-		
-//		HallOfFameScene mms = new HallOfFameScene(this,game);//MainMenuScene();
-//		switchScene(mms);	
-		
-		if (Importer.dbReady == false){
-			LoadFromYagoScene mms = new LoadFromYagoScene(this,game);//MainMenuScene();
-			switchScene(mms);	
-		}
-		else{
-			//Show main screen
-			LoginScene mms = new LoginScene(this,game);//MainMenuScene();
-			switchScene(mms);		
-		}	
-		//        mainFrame.setContentPane(mms.create());
-
-//		fadeSwitchScene(mms);
+		switchScene(createConnectionScene());
 
 		mainFrame.pack();
 
@@ -139,6 +126,48 @@ public class GameGUI {
 		
 		t1.setRepeats(false);
 		t1.start();
+	}
+	
+	public WaitingScene createConnectionScene() {
+		final GameGUI gameGUI = this;
+		
+		Runnable waitConnection = new Runnable() {
+
+			@Override
+			public void run() {
+				final Timer timer = new Timer(0, new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (Importer.dbReady == false){
+							LoadFromYagoScene mms = new LoadFromYagoScene(gameGUI,game);//MainMenuScene();
+							fadeSwitchScene(mms);	
+						}
+						else{
+							//Show main screen
+							LoginScene mms = new LoginScene(gameGUI,game);//MainMenuScene();
+							fadeSwitchScene(mms);		
+						}	
+					}
+				});
+				
+				//Initialize connection pool and db state
+				try {
+					mConnPool.init();
+					DatabaseHandler dbh = new DatabaseHandler(mConnPool);
+					dbh.set_db_state();
+					dbh.close();
+				} catch (DatabaseException e1) {
+					JOptionPane.showMessageDialog(gameGUI.mainFrame, e1.getMessage());
+				}
+				
+				timer.setRepeats(false);
+				timer.start();
+			}
+			
+		};
+		
+		return new WaitingScene(gameGUI, game, waitConnection, "Connecting to database...");
 	}
 	
 	public void quit() {

@@ -238,12 +238,12 @@ public class EditCountryScene extends Scene{
 				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
 			}
 			
-			try {
+//			try {
 				dbh.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 //			if(usernameField==null||passwordField==null)
 //				return;
 //			User user = confirmUser(usernameField.getText(), passwordField.getText());
@@ -313,12 +313,12 @@ public class EditCountryScene extends Scene{
 				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
 			}
 
-			try {
+//			try {
 				dbh.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 
 		}
