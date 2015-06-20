@@ -109,7 +109,7 @@ public class StarSpawner extends JPanel implements Runnable{
 			this.repaint();
 
 			try {
-				Thread.sleep(sleep);
+				Thread.sleep(sleep>0?sleep:2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
