@@ -348,7 +348,7 @@ public class ReloadYago {
 			e.printStackTrace();
 		}
 	}
-	private static void deleteAllData(String dbname){
+	public static void deleteAllData(String dbname){
 		String tablesQuery = "SHOW TABLES FROM "+dbname+";";
 		try {
 			ResultSet rs = dbh.executeQuery(tablesQuery);

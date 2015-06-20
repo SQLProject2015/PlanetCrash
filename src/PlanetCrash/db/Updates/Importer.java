@@ -113,6 +113,7 @@ public class Importer {
 		System.out.println("inserting currency " + (System.currentTimeMillis()-start)/1000f);
 		CurrenciesUploader currencyUploader = new CurrenciesUploader(currency_set, dbh);
 		currencyUploader.upload();
+		currency_set = new HashSet<String>();
 		HashMap<String, Integer> currency_id_name_map = get_currency_id_name_map();
 		
 
@@ -122,12 +123,15 @@ public class Importer {
 		System.out.println("inserting languags " + (System.currentTimeMillis()-start)/1000f);
 		LanguagesUploader languageUploader = new LanguagesUploader(language_set, dbh);
 		languageUploader.upload();
+		language_set = new HashSet<String>();
 		HashMap<String, Integer> language_id_name_map = get_language_id_name_map();
 		
 		//COUNTRIES
 		System.out.println("inserting countries " + (System.currentTimeMillis()-start)/1000f);
 		CountriesUploader countriesUploader = new CountriesUploader(countries_map, language_id_name_map, currency_id_name_map, dbh);
 		countriesUploader.upload();
+		currency_id_name_map = new HashMap<String, Integer>();
+		language_id_name_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> country_id_name_map = get_country_id_name_map();
 		
 			
@@ -135,6 +139,7 @@ public class Importer {
 		System.out.println("inserting cities " + (System.currentTimeMillis()-start)/1000f);
 		CitiesUploader citiesUploader = new CitiesUploader(cities_map, country_id_name_map, dbh);
 		citiesUploader.upload();
+		cities_map = new HashMap<String, entity_city>();
 		HashMap<String, Integer> city_id_name_map =  get_city_id_name_map();
 	
 
@@ -142,6 +147,8 @@ public class Importer {
 		System.out.println("inserting capitals " + (System.currentTimeMillis()-start)/1000f);
 		CapitalsUploader capitalsUploader = new CapitalsUploader(countries_map, country_id_name_map, city_id_name_map, dbh);
 		capitalsUploader.upload();
+		country_id_name_map = new HashMap<String, Integer>();
+		countries_map = new HashMap<String,entity_country>();
 		
 		
 		//PERSONS
