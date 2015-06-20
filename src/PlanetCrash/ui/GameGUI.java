@@ -3,11 +3,10 @@ package PlanetCrash.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -128,6 +127,10 @@ public class GameGUI {
 		t1.start();
 	}
 	
+	/**
+	 * 
+	 * @return A Scene that initialized the database and connection pool.
+	 */
 	public WaitingScene createConnectionScene() {
 		final GameGUI gameGUI = this;
 		
@@ -158,7 +161,11 @@ public class GameGUI {
 					dbh.set_db_state();
 					dbh.close();
 				} catch (DatabaseException e1) {
-					JOptionPane.showMessageDialog(gameGUI.mainFrame, e1.getMessage());
+					//JOptionPane.showMessageDialog(gameGUI.mainFrame, e1.getMessage());
+					final JDialog dialog = new JDialog(mainFrame,e1.getMessage(),true);
+					dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+					dialog.pack();
+					dialog.setVisible(true);
 				}
 				
 				timer.setRepeats(false);
