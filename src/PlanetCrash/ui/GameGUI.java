@@ -4,9 +4,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -57,8 +57,6 @@ public class GameGUI {
 		mainFrame = new JFrame("Planet Crash");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
-		
-		Config config = new Config();
 		
 		switchScene(createConnectionScene());
 
@@ -161,11 +159,8 @@ public class GameGUI {
 					dbh.set_db_state();
 					dbh.close();
 				} catch (DatabaseException e1) {
-					//JOptionPane.showMessageDialog(gameGUI.mainFrame, e1.getMessage());
-					final JDialog dialog = new JDialog(mainFrame,e1.getMessage(),true);
-					dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-					dialog.pack();
-					dialog.setVisible(true);
+					JOptionPane.showMessageDialog(gameGUI.mainFrame, e1.getMessage());
+					gameGUI.quit();
 				}
 				
 				timer.setRepeats(false);
