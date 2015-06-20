@@ -155,8 +155,6 @@ public class LoadFromYagoScene extends Scene{
 						if (isFirstLoad){
 							try{
 								Importer i = new Importer(dbh, config);
-								i.parsing_finished = 0;
-								i.uploading_finished = 0;
 							} catch (FileNotFoundException | SQLException e) {
 								try {
 									EventQueue.invokeAndWait(new Runnable() {
@@ -189,7 +187,8 @@ public class LoadFromYagoScene extends Scene{
 						}
 	
 						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Database loaded successfully!");
-						
+						Importer.parsing_finished = 0;
+						Importer.uploading_finished = 0;
 						if (isFirstLoad){
 							LoginScene mms = new LoginScene(gameGUI,game);		
 							gameGUI.fadeSwitchScene(mms);
