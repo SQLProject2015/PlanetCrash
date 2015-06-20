@@ -125,6 +125,7 @@ public class DifficultySelectScene extends Scene{
 						qg = GameUtils.generateCountry(game.getUser().getId(), cfg.get_db_name(), dbh, game.getDifficulty());
 						if (qg==null)
 							continue;
+						game.setCountryId(qg.getCountryId());
 						game.setCountry(qg.getCountry());
 						game.setQuestions(qg.getPossibleQuestions());
 						game.setPlanetName(GameUtils.funkName(game.getCountry()));

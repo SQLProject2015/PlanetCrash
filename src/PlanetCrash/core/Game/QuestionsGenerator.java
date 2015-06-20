@@ -574,4 +574,8 @@ public class QuestionsGenerator {
 	public String getCountry() {
 		return countryName;
 	}
+	
+	public int getCountryId() {
+		return countryId;
+	}
 }

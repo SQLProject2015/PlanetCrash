@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
@@ -21,12 +22,15 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import PlanetCrash.core.Game.Game;
+import PlanetCrash.db.DatabaseHandler;
 import PlanetCrash.ui.GameGUI;
 import PlanetCrash.ui.Objects.JImage;
 import PlanetCrash.ui.Objects.JRoundedButton;
 
 public class EndGameScene extends Scene{
 
+	
+	
 	private String[] goodNews = {"you make a nice stew.", "you go well with bread.", "being eaten alive kinda tickles.",
 									"at least you're not a disgusting alien.", "you will get a hot bath in a cauldron."};
 	
@@ -38,6 +42,31 @@ public class EndGameScene extends Scene{
 	@Override
 	public Component create() {
 		boolean victory = game.getLives()>=0 && game.getCurrentQuestion()>=game.getDifficulty()-1;
+		
+		if (victory) { //Update country victory in db
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
+					try {
+						dbh.singleInsert("user_country_completed",
+								new String[]{"idUser","idCountry","isManual","Level"},
+								new Object[]{game.getUser().getId(), game.getCountryId(), 0, game.getDifficulty()});
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					try {
+						dbh.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			}).start();
+		}
+		
 
 		JLayeredPane panel = new JLayeredPane();
 		panel.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
