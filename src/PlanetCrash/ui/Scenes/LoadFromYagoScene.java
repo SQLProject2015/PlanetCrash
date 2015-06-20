@@ -162,6 +162,7 @@ public class LoadFromYagoScene extends Scene{
 										@Override
 										public void run() {
 											JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
+											
 										}
 										
 									});
@@ -169,6 +170,7 @@ public class LoadFromYagoScene extends Scene{
 										| InterruptedException e1) {
 									e1.printStackTrace();
 								}
+								gameGUI.quit();
 								
 							}
 						}
@@ -177,7 +179,10 @@ public class LoadFromYagoScene extends Scene{
 								ReloadYago.updateFromYago(gameGUI.mConnPool, config);
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
-								e.printStackTrace();
+								JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
+								MainMenuScene mms = new MainMenuScene(gameGUI,game);		
+								gameGUI.fadeSwitchScene(mms);
+								return;
 							}
 						}
 	
