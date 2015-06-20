@@ -25,17 +25,21 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	@Override
 	public YagoEntry next() {
 		YagoEntry ret = null;
+		String line ="";
 		try {
 			ret = this.next;
-			String line = br.readLine();
+			line = br.readLine();
 			if (line!=null) {
 				String[] split = line.split("\\s+"); //split by whitespaces
+				if (split.length != 4){
+					return null;					
+				}
 				this.next = new YagoEntry(split[0],split[1],split[2],split[3]);
 			} else {
 				this.next = null;
 			}
 		} catch (IOException e) {
-			e.printStackTrace(); //TODO: maybe handle differently?
+			System.out.println("Could not parse line: "+line);
 		}
 		return ret;
 	}

@@ -176,7 +176,7 @@ public class LoadFromYagoScene extends Scene{
 						}
 						else{
 							try {
-								ReloadYago.updateFromYago(gameGUI.mConnPool, config);
+								ReloadYago.updateFromYago(gameGUI.mConnPool, config);							
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
 								JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");
@@ -187,7 +187,8 @@ public class LoadFromYagoScene extends Scene{
 						}
 	
 						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Database loaded successfully!");
-						
+						Importer.parsing_finished = 0;
+						Importer.uploading_finished = 0;
 						if (isFirstLoad){
 							LoginScene mms = new LoginScene(gameGUI,game);		
 							gameGUI.fadeSwitchScene(mms);

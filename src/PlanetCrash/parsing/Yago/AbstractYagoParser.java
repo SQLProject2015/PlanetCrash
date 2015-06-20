@@ -42,6 +42,9 @@ public abstract class AbstractYagoParser implements Runnable {
 		
 		while(lexer.hasNext()) {
 			YagoEntry next = lexer.next();
+			if (next == null){
+				continue;
+			}
 			if(next.lentity.length()>VARCHAR_LIMIT || next.rentity.length()>VARCHAR_LIMIT)
 				continue;
 			if(parse(next)&&okayflag&&!litemode&&bw!=null) {
