@@ -33,7 +33,7 @@ public class GameGUI {
 	public static final String ASSETS = "assets/";
 	
 	
-	public ConnectionPool mConnPool;
+	public static ConnectionPool mConnPool;
 
 	protected Game game;
 
