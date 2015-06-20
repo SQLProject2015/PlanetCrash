@@ -27,7 +27,7 @@ public class ReloadYago {
 	public static void updateFromYago(ConnectionPool pool,Config conf) throws FileNotFoundException{
 		dbh =new DatabaseHandler(pool);
 		backupManualUpdates(conf.get_db_name());
-		deleteAllData(conf.get_db_name());
+		deleteAllData(conf.get_db_name(), dbh);
 		try {
 			Importer i = new Importer(dbh,conf);
 		} catch (SQLException e) {
@@ -348,7 +348,8 @@ public class ReloadYago {
 			e.printStackTrace();
 		}
 	}
-	public static void deleteAllData(String dbname){
+	public static void deleteAllData(String dbname, DatabaseHandler dbh){
+		
 		String tablesQuery = "SHOW TABLES FROM "+dbname+";";
 		try {
 			ResultSet rs = dbh.executeQuery(tablesQuery);

@@ -154,7 +154,7 @@ public class LoadFromYagoScene extends Scene{
 					public void run(){
 						if (isFirstLoad){
 							try{
-								ReloadYago.deleteAllData(config.get_db_name());
+								ReloadYago.deleteAllData(config.get_db_name(), dbh);
 								Importer i = new Importer(dbh, config);
 							} catch (FileNotFoundException | SQLException e) {
 								try {
