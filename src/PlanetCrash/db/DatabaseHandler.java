@@ -208,8 +208,10 @@ public class DatabaseHandler {
 
 
 	public int truncateTable(String table) throws SQLException {
-		Statement stmnt = conn.createStatement();
-		return stmnt.executeUpdate("SET FOREIGN_KEY_CHECKS = 0;truncate "+table+";SET FOREIGN_KEY_CHECKS = 1;");
+		conn.createStatement().executeUpdate("SET FOREIGN_KEY_CHECKS = 0;");
+		conn.createStatement().executeUpdate("truncate "+table+";");
+		conn.createStatement().executeUpdate("SET FOREIGN_KEY_CHECKS = 1;");
+		return 0;
 	}
 
 	private void genericFormatUpdate(String command, /*String table, String[] columns,*/ Object[] values) throws SQLException {
