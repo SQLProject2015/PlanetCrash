@@ -83,7 +83,7 @@ public class PersonProfessionUploader extends AbstractUploader{
 				
 				try {
 					//idProfession
-					rs2=dbh.executeFormatQuery("Profession", new String[]{"idProfession"}, "WHERE Name =\""+profession+"\"");
+					rs2=dbh.executeFormatQuery("Profession", new String[]{"idProfession"}, new String[]{"Name"}, new Object[]{profession});//"WHERE Name =\""+profession+"\"");
 					if(rs2.first())
 						values[1]=rs2.getInt(1);
 

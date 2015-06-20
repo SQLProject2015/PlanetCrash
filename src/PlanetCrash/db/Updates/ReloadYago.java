@@ -206,7 +206,7 @@ public class ReloadYago {
 		ResultSet rs;
 		int retId = 0;
 		try {
-			rs=dbh.executeFormatQuery(tableName, new String[]{column}, "WHERE Name = \""+valueToSearch+"\"");
+			rs=dbh.executeFormatQuery(tableName, new String[]{column}, new String[]{"Name"}, new Object[]{valueToSearch});//"WHERE Name = \""+valueToSearch+"\"");
 			if(rs.first()){
 				retId = rs.getInt(1);
 			}
@@ -222,7 +222,7 @@ public class ReloadYago {
 		ResultSet rs;
 		String retString = "";
 		try {
-			rs=dbh.executeFormatQuery(tableName, new String[]{column}, "WHERE id"+tableName+" ='"+valueToSearch+"'");
+			rs=dbh.executeFormatQuery(tableName, new String[]{column}, new String[]{"id"+tableName}, new Object[]{valueToSearch});//"WHERE id"+tableName+" ='"+valueToSearch+"'");
 			if(rs.first()){
 				retString = rs.getString(1);
 			}

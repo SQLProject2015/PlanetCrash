@@ -54,15 +54,13 @@ public class DatabaseHandler {
 		return rs;
 	}
 
-	/**
-	 * 
-	 * @param table table name to search
-	 * @param columns column names to search (or empty to search all)
-	 * @param condition condition to search (e.g "WHERE NAME = \"JOHN\"") (or null/empty for nothing)
-	 * @return result set for your query
-	 * @throws SQLException 
-	 */
-	public ResultSet executeFormatQuery(String table, String[] columns, String condition) throws SQLException {
+	
+	public ResultSet executeFormatQuery(String table, String[] columns, String[] whereCols, Object[] whereValues) throws SQLException {
+		if(whereCols!=null&&whereValues!=null&&whereCols.length!=whereValues.length) {
+			System.out.println("Mismatching columns-values");
+			return null;
+		}
+		
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT ");
 		if(columns.length==0 || columns==null)
@@ -73,22 +71,17 @@ public class DatabaseHandler {
 				sql.append(columns[i]+(i<columns.length-1?",":""));
 			sql.append(")");
 		}
+		sql.append("FROM "+table);
+		
+		if(whereCols!=null&&whereValues!=null) {
+			sql.append(" WHERE");
+			for(int i=0;i<whereCols.length;i++)
+				sql.append(" " + whereCols[i]+"=?"+(i<whereCols.length-1?" AND":""));
+		}
+		sql.append(";");
 
-		sql.append("FROM "+table+(condition==null?"":" "+condition)+";");
-
-		return executeQuery(sql.toString());
+		return genericFormatQuery(sql.toString(), whereValues);
 	}
-
-	/**
-	 * 
-	 * @param update
-	 * @return number of rows affected by update
-	 * @throws SQLException
-	 */
-	//		public int executeUpdate(String update) throws SQLException {
-	//			Statement stmnt = conn.createStatement();
-	//			return stmnt.executeUpdate(update);
-	//		}
 
 	/**
 	 * 
@@ -214,6 +207,19 @@ public class DatabaseHandler {
 		return 0;
 	}
 
+	private ResultSet genericFormatQuery(String command, Object[] values) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement(command);
+		for (int i=0; i<values.length;i++)
+			if(values[i]==null)
+				ps.setNull(i+1, java.sql.Types.NULL);
+			else if(values[i] instanceof String)
+				ps.setString(i+1, (String)values[i]);
+			else if(values[i] instanceof Integer)
+				ps.setInt(i+1, (Integer)values[i]);
+		ResultSet rs = ps.executeQuery();
+		return rs;
+	}
+	
 	private void genericFormatUpdate(String command, /*String table, String[] columns,*/ Object[] values) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement(command);
 		for (int i=0; i<values.length;i++)
@@ -224,6 +230,7 @@ public class DatabaseHandler {
 			else if(values[i] instanceof Integer)
 				ps.setInt(i+1, (Integer)values[i]);
 		ps.executeUpdate();
+		ps.close();
 	}
 
 
@@ -246,6 +253,7 @@ public class DatabaseHandler {
 			else{
 				Importer.dbReady = true;
 			}
+			rs.close();
 		}
 		catch(Exception e){
 			Importer.dbReady = false;

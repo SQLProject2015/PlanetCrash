@@ -48,7 +48,7 @@ public class CountriesCitiesUploader extends AbstractUploader{
 	        
 	        try{
 				//idCountry
-				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, "WHERE Name = \""+country+"\"");
+				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, new String[]{"Name"},new Object[]{country});// "WHERE Name = \""+country+"\"");
 				if(rs.first())
 					values[0] = rs.getInt(1);
 	        }catch(SQLException e) {
@@ -64,7 +64,7 @@ public class CountriesCitiesUploader extends AbstractUploader{
 				
 				try {
 					//idCity
-					rs2=dbh.executeFormatQuery("City", new String[]{"idCity"}, "WHERE Name =\""+city+"\"");
+					rs2=dbh.executeFormatQuery("City", new String[]{"idCity"}, new String[]{"Name"}, new Object[]{city});//"WHERE Name =\""+city+"\"");
 					if(rs2.first())
 						values[1]=rs2.getInt(1);
 

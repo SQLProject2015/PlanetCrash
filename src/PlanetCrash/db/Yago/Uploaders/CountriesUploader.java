@@ -50,7 +50,7 @@ public class CountriesUploader extends AbstractUploader{
 				values[0] = country.getYagoName();
 
 				//idContinent
-				rs=dbh.executeFormatQuery("Continent", new String[]{"idContinent"}, "WHERE Name = \""+country.getContinent()+"\"");
+				rs=dbh.executeFormatQuery("Continent", new String[]{"idContinent"},new String[]{"Name"}, new Object[]{country.getContinent()});// "WHERE Name = \""+country.getContinent()+"\"");
 				if(rs.first())
 					values[1] = rs.getInt(1);
 

@@ -82,9 +82,9 @@ public class GameUtils {
 	public static LinkedHashMap<String,Integer> getHighScores(ConnectionPool conn, Config config){
 		HashMap<String,Integer> highScores = new HashMap<String,Integer>();
 		String dbName = config.get_db_name();
-		String highScoreQuery = "SELECT users.Username, b.Score from "+dbName+
-				".users, (SELECT user_country_completed.idUser, sum(user_country_completed.Level) as Score FROM "+
-				dbName+".user_country_completed group by idUser) as b WHERE users.idUser=b.idUser"+""
+		String highScoreQuery = "SELECT Users.Username, b.Score from "+dbName+
+				".Users, (SELECT user_country_completed.idUser, sum(user_country_completed.Level) as Score FROM "+
+				dbName+".user_country_completed group by idUser) as b WHERE Users.idUser=b.idUser"+""
 						+ " ORDER BY b.Score DESC LIMIT 5;";
 		DatabaseHandler dbh = new DatabaseHandler(conn);
 		try {

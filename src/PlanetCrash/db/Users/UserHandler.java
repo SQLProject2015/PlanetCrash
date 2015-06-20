@@ -9,7 +9,7 @@ public class UserHandler {
 	
 	public static User validate_user(String username, String password, DatabaseHandler dbh) throws SQLException, UserException{
 		ResultSet rs;
-		rs=dbh.executeFormatQuery("Users", new String[]{"idUser"}, "WHERE Username = \""+username+"\" AND Password = \""+password+"\"");
+		rs=dbh.executeFormatQuery("Users", new String[]{"idUser"},new String[]{"Username", "Password"}, new Object[]{username,password});//"WHERE Username = \""+username+"\" AND Password = \""+password+"\"");
 		if(rs.first()) {
 			User user = new User(rs.getInt(1),username);
 			return user;
@@ -21,7 +21,7 @@ public class UserHandler {
 	public static User add_new_user(String username, String password, DatabaseHandler dbh) throws SQLException, UserException{
 		ResultSet rs;
 
-		rs=dbh.executeFormatQuery("Users", new String[]{"idUser"}, "WHERE Username = \""+username+"\"");
+		rs=dbh.executeFormatQuery("Users", new String[]{"idUser"}, new String[]{"Username"},new Object[]{username});//"WHERE Username = \""+username+"\"");
 		if(rs.first()){
 			throw new UserException("User already exists!");
 		}

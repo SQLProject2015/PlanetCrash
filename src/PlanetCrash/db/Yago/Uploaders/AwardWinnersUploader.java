@@ -83,7 +83,7 @@ public class AwardWinnersUploader extends AbstractUploader{
 				
 				try {
 					//idProfession
-					rs2=dbh.executeFormatQuery("Award", new String[]{"idAward"}, "WHERE Name =\""+award+"\"");
+					rs2=dbh.executeFormatQuery("Award", new String[]{"idAward"},new String[]{"Name"}, new Object[]{award});// "WHERE Name =\""+award+"\"");
 					if(rs2.first())
 						values[0]=rs2.getInt(1);
 
