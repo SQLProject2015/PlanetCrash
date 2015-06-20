@@ -18,6 +18,7 @@ public class ReloadYago {
 	private static HashMap<String, entity_country> countries_map_bck = new HashMap<String, entity_country>();
 	private static HashMap<String, entity_city> cities_map_bck = new HashMap<String, entity_city>();
 	private static HashMap<String, entity_person> persons_map_bck = new HashMap<String, entity_person>();
+	private static HashMap<Integer, String> scores_bck = new HashMap<Integer, String>();
 	private static HashSet<String> currency_set_bck = new HashSet<String>();
 	private static HashSet<String> language_set_bck = new HashSet<String>();
 	private static HashSet<String> continent_set_bck = new HashSet<String>();
@@ -190,6 +191,19 @@ public class ReloadYago {
 				e.printStackTrace();
 			}
 		}
+		//insert scores
+		for(Integer idUser:scores_bck.keySet()){
+			try {
+				dbh.singleUpdate(dbname+".user_country_completed",
+						new String[]{"idCountry"},
+						new Object[]{getIdFromDB("Country","idCountry",scores_bck.get(idUser))},
+						new String[]{"idUser"},
+						new Object[]{idUser});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	private static int getIdFromDB(String tableName, String column, String valueToSearch) {
@@ -316,6 +330,19 @@ public class ReloadYago {
 			while(rs.next()){				
 				String currencyName = rs.getString("Name");
 				currency_set_bck.add(currencyName);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*backup scores*/
+		String scoreQuery = "SELECT user_country_completed.idUser, user_country_completed.idCountry FROM "+dbname+".user_country_completed";
+		try {
+			ResultSet rs = dbh.executeQuery(scoreQuery);
+			while(rs.next()){
+				Integer userId = rs.getInt("idUser");
+				Integer countryId = rs.getInt("idCountry");
+				scores_bck.put(userId, getNameFromDB("Country", "Name", countryId));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
