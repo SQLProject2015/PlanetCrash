@@ -13,7 +13,7 @@ public class Game {
 	Color backdrop,land;
 	String country;
 	List<Question> questions=null;
-	int currentQuestion;
+	int currentQuestion,countryId;
 	String planet;
 
 	File soldier;
@@ -116,5 +116,13 @@ public class Game {
 	
 	public void advanceQuestion() {
 		currentQuestion++;
+	}
+	
+	public void setCountryId(int id) {
+		countryId=id;
+	}
+	
+	public int getCountryId() {
+		return countryId;
 	}
 }
