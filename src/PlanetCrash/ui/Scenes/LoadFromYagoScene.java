@@ -155,6 +155,8 @@ public class LoadFromYagoScene extends Scene{
 						if (isFirstLoad){
 							try{
 								Importer i = new Importer(dbh, config);
+								i.parsing_finished = 0;
+								i.uploading_finished = 0;
 							} catch (FileNotFoundException | SQLException e) {
 								try {
 									EventQueue.invokeAndWait(new Runnable() {
@@ -176,7 +178,7 @@ public class LoadFromYagoScene extends Scene{
 						}
 						else{
 							try {
-								ReloadYago.updateFromYago(gameGUI.mConnPool, config);
+								ReloadYago.updateFromYago(gameGUI.mConnPool, config);							
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
 								JOptionPane.showMessageDialog(gameGUI.mainFrame, "Can't find Yago Files!");

@@ -30,6 +30,8 @@ public class ReloadYago {
 		deleteAllData(conf.get_db_name());
 		try {
 			Importer i = new Importer(dbh,conf);
+			i.parsing_finished = 0;
+			i.uploading_finished = 0;
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
