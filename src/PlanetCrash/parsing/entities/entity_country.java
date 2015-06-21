@@ -9,7 +9,6 @@ public class entity_country {
 	private String language;
 	private String capital; 
 	private int population_size; 
-	private String leader;
 	
 	public entity_country(){
 		
@@ -23,7 +22,6 @@ public class entity_country {
 		this.language = language;
 		this.capital = capital;
 		this.population_size = population_size;
-		this.leader = leader;
 	}
 	public entity_country(String yago_name,String continent,String currency,String language,String capital,int population_size){
 		this.yago_name = yago_name;
@@ -69,12 +67,6 @@ public class entity_country {
 	}
 	public void setPopulation_size(int population_size) {
 		this.population_size = population_size;
-	}
-	public String getLeader() {
-		return leader;
-	}
-	public void setLeader(String leader) {
-		this.leader = leader;
 	}
 	public String getLabel() {
 		return label;

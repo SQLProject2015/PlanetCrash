@@ -76,16 +76,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 				flag=true;
 			}
 		}
-
-		
-		country = countries_map.get(clean_rentity);
-		if(country != null){
-			if (toParse.relation.equals(properties.get_yago_tag_leader())){
-				country.setLeader(clean_lentity);
-				flag=true;
-			}
-		}
-		
+	
 				
 		entity_city city = cities_map.get(clean_lentity);
 		if (city!=null){
