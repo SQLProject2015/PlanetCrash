@@ -12,7 +12,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import PlanetCrash.core.Game.Game;
-import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
 import PlanetCrash.db.DatabaseException;
 import PlanetCrash.db.DatabaseHandler;

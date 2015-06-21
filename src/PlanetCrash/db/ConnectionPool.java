@@ -53,7 +53,7 @@ public class ConnectionPool {
 		} catch (ClassNotFoundException e) {
 			throw new DatabaseException("Unable to load the MySQL JDBC driver..\n"+e.getMessage());
 		}
-		System.out.println("Driver loaded successfully");
+		//System.out.println("Driver loaded successfully");
 
 		// creating the connection
 		System.out.print("Trying to connect... ");

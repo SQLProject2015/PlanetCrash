@@ -189,5 +189,7 @@ public class Config {
 	public int get_files_size(){
 		return Integer.parseInt(configFile.getProperty("TOTAL_FILES_SIZE"));
 	}
-	
+	public int get_high_graphics() {
+		return Integer.parseInt(configFile.getProperty("highGraphics"));
+	}
 }
