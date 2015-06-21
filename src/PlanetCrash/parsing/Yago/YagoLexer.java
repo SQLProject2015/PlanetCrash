@@ -14,7 +14,9 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	private BufferedReader br;
 
 	public YagoLexer(String filepath) throws FileNotFoundException {
-		this.br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filepath))));
+		FileInputStream fstream = new FileInputStream(filepath);
+		this.br = new BufferedReader(new InputStreamReader(fstream));
+		//this.br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filepath))));
 		next();
 	}
 
