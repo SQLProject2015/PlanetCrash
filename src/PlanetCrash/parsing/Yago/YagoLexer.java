@@ -1,6 +1,10 @@
 package PlanetCrash.parsing.Yago;
 
 import java.io.BufferedReader;
+<<<<<<< HEAD
+=======
+import java.io.File;
+>>>>>>> parent of 7bcdd4d... lexer
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,6 +20,7 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	private TsvParser parser;
 
 	public YagoLexer(String filepath) throws FileNotFoundException {
+<<<<<<< HEAD
 		//		try {
 		//			this.br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath),"UTF-8"));
 		//		} catch (UnsupportedEncodingException e) {
@@ -26,6 +31,9 @@ public class YagoLexer implements Iterator<YagoEntry> {
 		settings.getFormat().setLineSeparator(System.lineSeparator());
 		parser = new TsvParser(settings);
 		parser.beginParsing(new FileReader(filepath));
+=======
+		this.br = new BufferedReader(new FileReader(new File(filepath)));
+>>>>>>> parent of 7bcdd4d... lexer
 		next();
 	}
 
