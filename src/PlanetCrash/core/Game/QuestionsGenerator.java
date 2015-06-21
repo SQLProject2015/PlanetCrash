@@ -129,8 +129,8 @@ public class QuestionsGenerator {
 				q.setCorrectAnswer(new Answer(new Integer(currYear-year).toString()));
 				q.addPossibleAnswers(new Answer(new Integer(currYear-year).toString()));
 				q.addPossibleAnswers(new Answer(new Integer(currYear-year+r.nextInt(10)+1).toString()));
-				q.addPossibleAnswers(new Answer(new Integer((currYear-year)-r.nextInt(10)+1).toString()));
-				q.addPossibleAnswers(new Answer(new Integer(((currYear-year)+30)/(1+r.nextInt(3))).toString()));
+				q.addPossibleAnswers(new Answer(new Integer((currYear-year)-r.nextInt(10)-1).toString()));
+				q.addPossibleAnswers(new Answer(new Integer(((currYear-year)+30)/(2+r.nextInt(2))).toString()));
 				this.possibleQuestions.add(q);
 			}
 
@@ -198,8 +198,8 @@ public class QuestionsGenerator {
 					return;
 				q.setCorrectAnswer(new Answer(populationSize.toString()));
 				q.addPossibleAnswers(new Answer(populationSize.toString()));
-				q.addPossibleAnswers(new Answer(((Integer)(populationSize/(r.nextInt(4)+1))).toString()));
-				q.addPossibleAnswers(new Answer(((Integer)(populationSize*(r.nextInt(4)+1))).toString()));
+				q.addPossibleAnswers(new Answer(((Integer)(populationSize/(r.nextInt(3)+2))).toString()));
+				q.addPossibleAnswers(new Answer(((Integer)(populationSize*(r.nextInt(3)+2))).toString()));
 				q.addPossibleAnswers(new Answer(((Integer)(populationSize/6)).toString()));
 				q.setQuestionAsReady();
 				possibleQuestions.add(q);
