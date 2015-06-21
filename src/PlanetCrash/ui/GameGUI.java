@@ -16,7 +16,7 @@ import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
 import PlanetCrash.db.DatabaseException;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
+import PlanetCrash.db.Yago.Uploaders.Importer;
 import PlanetCrash.ui.Objects.Effects.Fader;
 import PlanetCrash.ui.Scenes.LoadFromYagoScene;
 import PlanetCrash.ui.Scenes.LoginScene;
@@ -28,7 +28,6 @@ public class GameGUI {
 	public static final int WINDOW_WIDTH=800;
 	public static final int WINDOW_HEIGHT=600;
 
-	//public static final String ASSETS = System.getProperty("user.dir")+"\\assets\\";
 	public static final String ASSETS = "assets/";
 	
 	

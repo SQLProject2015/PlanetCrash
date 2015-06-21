@@ -11,7 +11,6 @@ import java.util.Map;
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_university;
 
 public class UniversitiesUploader extends AbstractUploader{
@@ -59,7 +58,6 @@ public class UniversitiesUploader extends AbstractUploader{
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
 				c+=BATCHSIZE;
-				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
 			Importer.uploading_finished++;

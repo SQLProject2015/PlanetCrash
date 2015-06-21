@@ -91,18 +91,6 @@ public class parser_transitive_types extends AbstractYagoParser{
 			entity_city new_city = new entity_city(clean_lentity);
 			cities_map.put(clean_lentity, new_city);
 
-
-//			if (cities_map.size() >= 5000){
-//				new Thread(new Runnable() {
-//					@Override
-//					public void run() {
-//						DatabaseHandler dbh = new DatabaseHandler(GameGUI.mConnPool);
-//						CitiesUploader cu = new CitiesUploader(cities_map, null, dbh);
-//						dbh.close();
-//					}
-//				}).start();
-//				cities_map = new HashMap<String, entity_city>();
-//			}
 			return true;
 		}
 		else if(toParse.rentity.equals(properties.get_yago_tag_university())){

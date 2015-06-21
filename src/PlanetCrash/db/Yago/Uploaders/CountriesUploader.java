@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_country;
 
 public class CountriesUploader extends AbstractUploader{
@@ -56,29 +55,10 @@ public class CountriesUploader extends AbstractUploader{
 
 				values[2] = currency_id_name_map.get(country.getCurrency());
 				values[3] = language_id_name_map.get(country.getLanguage());
-				
-//				//idCurrency
-//				rs=dbh.executeFormatQuery("Currency", new String[]{"idCurrency"}, "WHERE Name =\""+country.getCurrency()+"\"");
-//				if(rs.first())
-//					values[2]=rs.getInt(1);
-//
-//				//idLanguage
-//				rs=dbh.executeFormatQuery("Language", new String[]{"idLanguage"}, "WHERE Name =\""+country.getLanguage()+"\"");
-//				if(rs.first())
-//					values[3]=rs.getInt(1);
-
-//				//idCapital
-//				rs=dbh.executeFormatQuery("City", new String[]{"idCity"}, "WHERE Name =\""+country.getCapital()+"\"");
-//				if(rs.first())
-//					values[4]=rs.getInt(1);
 
 				//PopulationSize
 				values[4]=country.getPopulation_size();
 
-//				//currentLeader
-//				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name =\""+country.getLeader()+"\"");
-//				if(rs.first())
-//					values[6]=rs.getInt(1);
 				Importer.uploading_finished++;
 
 			} catch (SQLException e) {

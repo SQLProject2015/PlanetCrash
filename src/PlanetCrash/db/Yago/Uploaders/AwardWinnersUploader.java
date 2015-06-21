@@ -17,8 +17,8 @@ import java.util.Set;
 
 
 
+
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_country;
 import PlanetCrash.parsing.entities.entity_person;
 
@@ -43,8 +43,6 @@ public class AwardWinnersUploader extends AbstractUploader{
 	 * Upload all country entities to the database
 	 */
 	public void upload() {
-		//Collection<Set<String>> countries = ccmap.keySet();
-		
 	    Iterator it = pmap.entrySet().iterator();
 	    List<Object[]> batch = new ArrayList<Object[]>();
 	    while (it.hasNext()) {
@@ -57,18 +55,6 @@ public class AwardWinnersUploader extends AbstractUploader{
 	        Integer person_id=0;
 	        	        
 	        person_id = persons_id_name_map.get(person);
-	        
-//	        try{
-//				//idCountry
-//				rs=dbh.executeFormatQuery("Person", new String[]{"idPerson"}, "WHERE Name = \""+person+"\"");
-//				if(rs.first())
-//					person_id = rs.getInt(1);
-//	        }catch(SQLException e) {
-//				// TODO Auto-generated catch block
-//				System.out.println("Error initializing country: "+person);
-//				e.printStackTrace();
-//				continue;        	
-//	        }
 	        
 	        if (person_id==null){
 	        	continue;

@@ -10,7 +10,6 @@ import java.util.Map;
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_person;
 
 public class PersonsUploader extends AbstractUploader{
@@ -36,31 +35,19 @@ public class PersonsUploader extends AbstractUploader{
 	 */
 	public void upload() {
 		Collection<entity_person> persons = pmap.values();
-		
+
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(entity_person person : persons) {
 			//Get relevant ids
 			ResultSet rs;
 			Object[] values = new Object[columns.length];
-			//try {
-				//Name
-				values[0] = person.getName();
-				values[1] = person.getYearOfBirth();
-				values[2] = person.getYearOfDeath();
+			values[0] = person.getName();
+			values[1] = person.getYearOfBirth();
+			values[2] = person.getYearOfDeath();
 
-				//idContinent
-				values[3] = city_id_name_map.get(person.getPlaceOfBirth());
-//				rs=dbh.executeFormatQuery("City", new String[]{"idCity"}, "WHERE Name =\""+person.getPlaceOfBirth()+"\"");
-//				if(rs.first())
-//					values[3] = rs.getInt(1);
+			//idContinent
+			values[3] = city_id_name_map.get(person.getPlaceOfBirth());
 
-
-			//} catch (SQLException e) {
-				// TODO Auto-generated catch block
-//				System.out.println("Error initializing country: "+person.getName());
-//				e.printStackTrace();
-//				continue;
-//			}
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);

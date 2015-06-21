@@ -57,9 +57,7 @@ public class parser_yago_wikipedia_info extends AbstractYagoParser{
 			}
 		}
 		
-
 		return flag;
-		
 		
 	}
 	

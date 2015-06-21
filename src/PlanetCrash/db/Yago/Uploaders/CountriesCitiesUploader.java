@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_country;
 
 public class CountriesCitiesUploader extends AbstractUploader{
@@ -33,8 +32,6 @@ public class CountriesCitiesUploader extends AbstractUploader{
 	 * Upload all country entities to the database
 	 */
 	public void upload() {
-		//Collection<Set<String>> countries = ccmap.keySet();
-		
 	    Iterator it = ccmap.entrySet().iterator();
 	    List<Object[]> batch = new ArrayList<Object[]>();
 	    while (it.hasNext()) {

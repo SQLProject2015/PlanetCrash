@@ -3,7 +3,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import PlanetCrash.core.Exceptions.NotFoundException;
-import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
 import PlanetCrash.parsing.entities.entity_country;
@@ -12,26 +11,6 @@ import PlanetCrash.parsing.entities.entity_country;
 public class ManualUpdater {
 	static Config conf = new Config();
 	
-	public static boolean add_Person(String name, int yearOfBirth, int yearOfDeath, String city, String profession, DatabaseHandler dbh) throws SQLException, NotFoundException{
-		// get city id from DB
-		int idCity = getIdFromDB("City", "idCity", city, dbh);
-		
-		// get profession id from DB
-		int idProfession = getIdFromDB("Profession", "idProfession", profession, dbh);
-		
-		// insert to Person table
-		dbh.singleInsert(String.format("%s.Person",conf.get_db_name()), new String[]{"`Name`","`yearOfBirth`", "`yearOfDeath`", "`idPlaceOfBirth`","`isManual`"},
-				new Object[]{name, yearOfBirth, yearOfDeath, idCity,1});
-		
-		// get person id from DB
-		int idPerson = getIdFromDB("Person", "idPerson", name, dbh);
-		
-		// insert to Person_Profession table
-		dbh.singleInsert(String.format("%s.Person_Profession",conf.get_db_name()), new String[]{"`idPerson`","`idProfession`", "`isManual`"},
-				new Object[]{idPerson, idProfession,1});
-		
-		return true;
-	}
 	
 	public static boolean add_Country(String name, String continent, String currency, String language, String capital, int population_size, DatabaseHandler dbh) throws SQLException, NotFoundException{
 		int idCaptitalCity;
@@ -88,30 +67,9 @@ public class ManualUpdater {
 		return true;
 	}
 	
-	public static boolean update_country(String name, String continent, String currency, String language, String capital, int population_size, DatabaseHandler dbh) throws SQLException, NotFoundException{
-//		// get continent id from DB
-//		int idContinent = getIdFromDB("Continent", "idContinent", continent, dbh);
-//		
-//		// get currency id from DB
-//		int idCurrency = getIdFromDB("Currency", "idCurrency", currency, dbh);
-//		
-//		// get language id from DB
-//		int idLanguage = getIdFromDB("Language", "idLanguage", language, dbh);
-//		
-//		// get capital id from DB
-//		int idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
-//		
-
-//		
-////		String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
-////									+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
-////									conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
-////		dbh.executeUpdate(query);
-//		dbh.singleUpdate(conf.get_db_name()+".Country", 
-//				new String[]{"idContinent","idCurrency","idLanguage","idCapital","PopulationSize","isManual"},
-//				new Object[]{idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,1},
-//				new String[]{"idCountry"},
-//				new Object[]{idCountry});
+	public static boolean update_country(String name, String continent, 
+			String currency, String language, String capital, int population_size, DatabaseHandler dbh)
+					throws SQLException, NotFoundException{
 		
 		int idCaptitalCity;
 		int idContinent;
@@ -121,11 +79,6 @@ public class ManualUpdater {
 		//get country id from DB
 		int idCountry = getIdFromDB("Country", "idCountry", name, dbh);
 		
-		//	String query = String.format("UPDATE %s.Country SET idContinent=%d,idCurrency=%d,"
-		//	+ "idLanguage=%d, idCapital=%d, PopulationSize=%d, isManual=1 WHERE idCountry=%d",
-		//	conf.get_db_name(),idContinent,idCurrency,idLanguage,idCaptitalCity,population_size,idCountry);
-		//dbh.executeUpdate(query);
-	
 		// get capital id from DB
 		try{
 			idCaptitalCity = getIdFromDB("City", "idCity", capital, dbh);
