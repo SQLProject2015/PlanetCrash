@@ -46,4 +46,14 @@ public class YagoLexer implements Iterator<YagoEntry> {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void close() {
+		if(br!=null)
+			try {
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 }
