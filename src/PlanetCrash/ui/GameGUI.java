@@ -16,7 +16,7 @@ import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
 import PlanetCrash.db.DatabaseException;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
+import PlanetCrash.db.Yago.Uploaders.Importer;
 import PlanetCrash.ui.Objects.Effects.Fader;
 import PlanetCrash.ui.Scenes.LoadFromYagoScene;
 import PlanetCrash.ui.Scenes.LoginScene;

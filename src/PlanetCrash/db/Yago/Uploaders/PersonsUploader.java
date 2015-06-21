@@ -10,7 +10,6 @@ import java.util.Map;
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.parsing.entities.entity_person;
 
 public class PersonsUploader extends AbstractUploader{

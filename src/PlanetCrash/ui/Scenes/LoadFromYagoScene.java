@@ -23,6 +23,7 @@ import java.sql.SQLException;
 
 
 
+
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,8 +33,8 @@ import PlanetCrash.core.Game.Game;
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.db.Updates.Importer;
 import PlanetCrash.db.Updates.ReloadYago;
+import PlanetCrash.db.Yago.Uploaders.Importer;
 import PlanetCrash.ui.GameGUI;
 import PlanetCrash.ui.Objects.JImage;
 import PlanetCrash.ui.Objects.JRoundedButton;

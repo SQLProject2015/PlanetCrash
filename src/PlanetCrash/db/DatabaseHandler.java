@@ -9,7 +9,7 @@ import java.util.List;
 
 import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
-import PlanetCrash.db.Updates.Importer;
+import PlanetCrash.db.Yago.Uploaders.Importer;
 
 public class DatabaseHandler {
 

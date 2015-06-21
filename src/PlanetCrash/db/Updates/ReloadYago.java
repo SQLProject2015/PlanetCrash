@@ -9,6 +9,7 @@ import java.util.HashSet;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
 import PlanetCrash.db.DatabaseHandler;
+import PlanetCrash.db.Yago.Uploaders.Importer;
 import PlanetCrash.parsing.entities.entity_city;
 import PlanetCrash.parsing.entities.entity_country;
 import PlanetCrash.parsing.entities.entity_person;
