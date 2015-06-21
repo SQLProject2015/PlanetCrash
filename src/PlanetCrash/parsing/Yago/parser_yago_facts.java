@@ -18,7 +18,7 @@ import PlanetCrash.parsing.entities.entity_person;
 import PlanetCrash.parsing.entities.entity_university;
 
 public class parser_yago_facts extends AbstractYagoParser{
-	
+
 	HashMap<String, entity_city> cities_map;
 	HashMap<String, entity_country> countries_map;
 	HashMap<String, Set<String>> countries_cities_map;
@@ -27,16 +27,12 @@ public class parser_yago_facts extends AbstractYagoParser{
 	HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
 	Set<String> awards_set;
 
-//	Set<String> awards_set = new HashSet<String>(Arrays.asList("Grammy Award", "Grammy Lifetime Achievement Award", "Academy Award for Best Actor",
-//			"Academy Award for Best Actress", "Nobel Prize in Physics", "Nobel Prize in Chemistry", "Nobel Peace Prize", "FIFA World Player of the Year"));
-	
 
-	
 	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map,
 			HashMap<String, Set<String>> countries_cities_map, HashMap<String, entity_city> cities_map,
 			HashMap<String, entity_university> universities_map, HashMap<String, entity_person> persons_map, HashMap<String, entity_person> lite_persons_map, Set<String> awards_set) {		
 		super(filepath);
-		
+
 		this.countries_map = countries_map;
 		this.countries_cities_map = countries_cities_map;
 		this.cities_map = cities_map;
@@ -49,19 +45,19 @@ public class parser_yago_facts extends AbstractYagoParser{
 	@Override
 	public boolean parse(YagoEntry toParse) {
 		boolean flag=false;
-		
+
 		String clean_lentity = entity_cleaner(toParse.lentity);
 		String clean_rentity = entity_cleaner(toParse.rentity);
-		
+
 		entity_country country = countries_map.get(clean_lentity);
-		
+
 		if (country != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
 				if (country.getContinent() == null){
 					country.setContinent(clean_rentity);
 					flag=true;
 				}
-				
+
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_has_currency())){
 				country.setCurrency(clean_rentity);
@@ -76,8 +72,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 				flag=true;
 			}
 		}
-	
-				
+
 		entity_city city = cities_map.get(clean_lentity);
 		if (city!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
@@ -85,10 +80,10 @@ public class parser_yago_facts extends AbstractYagoParser{
 					city.setCountry(clean_rentity);
 					flag=true;
 				}
-				
+
 			}
 		}
-		
+
 		entity_university university = universities_map.get(clean_lentity);
 		if(university != null){
 			if (toParse.relation.equals(properties.get_yago_tag_located_in())){
@@ -98,7 +93,7 @@ public class parser_yago_facts extends AbstractYagoParser{
 				}
 			}
 		}
-		
+
 		entity_person per = persons_map.get(clean_lentity);
 		if (per != null){
 			if (toParse.relation.equals(properties.get_yago_tag_prize())){
@@ -119,28 +114,23 @@ public class parser_yago_facts extends AbstractYagoParser{
 					lite_persons_map.put(clean_lentity,per);
 					flag=true;
 				}
-				
+
 			}
 			else if (toParse.relation.equals(properties.get_yago_tag_birth_place())){
 				per.setPlaceOfBirth(clean_rentity);
 				flag = true;
 			}
-			
+
 			else if (toParse.relation.equals(properties.get_yago_tag_leader())){
 				lite_persons_map.put(clean_lentity,per);
 				flag = true;
 			}
-		}
-		
+		}	
 
-		
-		
-		
-		
 		return flag;
-		
-		
+
+
 	}
-	
+
 
 }
