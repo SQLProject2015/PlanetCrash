@@ -16,7 +16,7 @@ public class DatabaseHandler {
 	ConnectionPool cPool;
 	Connection conn;
 
-	//private static final String CONNPATH = "jdbc:mysql://host_addr:port/schema_name"; //"jdbc:mysql://localhost:3306/dbexample"; //TODO: change this
+	
 	private static final String USER = ""; //TODO: change this
 	private static final String PASS = ""; //TODO: change this
 	
@@ -100,7 +100,6 @@ public class DatabaseHandler {
 		for(int i=0;i<columns.length;i++)
 			sql+="?"+(i<columns.length-1?",":"");
 		sql+=");";
-		//System.out.println(sql);
 		//set auto-commit to false
 		conn.setAutoCommit(false);
 
@@ -177,9 +176,6 @@ public class DatabaseHandler {
 
 	}
 
-	//	public void singleDelete(String table, String[] columns, Object[] values) throws SQLException {
-	//		genericFormatUpdate("DELETE FROM", table, columns, values);
-	//	}
 
 	public void singleInsert(String table, String[] columns, Object[] values) throws SQLException {
 		if((columns.length!=values.length)) {

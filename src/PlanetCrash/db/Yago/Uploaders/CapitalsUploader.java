@@ -28,7 +28,7 @@ public class CapitalsUploader extends AbstractUploader{
 		this.cmap=countries_map;
 		this.country_id_name_map = country_id_name_map;
 		this.city_id_name_map = city_id_name_map;
-		
+
 	}
 
 	/**
@@ -41,27 +41,11 @@ public class CapitalsUploader extends AbstractUploader{
 			//Get relevant ids
 			Integer idCity, idCountry;
 			try {
-				
+
 				idCity = city_id_name_map.get(country.getCapital());
 				idCountry = country_id_name_map.get(country.getYagoName());
-				
-//				//idContinent
-//				rs=dbh.executeFormatQuery("City", new String[]{"idCity"}, "WHERE Name = \""+country.getCapital()+"\"");
-//				if(rs.first())
-//					idCity = rs.getInt(1);
-//				else{
-//					continue;
-//				}
-//				
-//				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, "WHERE Name = \""+country.getYagoName()+"\"");
-//				if(rs.first())
-//					idCountry = rs.getInt(1);
-//				else{
-//					continue;
-//				}
+
 				Importer.uploading_finished++;
-//				String query = String.format("UPDATE %s.Country SET idCapital=%d WHERE idCountry=%d", conf.get_db_name(),idCity,idCountry);
-				//dbh.executeUpdate(query);
 				dbh.singleUpdate(conf.get_db_name()+".Country",new String[]{"idCapital"},new Integer[]{idCity}, new String[]{"idCountry"},new Integer[]{idCountry});
 
 			} catch (SQLException e) {
@@ -71,13 +55,8 @@ public class CapitalsUploader extends AbstractUploader{
 				continue;
 			}
 
-//			if(batch.size()>=BATCHSIZE) {
-//				insertBatch(batch, table, columns);
-//			}
-//			batch.add(values);
 		}
-//		if(batch.size()>0) //empty what's left
-//			insertBatch(batch, table, columns);
+
 
 	}
 }

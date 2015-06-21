@@ -1,16 +1,11 @@
 package PlanetCrash.db.Yago.Uploaders;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import PlanetCrash.db.DatabaseHandler;
-import PlanetCrash.parsing.entities.entity_country;
+
 
 public class CurrenciesUploader extends AbstractUploader{
 	HashSet<String> cset;
@@ -36,18 +31,11 @@ public class CurrenciesUploader extends AbstractUploader{
 		for(String curr : cset) {
 
 			//Get relevant ids
-			//ResultSet rs;
-			Object[] values = new Object[columns.length];
-			//try {
-				//Name
-				values[0] = curr;
 
-			//} catch (SQLException e) {
-				// TODO Auto-generated catch block
-//				System.out.println("Error initializing country: "+lang);
-//				e.printStackTrace();
-//				continue;
-			//}
+			Object[] values = new Object[columns.length];
+			values[0] = curr;
+
+
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);

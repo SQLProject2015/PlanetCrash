@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import PlanetCrash.core.Game.GameUtils;
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.DatabaseHandler;
 import PlanetCrash.parsing.entities.entity_city;
@@ -43,27 +41,12 @@ public class CitiesUploader extends AbstractUploader{
 			//Get relevant ids
 			ResultSet rs;
 			Object[] values = new Object[columns.length];
-//			try {
-				//Name
-				values[0] = city.getName();
-
-				//idCountry
-//				rs=dbh.executeFormatQuery("Country", new String[]{"idCountry"}, "WHERE Name = \""+city.getCountry()+"\"");
-//				if(rs.first())
-//					values[1] = rs.getInt(1);
-				values[1] = country_id_name_map.get(city.getCountry());
-
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				System.out.println("Error initializing city: "+city.getName());
-//				e.printStackTrace();
-//				continue;
-//			}
+			values[0] = city.getName();
+			values[1] = country_id_name_map.get(city.getCountry());
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
 				c+=BATCHSIZE;
-				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
 			Importer.uploading_finished++;

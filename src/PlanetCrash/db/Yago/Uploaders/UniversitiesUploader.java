@@ -58,7 +58,6 @@ public class UniversitiesUploader extends AbstractUploader{
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
 				c+=BATCHSIZE;
-				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
 			Importer.uploading_finished++;

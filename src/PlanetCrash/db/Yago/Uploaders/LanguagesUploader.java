@@ -35,24 +35,13 @@ public class LanguagesUploader extends AbstractUploader{
 		List<Object[]> batch = new ArrayList<Object[]>();
 		for(String lang : lset) {
 
-			//Get relevant ids
-			//ResultSet rs;
 			Object[] values = new Object[columns.length];
-			//try {
-				//Name
-				values[0] = lang;
+			values[0] = lang;
 
-			//} catch (SQLException e) {
-				// TODO Auto-generated catch block
-//				System.out.println("Error initializing country: "+lang);
-//				e.printStackTrace();
-//				continue;
-			//}
 
 			if(batch.size()>=BATCHSIZE) {
 				insertBatch(batch, table, columns);
 				c+=BATCHSIZE;
-				//System.out.println("total "+c);
 				batch = new ArrayList<Object[]>();
 			}
 			Importer.uploading_finished++;

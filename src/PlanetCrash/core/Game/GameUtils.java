@@ -11,8 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-
 import PlanetCrash.core.config.Config;
 import PlanetCrash.db.ConnectionPool;
 import PlanetCrash.db.DatabaseHandler;
@@ -20,7 +18,6 @@ import PlanetCrash.db.DatabaseHandler;
 public class GameUtils {
 	/*return question generator object for random country that the user did not completed yet,
 	 * null in case that not found such country*/
-	private static Config config = new Config();
 	public static QuestionsGenerator generateCountry(int idUser, String dbName, DatabaseHandler dbh, int difficulty){
 		QuestionsGenerator qg =null;
 		ArrayList<Question> optionalQuestions=null;

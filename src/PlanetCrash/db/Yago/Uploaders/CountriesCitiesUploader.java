@@ -32,8 +32,6 @@ public class CountriesCitiesUploader extends AbstractUploader{
 	 * Upload all country entities to the database
 	 */
 	public void upload() {
-		//Collection<Set<String>> countries = ccmap.keySet();
-		
 	    Iterator it = ccmap.entrySet().iterator();
 	    List<Object[]> batch = new ArrayList<Object[]>();
 	    while (it.hasNext()) {
