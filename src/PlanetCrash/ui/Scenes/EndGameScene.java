@@ -29,12 +29,12 @@ import PlanetCrash.ui.Objects.JRoundedButton;
 
 public class EndGameScene extends Scene{
 
-	
-	
+
+
 	private String[] goodNews = {"you make a nice stew.", "you go well with bread.", "being eaten alive kinda tickles.",
-									"at least you're not a disgusting alien.", "you will get a hot bath in a cauldron."};
-	
-	
+			"at least you're not a disgusting alien.", "you will get a hot bath in a cauldron."};
+
+
 	public EndGameScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
 	}
@@ -42,10 +42,10 @@ public class EndGameScene extends Scene{
 	@Override
 	public Component create() {
 		boolean victory = game.getLives()>0 && game.getCurrentQuestion()>=game.getDifficulty()-1;
-		
+
 		if (victory) { //Update country victory in db
 			new Thread(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
@@ -56,17 +56,14 @@ public class EndGameScene extends Scene{
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-//					try {
-						dbh.close();
-//					} catch (SQLException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					
+
+					dbh.close();
+
+
 				}
 			}).start();
 		}
-		
+
 
 		JLayeredPane panel = new JLayeredPane();
 		panel.setPreferredSize(new Dimension(GameGUI.WINDOW_WIDTH,GameGUI.WINDOW_HEIGHT));
@@ -118,7 +115,7 @@ public class EndGameScene extends Scene{
 		JRoundedButton mainmenuBtn = new JRoundedButton("Main Menu", 220,60, 2);
 		mainmenuBtn.setBounds((GameGUI.WINDOW_WIDTH-mainmenuBtn.getWidth())/2, 430, mainmenuBtn.getWidth(), mainmenuBtn.getHeight());
 		panel.add(mainmenuBtn, new Integer(2), 0);
-		
+
 		//Add quit button
 		JRoundedButton quitBtn = new JRoundedButton("Quit", 220,60, 2);
 		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 500, quitBtn.getWidth(), quitBtn.getHeight());
@@ -128,18 +125,18 @@ public class EndGameScene extends Scene{
 		//Register mouse listeners
 		mainmenuBtn.addMouseListener(new EndSceneMouseListener(EndSceneMouseListener.MAIN_MENU));
 		quitBtn.addMouseListener(new EndSceneMouseListener(EndSceneMouseListener.QUIT));
-		
+
 		return panel;
 	}
-	
+
 	class EndSceneMouseListener implements MouseListener {
 		public static final int MAIN_MENU=0,QUIT=1;
 		int mode;
-		
+
 		public EndSceneMouseListener(int mode) {
 			this.mode=mode;
 		}
-		
+
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
@@ -150,33 +147,33 @@ public class EndGameScene extends Scene{
 				gameGUI.quit();
 				break;
 			}
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
 
 }

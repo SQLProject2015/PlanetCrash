@@ -59,7 +59,6 @@ public class LoadFromYagoScene extends Scene{
 	boolean isFirstLoad = true;
 
 	
-	//JRoundedButton perBtn = new JRoundedButton("percentage", 500, 60, 2);
 	JRoundedButton importBtn = new JRoundedButton("Import from Yago", 500, 60, 2);
 	JRoundedEditText usernameField = new JRoundedEditText(userpass,"Test", 220, 60, 2, false);
 	
@@ -102,21 +101,11 @@ public class LoadFromYagoScene extends Scene{
 			panel.add(backBtn, new Integer(2), 2);
 			isFirstLoad = false;
 		}
-		
-		//Add login button
-		//JRoundedButton perBtn = new JRoundedButton("Loading...", 500, 60, 2);
-//		perBtn.setBorderColor(Color.green);
-//		perBtn.setBounds((GameGUI.WINDOW_WIDTH-perBtn.getWidth())/2, 450, perBtn.getWidth(), perBtn.getHeight());
-//		panel.add(perBtn, new Integer(2), 2);
+
 								
 		//Register action listeners		
 		importBtn.addMouseListener(new MainListener(MainListener.IMPORT));
-		backBtn.addMouseListener(new MainListener(MainListener.BACK));
-		
-//		if (isFirstLoad){
-//			JOptionPane.showMessageDialog(gameGUI.mainFrame, "Seems like your database is not ready, you should import YAGO to start playing");
-//		}
-		
+		backBtn.addMouseListener(new MainListener(MainListener.BACK));		
 		return panel;
 	}
 	
