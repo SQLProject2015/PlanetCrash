@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 public class YagoLexer implements Iterator<YagoEntry> {
@@ -14,7 +15,12 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	private BufferedReader br;
 
 	public YagoLexer(String filepath) throws FileNotFoundException {
-		this.br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filepath))));
+		try {
+			this.br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
 		next();
 	}
 
