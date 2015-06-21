@@ -68,13 +68,11 @@ public class SettingsScene extends Scene{
 		panel.add(reloadBtn, new Integer(2), 2);
 		
 		//Add login button
-		//JRoundedButton perBtn = new JRoundedButton("Loading...", 500, 60, 2);
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 325, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
 		
 		//Add login button
-		//JRoundedButton perBtn = new JRoundedButton("Loading...", 500, 60, 2);
 		editBtn.setBorderColor(Color.green);
 		editBtn.setBounds((GameGUI.WINDOW_WIDTH-editBtn.getWidth())/2, 400, editBtn.getWidth(), editBtn.getHeight());
 		panel.add(editBtn, new Integer(2), 2);
@@ -84,7 +82,6 @@ public class SettingsScene extends Scene{
 		panel.add(backBtn, new Integer(2), 2);
 								
 		//Register action listeners
-		//LoadToYagoListener lml = new LoadToYagoListener();
 		reloadBtn.addMouseListener(new MainListener(MainListener.ADD_ALL));
 		addBtn.addMouseListener(new MainListener(MainListener.ADD_COUNTRY));
 		editBtn.addMouseListener(new MainListener(MainListener.EDIT_COUNTRY));

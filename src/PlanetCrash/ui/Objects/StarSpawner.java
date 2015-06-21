@@ -116,7 +116,6 @@ public class StarSpawner extends JPanel implements Runnable{
 
 
 			beforetime = System.currentTimeMillis();
-//			System.out.println(Thread.currentThread().getId());
 		}
 
 	}

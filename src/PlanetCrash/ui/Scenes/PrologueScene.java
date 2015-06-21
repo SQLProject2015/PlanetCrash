@@ -64,8 +64,7 @@ public class PrologueScene extends Scene {
 		message.setBackground(new Color(0,0,0,0));
 		message.setBorder(BorderFactory.createEmptyBorder());
 		int mw=(int)message.getPreferredSize().getWidth(), mh=(int)message.getPreferredSize().getHeight();
-//		message.setBounds((GameGUI.WINDOW_WIDTH-mw)/2, GameGUI.WINDOW_HEIGHT-mh, mw, mh);
-//		panel.add(message,new Integer(3),0);
+
 		speechBubble.add(message);
 		
 		//Add play button

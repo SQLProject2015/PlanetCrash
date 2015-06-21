@@ -169,9 +169,6 @@ public class DifficultySelectScene extends Scene{
 			//Set lives
 			game.setLives(4);
 
-			//load the scene
-//			GameScene gs = new GameScene(gameGUI, game);
-//			PlanetScene ps = new PlanetScene(gameGUI, game);
 			LoadingScene ls = new LoadingScene(gameGUI, game);
 			gameGUI.fadeSwitchScene(ls);
 

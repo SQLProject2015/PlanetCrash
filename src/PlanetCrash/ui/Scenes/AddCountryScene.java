@@ -25,7 +25,7 @@ import PlanetCrash.ui.Objects.JRoundedEditText;
 import PlanetCrash.ui.Objects.StarryBackground;
 
 public class AddCountryScene extends Scene{
-	
+
 	public AddCountryScene(GameGUI gameGUI, Game game) {
 		super(gameGUI, game);
 	}
@@ -39,7 +39,7 @@ public class AddCountryScene extends Scene{
 
 	JRoundedButton backBtn = new JRoundedButton("Back", 100, 60, 2);
 	JRoundedButton addBtn = new JRoundedButton("Add", 220, 60, 2);
-	
+
 	@Override
 	public Component create() {
 		JLayeredPane panel = new JLayeredPane();
@@ -57,22 +57,22 @@ public class AddCountryScene extends Scene{
 		logo.setBounds((GameGUI.WINDOW_WIDTH-logo.getWidth())/2,80,logo.getWidth(),logo.getHeight());
 		logo.setOpaque(false);
 		panel.add(logo, new Integer(1), 0);
-		
+
 		//login x,y
 		int loginy = 200;
-		
+
 		//init user/pass font
 		Font userpass = new Font(null, Font.BOLD, 14);
-		
+
 		//Add name field
 		JPanel namePanel = new JPanel();
 		JRoundedButton usernameLabel = new JRoundedButton(userpass,"Name:", 100, userpass.getSize()+20, 2);
 		nameField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-		
+
 		usernameLabel.isButton(false);
 		usernameLabel.setBorderColor(Color.cyan);
 		nameField.setBorderColor(Color.cyan);
-		
+
 		namePanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight()));
 		namePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)namePanel.getPreferredSize().getWidth())/2,
 				loginy, usernameLabel.getWidth()+nameField.getWidth()+50, nameField.getHeight());
@@ -81,16 +81,16 @@ public class AddCountryScene extends Scene{
 		namePanel.add(usernameLabel);
 		namePanel.add(nameField);
 		panel.add(namePanel, new Integer(2),0);
-		
+
 		//Add Continent field
 		JPanel continentPanel = new JPanel();
 		JRoundedButton passwordLabel = new JRoundedButton(userpass,"Continent:", 100, userpass.getSize()+20, 2);
 		continetField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-	
+
 		passwordLabel.isButton(false);
 		passwordLabel.setBorderColor(Color.cyan);
 		continetField.setBorderColor(Color.cyan);
-		
+
 		continentPanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+continetField.getWidth()+50, continetField.getHeight()));
 		continentPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)continentPanel.getPreferredSize().getWidth())/2,
 				loginy+50, usernameLabel.getWidth()+continetField.getWidth()+50, continetField.getHeight());
@@ -99,16 +99,16 @@ public class AddCountryScene extends Scene{
 		continentPanel.add(passwordLabel);
 		continentPanel.add(continetField);
 		panel.add(continentPanel, new Integer(2),1);
-		
+
 		//Add currency field
 		JPanel currencyPanel = new JPanel();
 		JRoundedButton currencyLabel = new JRoundedButton(userpass,"Currency:", 100, userpass.getSize()+20, 2);
 		currencyField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-	
+
 		currencyLabel.isButton(false);
 		currencyLabel.setBorderColor(Color.cyan);
 		currencyField.setBorderColor(Color.cyan);
-		
+
 		currencyPanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+currencyField.getWidth()+50, currencyField.getHeight()));
 		currencyPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)currencyPanel.getPreferredSize().getWidth())/2,
 				loginy+100, usernameLabel.getWidth()+currencyField.getWidth()+50, currencyField.getHeight());
@@ -117,16 +117,16 @@ public class AddCountryScene extends Scene{
 		currencyPanel.add(currencyLabel);
 		currencyPanel.add(currencyField);
 		panel.add(currencyPanel, new Integer(2),1);
-		
+
 		//Add language field
 		JPanel languagePanel = new JPanel();
 		JRoundedButton languageLabel = new JRoundedButton(userpass,"Language:", 100, userpass.getSize()+20, 2);
 		languageField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-	
+
 		languageLabel.isButton(false);
 		languageLabel.setBorderColor(Color.cyan);
 		languageField.setBorderColor(Color.cyan);
-		
+
 		languagePanel.setPreferredSize(new Dimension(usernameLabel.getWidth()+languageField.getWidth()+50, languageField.getHeight()));
 		languagePanel.setBounds((GameGUI.WINDOW_WIDTH-(int)languagePanel.getPreferredSize().getWidth())/2,
 				loginy+150, usernameLabel.getWidth()+languageField.getWidth()+50, languageField.getHeight());
@@ -135,16 +135,16 @@ public class AddCountryScene extends Scene{
 		languagePanel.add(languageLabel);
 		languagePanel.add(languageField);
 		panel.add(languagePanel, new Integer(2),1);
-		
+
 		//Add capital field
 		JPanel capitalPanel = new JPanel();
 		JRoundedButton capitalLabel = new JRoundedButton(userpass,"Capital:", 100, userpass.getSize()+20, 2);
 		capitalField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-	
+
 		capitalLabel.isButton(false);
 		capitalLabel.setBorderColor(Color.cyan);
 		capitalField.setBorderColor(Color.cyan);
-		
+
 		capitalPanel.setPreferredSize(new Dimension(capitalLabel.getWidth()+capitalField.getWidth()+50, capitalField.getHeight()));
 		capitalPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)capitalPanel.getPreferredSize().getWidth())/2,
 				loginy+200, capitalLabel.getWidth()+capitalField.getWidth()+50, capitalField.getHeight());
@@ -153,16 +153,16 @@ public class AddCountryScene extends Scene{
 		capitalPanel.add(capitalLabel);
 		capitalPanel.add(capitalField);
 		panel.add(capitalPanel, new Integer(2),1);
-		
+
 		//Add population field
 		JPanel populationPanel = new JPanel();
 		JRoundedButton populationLabel = new JRoundedButton(userpass,"Population:", 100, userpass.getSize()+20, 2);
 		populationField = new JRoundedEditText(userpass,"", 220, userpass.getSize()+20, 2, false);
-	
+
 		populationLabel.isButton(false);
 		populationLabel.setBorderColor(Color.cyan);
 		populationField.setBorderColor(Color.cyan);
-		
+
 		populationPanel.setPreferredSize(new Dimension(populationLabel.getWidth()+populationField.getWidth()+50, populationField.getHeight()));
 		populationPanel.setBounds((GameGUI.WINDOW_WIDTH-(int)populationPanel.getPreferredSize().getWidth())/2,
 				loginy+250, populationLabel.getWidth()+populationField.getWidth()+50, populationField.getHeight());
@@ -171,34 +171,34 @@ public class AddCountryScene extends Scene{
 		populationPanel.add(populationLabel);
 		populationPanel.add(populationField);
 		panel.add(populationPanel, new Integer(2),1);
-		
-		
-		
+
+
+
 		//Add add button
 		addBtn.setBorderColor(Color.green);
 		addBtn.setBounds((GameGUI.WINDOW_WIDTH-addBtn.getWidth())/2, 500, addBtn.getWidth(), addBtn.getHeight());
 		panel.add(addBtn, new Integer(2), 2);
-		
+
 		backBtn.setBorderColor(Color.green);
 		backBtn.setBounds(30, 500, backBtn.getWidth(), backBtn.getHeight());
 		panel.add(backBtn, new Integer(2), 2);
-//		
-//		//Add create user button
-//		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
-//		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
-//		panel.add(createBtn, new Integer(2), 3);
-		
+		//		
+		//		//Add create user button
+		//		JRoundedButton createBtn = new JRoundedButton("Register", 220, 60, 2);
+		//		createBtn.setBounds((GameGUI.WINDOW_WIDTH-loginBtn.getWidth())/2, 375+60+20, createBtn.getWidth(), createBtn.getHeight());
+		//		panel.add(createBtn, new Integer(2), 3);
+
 		//Register action listeners
-//		LoginMouseListener lml = new LoginMouseListener();
-//		addBtn.addMouseListener(lml);
+		//		LoginMouseListener lml = new LoginMouseListener();
+		//		addBtn.addMouseListener(lml);
 
 		//LoadToYagoListener lml = new LoadToYagoListener();
 		addBtn.addMouseListener(new MainListener(MainListener.ADD_COUNTRY));
 		backBtn.addMouseListener(new MainListener(MainListener.BACK));
 		return panel;
 	}
-	
-	
+
+
 	class MainListener implements MouseListener {
 
 		public static final int BACK=0,ADD_COUNTRY=1;
@@ -206,8 +206,8 @@ public class AddCountryScene extends Scene{
 		public MainListener(int mode) {
 			this.mode=mode;
 		}		
-		
-		
+
+
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			switch(mode) {
@@ -218,7 +218,7 @@ public class AddCountryScene extends Scene{
 			case ADD_COUNTRY:
 				DatabaseHandler dbh = new DatabaseHandler(gameGUI.mConnPool);
 				try{
-					
+
 					if (check_not_empty_fields()){
 						ManualUpdater.add_Country(nameField.getText(), continetField.getText(), currencyField.getText(), languageField.getText(), capitalField.getText(), Integer.parseInt(populationField.getText()), dbh);
 						JOptionPane.showMessageDialog(gameGUI.mainFrame, "Country was added :)");
@@ -229,30 +229,26 @@ public class AddCountryScene extends Scene{
 						capitalField.setText("");
 						populationField.setText("");
 					}	
-					
-					
+
+
 				}catch(NotFoundException | SQLException ex){
 					JOptionPane.showMessageDialog(gameGUI.mainFrame, ex.getMessage());
 				}catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(gameGUI.mainFrame, "Population can be number only");
 				}finally{
-//					try {
-						dbh.close();
-//					} catch (SQLException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+
+					dbh.close();
 				}
 				break;
 			}
-			
-			
+
+
 		}
-		
+
 		public boolean check_not_empty_fields(){
 			if (continetField.getText().isEmpty() || currencyField.getText().isEmpty() || 
-				languageField.getText().isEmpty() || capitalField.getText().isEmpty() ||
-				populationField.getText().isEmpty() || nameField.getText().isEmpty())
+					languageField.getText().isEmpty() || capitalField.getText().isEmpty() ||
+					populationField.getText().isEmpty() || nameField.getText().isEmpty())
 			{
 				JOptionPane.showMessageDialog(gameGUI.mainFrame, "Don't leave fields empty!");
 				return false;
@@ -263,28 +259,28 @@ public class AddCountryScene extends Scene{
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
 
-	
+
 }
