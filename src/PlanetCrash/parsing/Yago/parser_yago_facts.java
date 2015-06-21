@@ -29,12 +29,11 @@ public class parser_yago_facts extends AbstractYagoParser{
 
 
 	public parser_yago_facts(String filepath, HashMap<String, entity_country> countries_map,
-			HashMap<String, Set<String>> countries_cities_map, HashMap<String, entity_city> cities_map,
+			HashMap<String, entity_city> cities_map,
 			HashMap<String, entity_university> universities_map, HashMap<String, entity_person> persons_map, HashMap<String, entity_person> lite_persons_map, Set<String> awards_set) {		
 		super(filepath);
 
 		this.countries_map = countries_map;
-		this.countries_cities_map = countries_cities_map;
 		this.cities_map = cities_map;
 		this.universities_map = universities_map;
 		this.persons_map = persons_map;
