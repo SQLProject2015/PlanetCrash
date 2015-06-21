@@ -54,7 +54,7 @@ public abstract class AbstractYagoParser implements Runnable {
 				}
 			}
 		}
-		lexer.close();
+				
 		if(bw!=null)
 			try {
 				bw.close();
