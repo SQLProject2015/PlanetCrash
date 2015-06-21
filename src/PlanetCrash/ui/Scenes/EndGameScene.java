@@ -41,7 +41,7 @@ public class EndGameScene extends Scene{
 
 	@Override
 	public Component create() {
-		boolean victory = game.getLives()>=0 && game.getCurrentQuestion()>=game.getDifficulty()-1;
+		boolean victory = game.getLives()>0 && game.getCurrentQuestion()>=game.getDifficulty()-1;
 		
 		if (victory) { //Update country victory in db
 			new Thread(new Runnable() {

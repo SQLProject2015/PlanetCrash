@@ -85,7 +85,7 @@ public class GameScene extends Scene{
 		questionP.add(qlabel);
 
 		//Add question
-		Font qfont = (game.getQuestion(game.getCurrentQuestion()).getQuestion().length()>60?new Font(null, Font.PLAIN,11):ansfont);
+		Font qfont = (game.getQuestion(game.getCurrentQuestion()).getQuestion().length()>65?new Font(null, Font.PLAIN,11):ansfont);
 		JRoundedButton qst = new JRoundedButton(qfont, game.getQuestion(game.getCurrentQuestion()).getQuestion(),3*GameGUI.WINDOW_WIDTH/4, 40, 1);
 		qst.setBounds(0,40,3*GameGUI.WINDOW_WIDTH/4,40);
 		qst.isButton(false);
@@ -101,7 +101,7 @@ public class GameScene extends Scene{
 
 		int ax=0,ay=0;
 		for(int i=0; i<answersButtons.length; i++) {
-			qfont = (game.getQuestion(game.getCurrentQuestion()).getQuestion().length()>60?new Font(null, Font.PLAIN,11):ansfont);
+			qfont = (answers.get(i).getAnswer().length()>60?new Font(null, Font.PLAIN,11):ansfont);
 			JRoundedButton ans = new JRoundedButton(qfont,answers.get(i).getAnswer(), GameGUI.WINDOW_WIDTH/2, ah/2, 1);
 			ans.setOpaque(false);
 			ans.setBounds(ax, ay, GameGUI.WINDOW_WIDTH/2, ah/2);

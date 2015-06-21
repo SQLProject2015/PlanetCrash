@@ -49,26 +49,26 @@ public class MainMenuScene extends Scene {
 
 		//Add play button
 		JRoundedButton playBtn = new JRoundedButton("Play", 220,60, 2);
-		playBtn.setBounds((GameGUI.WINDOW_WIDTH-playBtn.getWidth())/2, 220, playBtn.getWidth(), playBtn.getHeight());
+		playBtn.setBounds((GameGUI.WINDOW_WIDTH-playBtn.getWidth())/2, 280, playBtn.getWidth(), playBtn.getHeight());
 		panel.add(playBtn, new Integer(2), 0);
 
 		//Add settings button
 		JRoundedButton settingBtn = new JRoundedButton("Settings", 220,60, 2);
-		settingBtn.setBounds((GameGUI.WINDOW_WIDTH-settingBtn.getWidth())/2, 310, settingBtn.getWidth(), settingBtn.getHeight());
+		settingBtn.setBounds((GameGUI.WINDOW_WIDTH-settingBtn.getWidth())/4, 370, settingBtn.getWidth(), settingBtn.getHeight());
 		settingBtn.setBorderColor(Color.GREEN);
 		panel.add(settingBtn, new Integer(3), 0);
 
 		//Add HOF button
 		JRoundedButton hofBtn = new JRoundedButton("Hall of fame", 220,60, 2);
-		hofBtn.setBounds((GameGUI.WINDOW_WIDTH-hofBtn.getWidth())/2, 400, hofBtn.getWidth(), hofBtn.getHeight());
-		hofBtn.setBorderColor(Color.decode("#bf00af"));
+		hofBtn.setBounds(3*(GameGUI.WINDOW_WIDTH-hofBtn.getWidth())/4, 370, hofBtn.getWidth(), hofBtn.getHeight());
+		hofBtn.setBorderColor(Color.pink);
 		panel.add(hofBtn, new Integer(3), 0);		
 		
 		
 		//Add quit button
 		JRoundedButton quitBtn = new JRoundedButton("Quit", 220,60, 2);
-		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 490, quitBtn.getWidth(), quitBtn.getHeight());
-		quitBtn.setBorderColor(Color.BLUE);
+		quitBtn.setBounds((GameGUI.WINDOW_WIDTH-quitBtn.getWidth())/2, 460, quitBtn.getWidth(), quitBtn.getHeight());
+		quitBtn.setBorderColor(Color.red);
 		panel.add(quitBtn, new Integer(3), 0);
 
 
@@ -77,7 +77,7 @@ public class MainMenuScene extends Scene {
 		JTextField welcomeMsg = new JTextField("Welcome back, "+game.getUser().getName()+"!");
 		welcomeMsg.setFont(font);
 		welcomeMsg.setForeground(Color.CYAN);
-		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 180,
+		welcomeMsg.setBounds((GameGUI.WINDOW_WIDTH-(int)welcomeMsg.getPreferredSize().getWidth())/2, 240,
 				(int)welcomeMsg.getPreferredSize().getWidth(), (int)welcomeMsg.getPreferredSize().getHeight());
 		welcomeMsg.setOpaque(false);
 		welcomeMsg.setBorder(BorderFactory.createEmptyBorder());
