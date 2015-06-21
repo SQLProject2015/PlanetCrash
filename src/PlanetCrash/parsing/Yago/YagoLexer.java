@@ -2,9 +2,10 @@ package PlanetCrash.parsing.Yago;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 
 public class YagoLexer implements Iterator<YagoEntry> {
@@ -13,7 +14,7 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	private BufferedReader br;
 
 	public YagoLexer(String filepath) throws FileNotFoundException {
-		this.br = new BufferedReader(new FileReader(new File(filepath)));
+		this.br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filepath))));
 		next();
 	}
 
