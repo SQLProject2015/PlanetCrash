@@ -1,26 +1,31 @@
 package PlanetCrash.parsing.Yago;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
+
+import com.univocity.parsers.tsv.TsvParser;
+import com.univocity.parsers.tsv.TsvParserSettings;
 
 public class YagoLexer implements Iterator<YagoEntry> {
 
 	private YagoEntry next=null;
 	private BufferedReader br;
+	private TsvParser parser;
 
 	public YagoLexer(String filepath) throws FileNotFoundException {
-		try {
-			this.br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath),"UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			System.out.println(e.getMessage());
-			return;
-		}
+		//		try {
+		//			this.br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath),"UTF-8"));
+		//		} catch (UnsupportedEncodingException e) {
+		//			System.out.println(e.getMessage());
+		//			return;
+		//		}
+		TsvParserSettings settings = new TsvParserSettings();
+		settings.getFormat().setLineSeparator(System.lineSeparator());
+		parser = new TsvParser(settings);
+		parser.beginParsing(new FileReader(filepath));
 		next();
 	}
 
@@ -32,18 +37,14 @@ public class YagoLexer implements Iterator<YagoEntry> {
 	@Override
 	public YagoEntry next() {
 		YagoEntry ret = null;
-		String line ="";
-		try {
-			ret = this.next;
-			line = br.readLine();
-			if (line!=null) {
-				String[] split = line.trim().split("\\s+"); //split by whitespaces
-				this.next = new YagoEntry(split[0],split[1],split[2],split[3]);
-			} else {
-				this.next = null;
-			}
-		} catch (IOException e) {
-			System.out.println("Could not parse line: "+line);
+		String[] line = {};
+		ret = this.next;
+		line = parser.parseNext();
+		if (line!=null) {
+			//String[] split = line.trim().split("\\s+"); //split by whitespaces
+			this.next = new YagoEntry(line[0],line[1],line[2],line[3]);
+		} else {
+			this.next = null;
 		}
 		return ret;
 	}
@@ -53,7 +54,7 @@ public class YagoLexer implements Iterator<YagoEntry> {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void close() {
 		if(br!=null)
 			try {
