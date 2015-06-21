@@ -39,6 +39,9 @@ public class parser_yago_wikipedia_info extends AbstractYagoParser{
 		boolean flag=false;
 		
 		String clean_lentity = entity_cleaner(toParse.lentity);
+		if (clean_lentity==null){
+			return false;
+		}
 		
 		entity_person per = persons_map.get(clean_lentity);
 		if (per != null){

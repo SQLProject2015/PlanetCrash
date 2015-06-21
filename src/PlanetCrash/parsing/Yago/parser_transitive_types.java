@@ -54,6 +54,9 @@ public class parser_transitive_types extends AbstractYagoParser{
 	public boolean parse(YagoEntry toParse) {
 		// TODO Auto-generated method stub
 		String clean_lentity = entity_cleaner(toParse.lentity);
+		if (clean_lentity==null){
+			return false;
+		}
 
 		if (toParse.rentity.equals(properties.get_yago_tag_country())){
 			entity_country new_country = new entity_country();

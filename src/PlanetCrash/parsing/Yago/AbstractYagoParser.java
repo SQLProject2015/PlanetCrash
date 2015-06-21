@@ -72,7 +72,13 @@ public abstract class AbstractYagoParser implements Runnable {
 		}
 	}
 	public static String entity_cleaner(String entity){
-		return entity.replaceAll("<", "").replaceAll(">", "").replaceAll("_", " ");
+		entity = entity.replaceAll("<", "").replaceAll(">", "").replaceAll("_", " ").replaceAll("/", " ").replaceAll("-", " ");
+		for (char c : entity.toCharArray()) {
+            if (((int) c) > 127) {
+                return null;
+            }
+        }
+		return entity;
 	}
 	/*
 	 * This function gets a yago entry and uses it to populate the database

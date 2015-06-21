@@ -47,7 +47,13 @@ public class parser_yago_facts extends AbstractYagoParser{
 		boolean flag=false;
 
 		String clean_lentity = entity_cleaner(toParse.lentity);
+		if (clean_lentity==null){
+			return false;
+		}
 		String clean_rentity = entity_cleaner(toParse.rentity);
+		if (clean_rentity==null){
+			return false;
+		}
 
 		entity_country country = countries_map.get(clean_lentity);
 

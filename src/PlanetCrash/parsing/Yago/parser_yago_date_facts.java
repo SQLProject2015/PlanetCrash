@@ -22,7 +22,12 @@ public class parser_yago_date_facts extends AbstractYagoParser{
 	@Override
 	public boolean parse(YagoEntry toParse) {
 		
-		entity_person person = persons_map.get(entity_cleaner(toParse.lentity));
+		String clean_lentity = entity_cleaner(toParse.lentity);
+		if (clean_lentity==null){
+			return false;
+		}
+		
+		entity_person person = persons_map.get(clean_lentity);
 		if (person!=null){
 			if (toParse.relation.equals(properties.get_yago_tag_birth_date())){
 				person.setYearOfBirth(getYearFromYagoDate(toParse.rentity));
