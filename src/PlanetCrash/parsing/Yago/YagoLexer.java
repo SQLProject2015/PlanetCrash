@@ -37,7 +37,7 @@ public class YagoLexer implements Iterator<YagoEntry> {
 			ret = this.next;
 			line = br.readLine();
 			if (line!=null) {
-				String[] split = line.split("\\s+"); //split by whitespaces
+				String[] split = line.trim().split("\\s+"); //split by whitespaces
 				this.next = new YagoEntry(split[0],split[1],split[2],split[3]);
 			} else {
 				this.next = null;
