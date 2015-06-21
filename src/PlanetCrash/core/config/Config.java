@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
- 
+
 /* cofiguration handler class*/ 
 public class Config {
- 
+
 	private Properties configFile = new Properties();
-	
+
 	public Config() 
 	{
 		try {
@@ -23,25 +23,25 @@ public class Config {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/** get the path of the yago files directory */
 	public String get_yago_files_directory(){
 		return configFile.getProperty("YagoFilesDirectory");
 	}
-	
+
 	/** get the name of the file yago_transitive_types.tsv */
 	public String get_yago_transitive_types_name(){		
 		return configFile.getProperty("YagoTransitiveTypeFileName");
 	}
-	
+
 	/** get the name of the file yagoFacts.tsv */
 	public String get_yago_facts_name(){
 		return configFile.getProperty("YagoFactsFileName");
 	}
-	
 
-	
+
+
 
 	/** get the name of the file yagoLiteralFacts.tsv */
 	public String get_yago_literal_facts_name(){
@@ -71,24 +71,24 @@ public class Config {
 	public String get_db_name(){
 		return configFile.getProperty("DbName");
 	}
-	
+
 	/** get the user name */
 	public String get_user_name(){
 		return configFile.getProperty("UserName");
 	}
-	
+
 	/** get user password */
 	public String get_password(){
 		return configFile.getProperty("Password");
 	}
-	
+
 	/** get number of connections to create **/
 	public int get_number_connection(){
 		return Integer.parseInt(configFile.getProperty("NumOfConnections"));
 	}
-	
+
 	/*parsing*/
-	
+
 
 
 	/** get the yago tag name for "country" type **/
@@ -103,7 +103,7 @@ public class Config {
 	public String get_yago_tag_city(){
 		return configFile.getProperty("CITY");
 	}
-	
+
 	/** get the yago tag name for "language" type **/
 	public String get_yago_tag_language(){
 		return configFile.getProperty("LANGUAGE");
@@ -124,7 +124,7 @@ public class Config {
 	public String get_yago_tag_population(){
 		return configFile.getProperty("POPULATION");
 	}
-	
+
 	/** get the yago tag name for "musician" type **/
 	public String get_yago_tag_musician(){
 		return configFile.getProperty("MUSICIAN");
@@ -190,6 +190,12 @@ public class Config {
 		return Integer.parseInt(configFile.getProperty("TOTAL_FILES_SIZE"));
 	}
 	public int get_high_graphics() {
-		return Integer.parseInt(configFile.getProperty("highGraphics"));
+		int ret =0;
+		try{
+			ret = Integer.parseInt(configFile.getProperty("highGraphics"));
+		} catch (NumberFormatException e) {
+			System.out.println("Bad config value: "+configFile.getProperty("highGraphics"));
+		}
+		return ret;
 	}
 }
