@@ -142,6 +142,7 @@ public class LoadFromYagoScene extends Scene{
 				
 				new Thread(new Runnable(){
 					public void run(){
+						ReloadYago.deleteLiteFiles(config);
 						if (isFirstLoad){
 							try{
 								ReloadYago.deleteAllData(config.get_db_name(), dbh);

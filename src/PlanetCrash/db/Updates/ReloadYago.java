@@ -1,5 +1,6 @@
 package PlanetCrash.db.Updates;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -342,5 +343,19 @@ public class ReloadYago {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void deleteLiteFiles(Config conf) {
+		File dir = new File(conf.get_yago_files_directory());
+		if(dir==null ||!dir.exists() || !dir.isDirectory()) {
+			System.out.println("Bad yago directory: "+conf.get_yago_files_directory());
+			return;
+		}
+		
+		File[] files = dir.listFiles();
+		for(int i=0;i<files.length;i++)
+			if(files[i].getName().endsWith(".lite"))
+				files[i].delete();
+		
 	}
 }
