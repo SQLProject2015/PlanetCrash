@@ -21,8 +21,9 @@ public class parser_transitive_types extends AbstractYagoParser{
 	HashMap<String, entity_city> cities_map;
 	HashMap<String, entity_university> universities_map;
 	HashMap<String, entity_person> persons_map;
-	HashSet<String> currency_set;
-	HashSet<String> language_set;
+	HashSet<String> currency_set = new HashSet<String>();
+	HashSet<String> language_set = new HashSet<String>();
+	HashMap<String, Set<String>> countries_cities_map;
 	HashMap<String, String > profession_tags = new HashMap<String, String>(){{
 		put("<wordnet_musician_110339966>","Musician");
 		put("<wordnet_scientist_110560637>","Scientist");
@@ -36,6 +37,7 @@ public class parser_transitive_types extends AbstractYagoParser{
 	public parser_transitive_types(String filepath,  HashMap<String, entity_country> countries_map,
 			HashMap<String,entity_person> persons_map,HashMap<String, entity_city> cities_map,
 			HashSet<String> currency_set, HashSet<String> language_set,
+			HashMap<String, Set<String>> countries_cities_map,
 			HashMap<String, entity_university> universities_map) {
 		super(filepath);
 
@@ -44,6 +46,7 @@ public class parser_transitive_types extends AbstractYagoParser{
 		this.cities_map = cities_map;
 		this.currency_set = currency_set;
 		this.language_set = language_set;
+		this.countries_cities_map = countries_cities_map;
 		this.universities_map = universities_map;
 	}
 
@@ -59,7 +62,7 @@ public class parser_transitive_types extends AbstractYagoParser{
 			entity_country new_country = new entity_country();
 			new_country.setYagoName(clean_lentity);
 			countries_map.put(clean_lentity, new_country);
-			//countries_cities_map.put(clean_lentity, new HashSet<String>());
+			countries_cities_map.put(clean_lentity, new HashSet<String>());
 			return true;
 		}
 		else if (toParse.rentity.equals(properties.get_yago_tag_musician()) || toParse.rentity.equals(properties.get_yago_tag_scientist()) ||

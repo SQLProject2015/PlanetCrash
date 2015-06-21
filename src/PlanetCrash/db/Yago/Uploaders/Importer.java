@@ -40,6 +40,7 @@ public class Importer {
 		HashMap<String, entity_person> persons_map = new HashMap<String, entity_person>();
 		HashSet<String> currency_set = new HashSet<String>();
 		HashSet<String> language_set = new HashSet<String>();
+		HashMap<String,Set<String>> countries_cities_map = new HashMap<String,Set<String>>();
 		HashMap<String, entity_university> universities_map = new HashMap<String,entity_university>();
 		HashMap<String, entity_person> lite_persons_map = new HashMap<String, entity_person>();
 		HashSet<String> awards_set = new HashSet<String>();
@@ -65,13 +66,13 @@ public class Importer {
 		
 		System.out.println("parsing transitive types " + (System.currentTimeMillis()-start)/1000f);
 		parser_transitive_types c = new parser_transitive_types(properties.get_yago_files_directory()+properties.get_yago_transitive_types_name(), countries_map,
-				persons_map, cities_map, currency_set, language_set, universities_map);		
+				persons_map, cities_map, currency_set, language_set, countries_cities_map, universities_map);		
 		c.populate();
 		System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 		parsing_finished+= 6483;	    
 
 		System.out.println("parsing facts " + (System.currentTimeMillis()-start)/1000f);
-		parser_yago_facts d = new parser_yago_facts(properties.get_yago_files_directory()+properties.get_yago_facts_name(),  countries_map, cities_map,universities_map,persons_map, lite_persons_map, awards_set);
+		parser_yago_facts d = new parser_yago_facts(properties.get_yago_files_directory()+properties.get_yago_facts_name(),  countries_map,  countries_cities_map, cities_map,universities_map,persons_map, lite_persons_map, awards_set);
 		d.populate();
 		System.out.println("done " + (System.currentTimeMillis()-start)/1000f);
 		parsing_finished+= 415;	
